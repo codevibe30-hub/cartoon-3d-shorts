@@ -166,12 +166,39 @@ modal deploy modal/render_app.py
 python modal/call_render.py https://link-ke/job.zip hasil.mp4
 ```
 
+### Paralel — disamakan dengan GitHub Actions (5 jendela barengan)
+
+Satu episode dipecah jadi 5 jendela frame dan dirender **bersamaan** di 5
+kontainer Modal, persis pola fan-out GitHub Actions:
+
+1. `modal/pack_windows.py` mengemas proyek jadi 5 `job.zip` ramping
+   (jendela sejajar grid chunk; `FROM`/`TO` terbakar di `render.sh` tiap
+   zip). `render.sh` jendela hanya me-render chunk rentangnya — tanpa
+   finalize — lalu mengemas chunk-nya jadi `output.mp4` (arsip ZIP).
+2. `modal/call_render_parallel.py` mengupload kelima zip, men-**spawn**
+   5 panggilan fungsi `render` sekaligus, mengekstrak semua chunk yang
+   kembali ke `out/chunks/` proyek lokal, dan memverifikasi jumlah frame
+   tiap chunk dengan ffprobe. Finalisasi tetap di mesin lokal seperti biasa.
+
+```bash
+python modal/call_render_parallel.py <folder-proyek> <total_frame> [--windows 5] [--chunk 75]
+```
+
+Fungsi Modal-nya tidak berubah — mode jendela hidup di job.zip + pemanggil,
+jadi panggilan tunggal `call_render.py` tetap kompatibel.
+
+Uji nyata (2026-11-20): job 750 frame (10 chunk × 75) selesai **397 detik**
+end-to-end dengan 5 jendela paralel; kelima kontainer finis dalam rentang
+10 detik satu sama lain (317–327 dtk). Bandingkan: jalur tunggal ±301 dtk
+untuk 150 frame, jadi 750 frame sekuensial akan ±1505 dtk. Biaya uji:
+$0,16 metered, tertagih $0 (kredit Starter).
+
 ## Struktur folder
 
 ```
 .
 ├── .github/workflows/        # render.yml — render cloud via GitHub Actions
-├── modal/                    # render_app.py + call_render.py — render via Modal (Cara 2)
+├── modal/                    # render via Modal (Cara 2): render_app.py + call_render.py (tunggal) + pack_windows.py & call_render_parallel.py (paralel 5 jendela)
 ├── templates/render.sh       # render.sh bawaan untuk job.zip (render cloud)
 ├── docs/FORMAT.md            # spesifikasi format video (terkunci)
 ├── examples/
