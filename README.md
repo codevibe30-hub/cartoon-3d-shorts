@@ -106,10 +106,48 @@ Mesin kedua bisa mengambil sebagian rentang frame (±2–3× lebih cepat dari VM
    jalankan `node scripts/render-chunks.mjs` di keduanya.
 4. Tarik chunk dari box, lalu `bash scripts/finalize.sh` seperti biasa.
 
+## Render via GitHub Actions (gratis, tanpa kartu)
+
+Render di runner GitHub lewat workflow `.github/workflows/render.yml`
+(manual dispatch). Kontraknya sederhana: workflow mengunduh **satu
+`job.zip`** dari URL publik, menjalankan `render.sh` di dalamnya, dan
+mengembalikan **`output.mp4`** sebagai artifact bernama `hasil-render`.
+
+Isi `job.zip`: satu folder proyek episode (template repo ini) + `render.sh`
+di root zip. `render.sh` memasang dependensi, mengunduh Chrome Headless
+Shell Remotion, me-render semua chunk (`scripts/render-chunks.mjs`), lalu
+mem-finalisasi menjadi `output.mp4` (env: `COMP_ID`, `TOTAL_FRAMES`,
+`CHUNK`, `EPISODE_OUTPUT` — lihat `templates/render.sh`).
+
+Alurnya:
+
+1. **Kemas proyek jadi job.zip** (render.sh proyek dipakai bila ada,
+   kalau tidak `templates/render.sh` yang dipakai):
+
+   ```bash
+   bash scripts/pack-job.sh /path/ke/proyek-episode job.zip
+   ```
+
+2. **Upload `job.zip` ke URL publik** mana pun yang bisa di-`curl`
+   (release GitHub, object storage, dsb.) dan salin URL-nya.
+
+3. **Trigger workflow + ambil hasil** dengan `gh` CLI (atau tombol
+   *Run workflow* di tab Actions, isi input `assets_url`):
+
+   ```bash
+   gh workflow run render.yml -f assets_url=https://link-ke/job.zip
+   gh run watch
+   gh run download -n hasil-render
+   ```
+
+   Hasilnya: `output.mp4` di folder unduhan — video final episode itu.
+
 ## Struktur folder
 
 ```
 .
+├── .github/workflows/        # render.yml — render cloud via GitHub Actions
+├── templates/render.sh       # render.sh bawaan untuk job.zip (render cloud)
 ├── docs/FORMAT.md            # spesifikasi format video (terkunci)
 ├── examples/
 │   └── stasiun-miharashi/    # SCRIPT.md + sources.md episode contoh
@@ -126,7 +164,7 @@ Mesin kedua bisa mengambil sebagian rentang frame (±2–3× lebih cepat dari VM
 ├── voice/                    # TTS (speko_tts.py, synth.sh), assemble, transcribe
 ├── audio/                    # musik & SFX generatif (dsp, instruments, sfx_gen)
 └── scripts/                  # render-chunks, stills, storyboard, captions,
-                              # progress, finalize, box_xfer (hybrid)
+                              # progress, finalize, box_xfer (hybrid), pack-job
 ```
 
 ## Lisensi
