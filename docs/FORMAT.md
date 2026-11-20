@@ -20,6 +20,7 @@ Format ini mengadopsi GAYA channel referensi Fafnir: **Indonesia, energik, ada t
 ## Alur produksi (WAJIB)
 - **Storyboard DIHAPUS dari alur produksi (aturan terbaru):** produksi langsung render video final TANPA tahap storyboard — riset → naskah → kode adegan → VO → render. Perkakas storyboard (`scripts/stills.mjs` + `scripts/make_storyboard.py`) tetap tersedia di repo ini, tapi sifatnya OPSIONAL dan secara default DILEWATI; pakai hanya bila kamu memang ingin meninjau still adegan sebelum render penuh.
 - **RENDER HYBRID TOTAL (aturan terbaru):** SEMUA render dibagi ke SEMUA mesin yang tersedia — mesin lokal + cloud box + 5 runner GitHub Actions paralel (workflow `render.yml`, tiap runner jendela frame sendiri). Setelah semua chunk lengkap & terverifikasi, chunk DISATUKAN lalu video difinalisasi seperti biasa (gabung chunk + VO/musik + loudness ±−14 LUFS + verifikasi final).
+- **ANTI-BANDING:** hindari bidang gradasi polos besar (dinding/langit/lantai satu warna menggradasi), terutama di adegan penutup — permukaan besar wajib diberi tekstur/detail/grain halus pemecah banding. (Encode final terbukti bukan penyebab banding: final adalah salinan persis chunk.)
 - **(Riwayat — tidak berlaku lagi)** Aturan lama: storyboard (still tiap adegan + subtitle bawah 1 baris, grid berlabel) dibuat sebagai laporan dan render tidak menunggu persetujuan. Sudah digantikan aturan di atas.
 
 ## ⚠️ KOREKSI ARAH (MENANG atas semua aturan topik sebelumnya)
