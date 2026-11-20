@@ -18,7 +18,8 @@ Format ini mengadopsi GAYA channel referensi Fafnir: **Indonesia, energik, ada t
 - **Metadata upload:** metadata DISESUAIKAN PER SOSMED, target penonton Indonesia + luar negeri (deskripsi dwibahasa ID + EN): **YT Shorts** — judul berisi PERSIS 5 hashtag relevan di akhir (mis. #TaugakSih #FaktaUnik #FunFact #Korea #Shorts); deskripsi dwibahasa + set hashtag lengkap (±10–12, campuran ID + EN, JANGAN cuma 1). **IG Reel** — caption: baris pertama judul TANPA hashtag, deskripsi dwibahasa, lalu semua hashtag dikelompokkan di paling bawah caption. **FB Reel** — caption ringkas: judul tanpa hashtag + 1–2 kalimat deskripsi + maks 3–5 hashtag di akhir (jangan dump banyak hashtag).
 
 ## Alur produksi (WAJIB)
-- **Storyboard tetap dibuat sebagai laporan, render TIDAK menunggu persetujuan:** storyboard (still tiap adegan + subtitle bawah 1 baris, grid berlabel) dibuat dan ditinjau, lalu render jalan terus. Koreksi arah tetap bisa diberikan kapan pun.
+- **Storyboard DIHAPUS dari alur produksi (aturan terbaru):** produksi langsung render video final TANPA tahap storyboard — riset → naskah → kode adegan → VO → render. Perkakas storyboard (`scripts/stills.mjs` + `scripts/make_storyboard.py`) tetap tersedia di repo ini, tapi sifatnya OPSIONAL dan secara default DILEWATI; pakai hanya bila kamu memang ingin meninjau still adegan sebelum render penuh.
+- **(Riwayat — tidak berlaku lagi)** Aturan lama: storyboard (still tiap adegan + subtitle bawah 1 baris, grid berlabel) dibuat sebagai laporan dan render tidak menunggu persetujuan. Sudah digantikan aturan di atas.
 
 ## ⚠️ KOREKSI ARAH (MENANG atas semua aturan topik sebelumnya)
 Yang ditiru dari channel referensi HANYA GAYA/format (ritme, struktur, formula judul). **ISI/TOPIK WAJIB ORISINAL 100%** — JANGAN produksi ulang topik dari katalog Shorts channel mana pun. Sumber topik: daftar ide orisinal kamu sendiri + hasil riset sendiri.

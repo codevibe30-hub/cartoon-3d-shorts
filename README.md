@@ -8,8 +8,10 @@ mengikuti ucapan narator kata-per-kata. Semua dirender secara programatik dengan
 
 Repo ini berisi **satu episode contoh yang lengkap dan bisa langsung dirender**
 ("Di Jepang, Ada Stasiun yang Nggak Punya Pintu Keluar Sama Sekali" — Stasiun
-Seiryu Miharashi), plus seluruh perkakas produksinya: riset → naskah → storyboard →
+Seiryu Miharashi), plus seluruh perkakas produksinya: riset → naskah →
 voice-over → musik/SFX generatif → render per-chunk (bisa hybrid dua mesin).
+(Tahap storyboard tersedia sebagai perkakas opsional, tapi secara default
+dilewati sesuai spek terbaru.)
 
 > Spesifikasi format video (struktur hook → build → twist → punchline, aturan
 > subtitle, formula judul, metadata upload) didokumentasikan lengkap di
@@ -76,9 +78,13 @@ Salin `.env.example` menjadi `.env` dan isi:
 3. **Kode adegan** — duplikat folder `src/videos/example/` menjadi
    `src/videos/<episode-baru>/`, sesuaikan `story.ts` (timeline shot) dan dunia 3D-nya,
    daftarkan komposisinya di `src/Root.tsx`.
-4. **Storyboard** — `node scripts/stills.mjs` merender still tiap adegan ke
-   `out/storyboard/`, lalu `python3 scripts/make_storyboard.py` menyusun grid
-   berlabel (label adegan di `scripts/storyboard_labels.json`).
+4. **Storyboard (OPSIONAL — dilewati secara default)** — sesuai spek terbaru
+   (lihat `docs/FORMAT.md`), tahap storyboard sudah DIHAPUS dari alur produksi:
+   produksi langsung render video final (lompat ke langkah 5–6). Bila kamu tetap
+   ingin meninjau still adegan dulu, perkakasnya masih tersedia:
+   `node scripts/stills.mjs` merender still tiap adegan ke `out/storyboard/`,
+   lalu `python3 scripts/make_storyboard.py` menyusun grid berlabel (label
+   adegan di `scripts/storyboard_labels.json`).
 5. **Voice-over** — `bash voice/synth.sh` (Speko TTS per baris) →
    `python3 voice/assemble.py` (gabung + `line_starts.json`) →
    buat `voice/voice16k.wav` lalu `python3 voice/transcribe.py` (timing kata) →
