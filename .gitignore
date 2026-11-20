@@ -1,0 +1,25 @@
+# dependencies
+node_modules/
+
+# render output & temp
+out/
+.tmp/
+*.mp4
+*.wav
+!public/**/*.wav
+
+# python
+__pycache__/
+.venv/
+*.pyc
+
+# env & secrets
+.env
+.env.*
+!.env.example
+
+# logs & misc
+*.log
+.DS_Store
+scripts/text_widths.json
+storyboard-*.png
