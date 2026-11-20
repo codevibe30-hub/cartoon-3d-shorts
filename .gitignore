@@ -17,6 +17,10 @@ __pycache__/
 .env
 .env.*
 !.env.example
+modal.env
+
+# job packages
+*.zip
 
 # logs & misc
 *.log

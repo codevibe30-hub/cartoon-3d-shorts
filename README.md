@@ -142,11 +142,36 @@ Alurnya:
 
    Hasilnya: `output.mp4` di folder unduhan — video final episode itu.
 
+## Render via Modal (Cara 2 — serverless, dipanggil seperti API)
+
+Alternatif GitHub Actions: fungsi serverless di [Modal](https://modal.com)
+yang dipanggil dari Python. Kontraknya **sama persis** — fungsi menerima
+URL `job.zip`, menjalankan `render.sh` di dalamnya, dan mengembalikan isi
+`output.mp4` sebagai bytes. Mesin Modal hanya menyala selama render
+berjalan (kredit Starter $30/bulan, dibayar per detik).
+
+Kode: `modal/render_app.py` (App `render-agent`, image Node 20 + ffmpeg +
+library Chrome Headless Shell untuk Remotion, timeout 1800 detik) dan
+`modal/call_render.py` (klien pemanggil).
+
+```bash
+# sekali saja: buat token di modal.com (Settings -> API Tokens), simpan sebagai
+# MODAL_TOKEN_ID + MODAL_TOKEN_SECRET di modal.env (JANGAN commit file ini),
+# lalu deploy:
+pip install modal
+set -a; . ./modal.env; set +a
+modal deploy modal/render_app.py
+
+# tiap render: kemas job.zip seperti Cara 1, upload ke URL publik, panggil:
+python modal/call_render.py https://link-ke/job.zip hasil.mp4
+```
+
 ## Struktur folder
 
 ```
 .
 ├── .github/workflows/        # render.yml — render cloud via GitHub Actions
+├── modal/                    # render_app.py + call_render.py — render via Modal (Cara 2)
 ├── templates/render.sh       # render.sh bawaan untuk job.zip (render cloud)
 ├── docs/FORMAT.md            # spesifikasi format video (terkunci)
 ├── examples/
