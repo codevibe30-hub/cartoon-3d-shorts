@@ -40,3 +40,15 @@ Yang ditiru dari channel referensi HANYA GAYA/format (ritme, struktur, formula j
 ## Referensi
 - Contoh episode lengkap (naskah + sumber fakta): `examples/stasiun-miharashi/`
 - Panduan pemakaian pipeline: `README.md` di root repo ini
+
+## ATURAN ALGORITMA SHORTS (riset 2026-11-21, sumber: YouTube Help/Creator Insider + data kreator)
+- Sinyal ranking yang DIKONFIRMASI YouTube: rasio ditonton vs di-swipe (VVSA), rata-rata durasi tonton, rata-rata % ditonton, like, survei kepuasan. Komentar/share/loop/subscribe BUKAN sinyal bernama (loop hanya berpengaruh lewat % ditonton).
+- TARGET ANGKA: VVSA >= 75% (video kita sekarang 63% — bottleneck utama adalah HOOK, bukan durasi; retensi badan 75% di 50-60 dtk sudah di pita sehat atas). % ditonton target 85%+.
+- HOOK 0-2 DETIK (WAJIB): frame 0 = visual paling aneh + teks klaim spesifik terkuantifikasi di layar; baris VO pertama langsung klaimnya (frasa brand "Tau gak sih" menyatu dengan klaim, BUKAN prolog/teaser generik terpisah). Ada re-hook di tengah (~50% durasi), video BERAKHIR tepat di payoff — potong semua dead air.
+- Durasi mengikuti kedalaman fakta: fakta tunggal cukup 30-40 dtk; JANGAN memanjangkan naskah demi durasi.
+- Judul YT = frasa pencarian berbentuk pertanyaan/klaim yang sama dengan yang diucapkan + tertulis di video. Hashtag BUKAN sinyal ranking (kategorisasi saja) — aturan 5 hashtag judul + #taugaksih utama tetap sebagai identitas seri.
+- KOMENTAR PINNED (baru): tiap upload WAJIB ada komentar pinned berisi pertanyaan biner/memicu debat ringan terkait fakta video (dipasang saat upload).
+- Jam upload patokan 19.00-21.00 WIB (audiens seed terjaga; jam bukan penguat ranking jangka panjang).
+- DILARANG: hapus + upload ulang video (dianggap spam, views YPP hilang), beli views/subscriber, sub4sub. Mengganti judul/metadata SETELAH tayang itu AMAN (tidak mereset distribusi).
+- RISIKO KEBIJAKAN "inauthentic content": konten massal bertemplat dengan variasi minimal tidak bisa dimonetisasi — mitigasi kita: naskah 100% orisinal per episode, dunia visual + struktur shot BERBEDA nyata antar episode (bukan ganti kata benda doang).
+- Triase mingguan dari YouTube Studio: topik dengan VVSA <60% tiga kali berturut = ganti pendekatan; VVSA >75% = gandakan polanya.
