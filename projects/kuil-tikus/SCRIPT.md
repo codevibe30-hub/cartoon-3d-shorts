@@ -68,6 +68,13 @@ Teks FB:
 Di India, Ada Kuil yang Penghuninya 25.000 Tikus Suci! 🐀 Di Kuil Karni Mata, tikus bukan hama — mereka keluarga dewi yang lagi reinkarnasi. Lari lewat kakimu? Itu berkah! Lihat yang putih? Hoki seumur hidup! Dan yang paling ajaib: 25 ribu tikus, NOL wabah. Berani berkunjung?
 #taugaksih #faktaunik #india #kuiltikus #harleytriesadulting
 
+## PERBAIKAN (22 Nov 2026 — render ulang sebelum upload)
+
+- CACAT: rambut/topi hero ter-render sebagai PITA HITAM melintang di dahi setinggi mata (menutupi alis, terbaca seperti penutup mata/glitch) di semua shot. Sumbernya di kode karakter bersama `src/videos/tikus/toon.ts`, fungsi `hatOn()` (cabang `cap`/`hair`): garis potong topi/rambut di `crown + 0.30/0.42 * HH` jatuh tepat di/melewati garis alis (alis di 0.287 * HH dari mahkota), dan lensa "peak" topi lama (32u × 0.06 HH, rim tinta tebal) menggantung di garis alis membentuk massa hitam daun di dahi.
+- FIX di `hatOn()`: garis potong dinaikkan ke `crown + 0.18 * HH` (rambut/topi murni di atas kepala, dahi kulit utuh antara garis rambut dan alis); peak topi digambar ulang jadi sabit brim tipis (30u × 0.03 HH, fill shade 0.88, rim 0.55×) yang dasarnya rata dengan tepi topi; goresan helai rambut dipindah ke dalam wilayah rambut baru (cut−14u → cut−4u); busur alis ekspresi shock di `faceFront`/`faceSide` diturunkan 6u → 4u di atas garis alis supaya tidak pernah menyentuh garis rambut.
+- Fix yang sama diterapkan ke `~/workspace/cartoon-3d/gereja-ayam/src/videos/ayam/toon.ts` (file/fungsi yang sama) supaya episode berikutnya yang menyalin dari sana sudah bersih.
+- Audio TIDAK diubah (VO/mix lama dipakai lagi); hanya visual yang di-render ulang penuh via GitHub Actions repo-direct, lalu finalize.sh seperti biasa. Diverifikasi dari file final baru: frame 0/±500/±1000/±1340/1734 diperiksa visual satu per satu — rambut di atas kepala, mata + alis bersih di semua frame.
+
 ## CATATAN PRODUKSI
 
 - Frame 0 = perlakuan thumbnail klikbait: visual paling ekstrem (karpet tikus mengelilingi kaki hero) mengisi frame, ekspresi SHOCK maksimal, teks klaim raksasa maks 3 kata per baris ("25.000 TIKUS / SUCI?!") — terbaca di ukuran thumbnail; teks layar + VO baris 1 menghantam titik kaget yang sama di momen yang sama.
