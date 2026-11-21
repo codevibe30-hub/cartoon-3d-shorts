@@ -318,7 +318,7 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
     blob(out, 0.2, 0, -9.8);
     out.places.push(stand(BUYER_B, -1.6, 0, -11.2, bid ? "shock" : "neutral", 0.3)); blob(out, -1.6, 0, -11.2);
     out.places.push(stand(BUYER_C, 1.9, 0, -11.0, "neutral", -0.3)); blob(out, 1.9, 0, -11.0);
-    cardFx("cardKing", drawCardFit(["TUNA KING"], "#23272f", "#ffd98a", 96), BID5_T - 0.4, 2.4, 0.2, 2.6, -12.6, 2.2, 1.1);
+    cardFx("cardKing", drawCardFit(["TUNA KING"], "#23272f", "#ffd98a", 96), BID5_T - 0.4, 2.4, -1.2, 2.6, -12.6, 2.2, 1.1);
     burstFx(BID5_T + 0.05, 0.7, 0.2, 3.1, -9.8, 2.2);
   }
   if (id === 6) {
