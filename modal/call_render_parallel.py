@@ -14,7 +14,7 @@ untuk panggilan tunggal lewat call_render.py).
 
 Usage:
     .venv/bin/python call_render_parallel.py <project-dir> <total_frames> \
-        [--windows 5] [--chunk 75] [--comp-id ExampleEpisode] [--keep-zips]
+        [--windows 10] [--chunk 75] [--comp-id ExampleEpisode] [--keep-zips]
 
 Token dibaca dari modal.env di folder ini (MODAL_TOKEN_ID/MODAL_TOKEN_SECRET).
 """
@@ -65,7 +65,7 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("project")
     ap.add_argument("total_frames", type=int)
-    ap.add_argument("--windows", type=int, default=5)
+    ap.add_argument("--windows", type=int, default=10)
     ap.add_argument("--chunk", type=int, default=75)
     ap.add_argument("--comp-id", default="ExampleEpisode")
     ap.add_argument("--keep-zips", action="store_true")

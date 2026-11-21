@@ -13,7 +13,7 @@ chunk, jadi tidak ada chunk yang terbelah di dua jendela.
 
 Usage:
     .venv/bin/python pack_windows.py <project-dir> <total_frames> \
-        [--windows 5] [--chunk 75] [--comp-id ExampleEpisode] [--out-dir DIR]
+        [--windows 10] [--chunk 75] [--comp-id ExampleEpisode] [--out-dir DIR]
 
 Output: job-w<i>-<from>-<to>.zip per jendela di out-dir + ringkasan JSON
 di stdout (daftar zip + rentang frame tiap jendela).
@@ -105,7 +105,7 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("project")
     ap.add_argument("total_frames", type=int)
-    ap.add_argument("--windows", type=int, default=5)
+    ap.add_argument("--windows", type=int, default=10)
     ap.add_argument("--chunk", type=int, default=75)
     ap.add_argument("--comp-id", default="ExampleEpisode")
     ap.add_argument("--out-dir", default=None)
