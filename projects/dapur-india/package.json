@@ -1,0 +1,29 @@
+{
+  "dependencies": {
+    "@react-three/fiber": "^9.3.0",
+    "@react-three/postprocessing": "^3.0.4",
+    "@remotion/cli": "4.0.535",
+    "@remotion/three": "4.0.535",
+    "postprocessing": "^6.37.8",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "remotion": "4.0.535",
+    "three": "0.180.0"
+  },
+  "description": "Di India, Dapur Ini Memberi Makan 100.000 Orang Tiap Hari — Gratis: the Golden Temple langar, Amritsar, a ±55 s cartoon-3D short (three.js in Remotion), Fafnir-ID format. Non-Indonesia episode (idea v1 #21).",
+  "devDependencies": {
+    "@types/react": "19.2.7",
+    "@types/three": "0.180.0",
+    "typescript": "5.9.3"
+  },
+  "license": "UNLICENSED",
+  "name": "dapur-india-short",
+  "private": true,
+  "scripts": {
+    "render": "remotion render src/index.ts",
+    "still": "remotion still src/index.ts",
+    "studio": "remotion studio src/index.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "version": "1.0.0"
+}
