@@ -1,35 +1,49 @@
-import { spawnSync } from "node:child_process";
-import path from "node:path";
+// Chunked full render: renders the composition in frame-range chunks to out/chunks/chunk-AAA-BBB.mp4
+// (video only, h264 crf 16). Chunks that already exist with the right frame count are skipped, so a
+// killed run (VM replacement) resumes where it stopped. Concatenate + mux audio afterwards.
+// NOTE: /tmp on this VM is a 512 MB tmpfs — Remotion's temp frames MUST go to disk instead.
 import fs from "node:fs";
+import path from "node:path";
+process.env.REMOTION_TMP = path.resolve("out/.tmp");
+fs.mkdirSync(process.env.REMOTION_TMP, { recursive: true });
+process.env.TEMP = process.env.TMP = process.env.TMPDIR = process.env.REMOTION_TMP;
+import { bundle } from "@remotion/bundler";
+import { selectComposition, renderMedia } from "@remotion/renderer";
+import { execFileSync } from "node:child_process";
 
-const root = path.resolve(process.cwd());
-const TOTAL = 1735;
-const CHUNK = 75;
-const jobs = [];
-for (let start = 0; start < TOTAL; start += CHUNK) jobs.push([start, Math.min(start + CHUNK, TOTAL)]);
-const [from, to] = jobs[Number(process.argv[2])];
-console.log(`rendering frames ${from}-${to - 1} (${to - from} frames)`);
+const TOTAL = 1735; // Kuil Tikus final comp: 1735 frame (57.82 dtk) dari voice/line_starts.json
+const CHUNK = Number(process.argv[2] || 75);
+// Optional frame window [FROM, TO) on the chunk grid, for hybrid multi-machine renders.
+const FROM = Number(process.env.FROM || 0);
+const TO = Number(process.env.TO || TOTAL);
+const browserExecutable = path.resolve("node_modules/.remotion/chrome-headless-shell/linux64/chrome-headless-shell-linux64/chrome-headless-shell");
+const chromiumOptions = { gl: process.env.REMOTION_GL || "swangle" };
+const inputProps = process.env.POST ? { post: JSON.parse(process.env.POST) } : undefined;
 
-const res = spawnSync("npx", ["remotion", "render", "KuilTikus",
-  path.join(root, "out", "frames"), `--frames=${from}-${to - 1}`,
-  "--concurrency=3", "--log=error"],
-  { cwd: root, stdio: "inherit", shell: true, env: process.env });
-if (res.status !== 0) process.exit(res.status ?? 1);
+fs.mkdirSync("out/chunks", { recursive: true });
+const serveUrl = await bundle({ entryPoint: path.resolve("src/index.ts"), publicDir: path.resolve("public") });
+const composition = await selectComposition({ serveUrl, id: "KuilTikus", browserExecutable, chromiumOptions });
 
-const padded = n => String(n).padStart(4, "0");
-const parts = [];
-for (let f = from; f < to; f++) {
-  const src = path.join(root, "out", "frames", `element-${padded(f)}.png`);
-  if (!fs.existsSync(src)) { console.error(`missing frame ${f}`); process.exit(1); }
-  parts.push(src);
+const framesOf = (file) => {
+  try {
+    const out = execFileSync("ffprobe", ["-v", "error", "-select_streams", "v:0", "-count_frames",
+      "-show_entries", "stream=nb_read_frames", "-of", "csv=p=0", file], { encoding: "utf8" });
+    return Number(out.trim());
+  } catch { return -1; }
+};
+
+for (let a = FROM; a < TO; a += CHUNK) {
+  const b = Math.min(a + CHUNK, TOTAL, TO) - 1;
+  const out = `out/chunks/chunk-${String(a).padStart(4, "0")}-${String(b).padStart(4, "0")}.mp4`;
+  const want = b - a + 1;
+  if (fs.existsSync(out) && framesOf(out) === want) { console.log(`skip ${out} (${want} frames ok)`); continue; }
+  const t0 = Date.now();
+  await renderMedia({
+    composition, serveUrl, codec: "h264", outputLocation: out, frameRange: [a, b],
+    concurrency: 2, crf: 16, muted: true, browserExecutable, chromiumOptions,
+    timeoutInMilliseconds: 300000, ...(inputProps ? { inputProps } : {}),
+    onBrowserLog: (l) => { if (l.type === "error") console.log("[err]", l.text.slice(0, 200)); },
+  });
+  console.log(`chunk ${a}-${b} done in ${((Date.now() - t0) / 1000).toFixed(0)}s -> ${out} (${framesOf(out)} frames)`);
 }
-const listPath = path.join(root, "out", `list-${from}-${to}.txt`);
-fs.writeFileSync(listPath, parts.map(p => `file '${p.replace(/\\/g, "/")}'\n`).join(""));
-
-const out = path.join(root, "out", "chunks", `chunk-${from}-${to}.mp4`);
-fs.mkdirSync(path.dirname(out), { recursive: true });
-const enc = spawnSync("ffmpeg", ["-y", "-f", "concat", "-safe", "0", "-i", listPath,
-  "-framerate", "30", "-c:v", "libx264", "-preset", "veryfast", "-crf", "13", "-pix_fmt", "yuv420p", out],
-  { stdio: "inherit" });
-if (enc.status !== 0) process.exit(enc.status ?? 1);
-console.log("wrote", out);
+console.log("ALL CHUNKS DONE");
