@@ -14,6 +14,14 @@ NO pack_window.py, NO job.zip, NO Muse storage upload.
 Run ids are recorded to <project-dir>/out/jobs-gh-repo/<stamp>/runs.json
 in the same format gh_pull.py consumes ({"from","to","run_id"} per job),
 so the existing gh_pull.py pulls repo-path artifacts unchanged.
+
+WINDOW CONVENTION — HALF-OPEN [FROM, TO): TO is the first frame NOT
+rendered, exactly like the workflow input comment and render-chunks.mjs.
+One 75-frame chunk starting at frame 0 is written 0:75, two chunks 0:150.
+NEVER write inclusive windows (0:74): every window silently loses its
+last frame. (Winton 2026-11-22: 22 chunks lost their last frame this
+way and needed 22 extra 1-frame patch runs.) Window sizes must be a
+multiple of 75; a partial tail window needs --allow-partial.
 """
 import argparse
 import json
@@ -63,25 +71,56 @@ def sync_project(local, repo_dir, name):
         print(f"[sync] projects/{name} already up to date", flush=True)
 
 
+CHUNK = 75
+
+
+def validate_windows(wins, allow_partial):
+    """Guard against the inclusive-window trap (see module docstring).
+
+    Windows are half-open [FROM, TO). Every window size must be a
+    positive multiple of CHUNK unless --allow-partial is given (tail
+    window at the end of a comp). Raises SystemExit on any violation,
+    before anything is synced or dispatched.
+    """
+    for frm, to in wins:
+        size = to - frm
+        if size <= 0:
+            raise SystemExit(
+                f"[window] {frm}:{to} invalid — TO must be greater than FROM "
+                f"(half-open [FROM, TO): TO is the first frame NOT rendered)")
+        if size % CHUNK != 0 and not allow_partial:
+            raise SystemExit(
+                f"[window] {frm}:{to} spans {size} frames — not a multiple of "
+                f"{CHUNK}. Windows are half-open [FROM, TO): a {CHUNK}-frame "
+                f"chunk from {frm} is written {frm}:{frm + CHUNK}, NOT "
+                f"{frm}:{frm + CHUNK - 1} (inclusive windows lose the last "
+                f"frame of every chunk). If this is a partial TAIL window, "
+                f"re-run with --allow-partial.")
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--local", required=True, help="local project folder (e.g. ~/workspace/cartoon-3d/tuna-40m)")
     ap.add_argument("--name", default=None, help="repo folder name under projects/ (default: basename of --local)")
     ap.add_argument("--repo-dir", default=DEFAULT_REPO_DIR, help="local checkout of the repo")
     ap.add_argument("--ref", default=None, help="optional git ref for the runner checkout")
-    ap.add_argument("windows", nargs="+", help="frame windows FROM:TO")
+    ap.add_argument("--allow-partial", action="store_true",
+                    help="allow window sizes that are not a multiple of 75 (partial tail window only)")
+    ap.add_argument("windows", nargs="+",
+                    help="frame windows FROM:TO, half-open [FROM, TO): TO = first frame NOT rendered (75-frame chunk from 0 = 0:75)")
     args = ap.parse_args()
 
     local = os.path.abspath(os.path.expanduser(args.local))
     name = args.name or os.path.basename(local)
     project_path = f"projects/{name}"
 
-    sync_project(local, args.repo_dir, name)
-
     wins = []
     for arg in args.windows:
         a, b = arg.split(":")
         wins.append((int(a), int(b)))
+    validate_windows(wins, args.allow_partial)
+
+    sync_project(local, args.repo_dir, name)
 
     stamp = time.strftime("%Y%m%d-%H%M%S")
     out_dir = os.path.join(local, "out", "jobs-gh-repo", stamp)
