@@ -20,6 +20,17 @@ Format ini mengadopsi GAYA channel referensi Fafnir: **Indonesia, energik, ada t
 - **Output & upload:** file MP4; upload ke akun sosmed kamu (IG/FB/YT) dengan ritme wajar manusiawi (hindari pola spam: jangan posting massal beruntun).
 - **Metadata upload:** metadata DISESUAIKAN PER SOSMED, target penonton Indonesia + luar negeri (deskripsi dwibahasa ID + EN):  **#taugaksih adalah HASHTAG UTAMA seri ini (perintah Baginda Raja 2026-11-21 ~22:46 WIB): WAJIB hashtag PERTAMA di judul YT (dari 5 hashtag judul) dan memimpin kelompok hashtag di deskripsi YT, caption IG, dan teks FB.** **YT Shorts** — judul berisi PERSIS 5 hashtag relevan di akhir (mis. #TaugakSih #FaktaUnik #FunFact #Korea #Shorts); deskripsi dwibahasa + set hashtag lengkap (±10–12, campuran ID + EN, JANGAN cuma 1). **IG Reel** — caption: baris pertama judul TANPA hashtag, deskripsi dwibahasa, lalu semua hashtag dikelompokkan di paling bawah caption. **FB Reel** — caption ringkas: judul tanpa hashtag + 1–2 kalimat deskripsi + maks 3–5 hashtag di akhir (jangan dump banyak hashtag).
 
+## STANDAR MUTU VISUAL — WAJIB SEMUA ANIMASI (ditetapkan 23 Nov 2026, perintah Baginda Raja — menyusul sidak frame Giethoorn yang dinilai flat/amatiran)
+
+Berlaku untuk SEMUA seri/produksi animasi (Fafnir-ID dan jalur lain), bukan cuma satu frame/proyek. Frame yang melanggar = GAGAL, wajib diperbaiki sebelum lanjut.
+
+1. **DILARANG visual flat/polosan.** Langit WAJIB bergradasi + awan berlapis bervolume (boleh ditambah matahari/burung) — langit biru polos = GAGAL.
+2. **Pohon/tajuk WAJIB berlapis** banyak layer warna (highlight + shadow), bentuk organik, batang bertekstur — lingkaran hijau polos = GAGAL.
+3. **Kartu/papan teks klaim:** tetap RAKSASA dan terbaca di ukuran thumbnail, tapi WAJIB ada gradasi, drop shadow, dan border berkarakter — papan warna rata flat = GAGAL.
+4. **Semua ornamen WAJIB detail:** tekstur material (atap jerami, serat kayu, bata), jendela + bingkai + kotak bunga, pagar, refleksi + riak di air, tekstur tanah/jalan setapak.
+5. **Pencahayaan konsisten + bayangan lembut + kedalaman warna** di seluruh frame; kesan akhir TIDAK BOLEH terasa "animasi murah amatiran".
+6. Standar ini adalah syarat mutu nomor 1: tidak ada penurunan detail demi kecepatan/biaya render di mesin mana pun.
+
 ## Alur produksi (WAJIB)
 - **Storyboard DIHAPUS dari alur produksi (aturan terbaru):** produksi langsung render video final TANPA tahap storyboard — riset → naskah → kode adegan → VO → render. Perkakas storyboard (`scripts/stills.mjs` + `scripts/make_storyboard.py`) tetap tersedia di repo ini, tapi sifatnya OPSIONAL dan secara default DILEWATI; pakai hanya bila kamu memang ingin meninjau still adegan sebelum render penuh.
 - **QA STILLS DIHAPUS dari alur produksi (aturan terbaru, perintah Baginda Raja 21 Nov 2026: 'Gausah ada QA'):** alur produksi = naskah → VO → LANGSUNG fan-out render hybrid total. TIDAK ADA tahap QA stills pra-render sama sekali. Yang TETAP wajib hanya verifikasi teknis file FINAL: ffprobe (durasi, 1080×1920, 30fps, codec, frame count) + loudness ±−14 LUFS.
