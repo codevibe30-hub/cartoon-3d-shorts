@@ -11,7 +11,7 @@ import { bundle } from "@remotion/bundler";
 import { selectComposition, renderMedia } from "@remotion/renderer";
 import { execFileSync } from "node:child_process";
 
-const TOTAL = 90; // GiethoornFrame: klip bukti gerak 90 frame (3 dtk, 30fps)
+const TOTAL = 1790; // GiethoornFrame full episode (1790 frames)
 const CHUNK = Number(process.argv[2] || 75);
 // Optional frame window [FROM, TO) on the chunk grid, for hybrid multi-machine renders.
 const FROM = Number(process.env.FROM || 0);

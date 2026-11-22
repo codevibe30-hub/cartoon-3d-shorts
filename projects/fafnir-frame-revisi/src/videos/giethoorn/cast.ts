@@ -10,10 +10,10 @@
 // always sits in frame.
 import * as THREE from "three";
 import {
-  Pen, bodyFront, fxShadow, fxContact, INK,
+  Pen, bodyFront, fxShadow, fxContact, fxNote, INK,
   Outfit, Expr, FrontOpts,
 } from "./toon";
-import { FPS, SHOTS, clamp01, camAt, HERO_BOAT, BRIDGE_Z } from "./story";
+import { FPS, SHOTS, clamp01, camAt, HERO_BOAT, BRIDGE_Z, heroBoatAt } from "./story";
 import { rng } from "./paint";
 import type { LightName } from "./lights";
 import { NOINK } from "./ink";
@@ -87,7 +87,7 @@ export class Fx {
   constructor(parent: THREE.Object3D) {
     this.mat = new THREE.MeshBasicMaterial({ map: blank, alphaTest: 0.5, side: THREE.DoubleSide });
     this.mat.alphaToCoverage = false;
-    this.soft = new THREE.MeshBasicMaterial({ map: blank, transparent: true, depthWrite: false, side: THREE.DoubleSide });
+    this.soft = new THREE.MeshBasicMaterial({ map: blank, transparent: true, depthWrite: true, side: THREE.DoubleSide });
     this.blob = blobMaterial(blank);
     this.mesh = new THREE.Mesh(CARD, this.mat);
     this.mesh.visible = false; this.mesh.layers.set(NOINK);
@@ -261,6 +261,54 @@ const HERO: Who = { i: 41, o: { jacket: "#2e7f86", pants: "#3b3f52", boots: "#5a
 const VILLAGER_A: Who = { i: 61, o: { jacket: "#e8862c", pants: "#3b3f52", boots: "#5a3b2a", hat: "cap", cap: "#e8c832" }, okey: "giethoornVillagerA" };
 const VILLAGER_B: Who = { i: 62, o: { jacket: "#7b5ac9", dress: "#d9a441", pants: "#3b3f52", boots: "#c99067", hat: "hair", hair: "#1d1410", skin: "#c99067" }, okey: "giethoornVillagerB" };
 
+// ---------------- episode props (drawn, never pasted) ----------------
+/** One goat horn: a bone-coloured curve sweeping up with darker
+ *  growth rings — the 1170 punchline, drawn on a 256x160 canvas. */
+const hornPts = (x0: number, y0: number, len: number, rise: number): [number, number][] => {
+  const pts: [number, number][] = [];
+  for (let i = 0; i <= 12; i++) {
+    const u = i / 12;
+    pts.push([x0 + u * len, y0 - Math.sin(u * 2.2) * rise - u * rise * 0.22]);
+  }
+  return pts;
+};
+const hornRings = (p: Pen, pts: [number, number][]) => {
+  for (const u of [0.35, 0.6, 0.85]) {
+    const i = Math.floor(u * 12), [x, y] = pts[i];
+    p.line([[x - 3, y - 15], [x + 5, y + 14]], "#b3a37f", 7, false);
+  }
+};
+export const drawHornOne = (p: Pen) => {
+  const pts = hornPts(36, 128, 175, 82);
+  p.line(pts, "#e6d7b8", 27);
+  hornRings(p, pts);
+};
+/** A PAIR of horns sprouting side by side (512x288): the twist
+ *  visual for "Giethoorn = tanduk kambing". */
+export const drawHornPair = (p: Pen) => {
+  for (const dir of [1, -1]) {
+    const pts: [number, number][] = [];
+    for (let i = 0; i <= 12; i++) {
+      const u = i / 12;
+      pts.push([256 + dir * u * 178, 276 - Math.sin(u * 2.0) * 148 - u * 42]);
+    }
+    p.line(pts, "#e6d7b8", 36);
+    hornRings(p, pts);
+  }
+};
+/** A hand-drawn NO CARS sign (256x320): post, red-ringed disc, a
+ *  little car silhouette under a red slash. Giethoorn's old centre
+ *  in one pictogram. */
+export const drawNoCar = (p: Pen) => {
+  p.poly([[118, 196], [138, 196], [138, 316], [118, 316]], "#6a4a2c", 6);
+  p.ell(128, 110, 97, 97, "#d42f2f", 0);
+  p.ell(128, 110, 75, 75, "#f6ecd2", 0);
+  p.poly([[80, 126], [94, 100], [162, 100], [176, 126]], INK, 0);
+  p.poly([[72, 126], [184, 126], [184, 146], [72, 146]], INK, 0);
+  p.dot(95, 150, 11); p.dot(161, 150, 11);
+  p.line([[64, 48], [192, 172]], "#d42f2f", 20, false);
+};
+
 // ---------------- staging ----------------
 export const stage = (id: number, t: number, cam: CamInfo): Stage => {
   const out: Stage = { places: [], fx: [] };
@@ -304,21 +352,103 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
     cardFx(key, draw, t0, dur, x, y, z, w, w / 2, soft);
   };
 
+  const S0 = (s.a - SHOTS[0].a) / FPS, SLEN = (s.b - s.a) / FPS;
+  const U = clamp01((t - S0) / Math.max(0.01, SLEN)); // shot-local progress 0..1
+  // the hero standing in his boat, riding the hull's exact bob
+  const heroInBoat = (expr: Expr, look = -0.15, scale = 1.5) => {
+    const bp = heroBoatAt(id, t);
+    const y = 0.55 + Math.sin(t * 1.3) * 0.03 + Math.sin(t * 2.4) * 0.01;
+    out.places.push(stand(HERO, bp.x, y, bp.z, expr, look, {}, scale));
+  };
+  // a giant fact card glued to the view axis for the whole shot
+  const card = (key: string, lines: string[], tx: number, ty: number, tz: number, up: number, sf = 0.52) =>
+    cardAerial(key, drawCardFit(lines, "#f2c018", "#1c1503", 100), S0, SLEN, tx, ty, tz, 0.5, up, sf, true);
+  const villagerBridge = () => out.places.push(stand(VILLAGER_A, -0.8, 2.78, BRIDGE_Z, "grin", 0.1, { wave: 1 }, 0.95));
+  const villagerPath = (z = -13) => { out.places.push(stand(VILLAGER_B, -5.4, 0.18, z, "grin", 0.2, {}, 1.0)); blob(out, -5.4, 0.18, z); };
+
   if (id === 1) {
     // THE COVER (frame 0): the hero's SHOCK face big in the boat
     // in the near foreground — behind him a whole village with
     // water for streets, and the claim as one GIANT board.
-    // hero idle: he rides the SAME bob as his boat (world.ts heroBoat,
-    // sin(t*1.3)*0.03) so his feet stay planted, plus a small breathing
-    // lift — blinking already runs via lidAt in stand()
-    const heroY = 0.55 + Math.sin(t * 1.3) * 0.03 + Math.sin(t * 2.4) * 0.01;
-    out.places.push(stand(HERO, HERO_BOAT[0], heroY, HERO_BOAT[2], "shock", -0.15, {}, 1.5));
+    heroInBoat("shock", -0.15);
     // a villager waves from the arched bridge; another walks the
     // towpath with the week's shopping — feet and boats only here
-    out.places.push(stand(VILLAGER_A, -0.8, 2.78, BRIDGE_Z, "grin", 0.1, { wave: 1 }, 0.95));
-    out.places.push(stand(VILLAGER_B, -5.4, 0.18, -13, "grin", 0.2, {}, 1.0)); blob(out, -5.4, 0.18, -13);
-    cardAerial("cardHook", drawCardFit(["DESA TANPA", "JALAN?!"], "#f2c018", "#1c1503", 100),
-      0, 3.0, 0, 3.5, -30, 0.5, 5.0, 0.52, true);
+    villagerBridge();
+    villagerPath();
+    card("cardHook", ["DESA TANPA", "JALAN?!"], 0, 3.5, -30, 5.0, 0.52);
+  } else if (id === 2) {
+    // THE NAME: high wide over the whole village — hero small in
+    // his boat below, the village running away to the church
+    heroInBoat("grin", 0);
+    villagerBridge();
+    villagerPath();
+    card("cardName", ["GIETHOORN"], 0, 2, -40, 4.2, 0.5);
+  } else if (id === 3) {
+    // THE BOAT RIDE: the hero sails down-canal on an errand while
+    // a villager strolls the towpath the other way — traffic here
+    // is hulls and footsteps, never wheels
+    heroInBoat("grin", 0.15);
+    const bz = -24 + U * 15;
+    out.places.push(person(cam, VILLAGER_B, -5.4, 0.18, bz,
+      { mode: "stroll", phase: (t * 1.35) % 1, expr: "grin", blink: lidAt(t, VILLAGER_B.i), look: 0.15 }, 1.0));
+    blob(out, -5.4, 0.18, bz);
+    const bp = heroBoatAt(3, t);
+    card("cardBoat", ["SERBA", "PERAHU!"], bp.x, 2.5, bp.z, 3.2, 0.5);
+  } else if (id === 4) {
+    // NO CARS: the hero plants himself by the prohibition sign on
+    // the towpath, stern as a traffic warden with no traffic
+    out.places.push(stand(HERO, 5.6, 0.18, -6, "stern", -0.2, {}, 1.15)); blob(out, 5.6, 0.18, -6);
+    out.fx.push({ key: "noCarSign", cw: 256, ch: 320, draw: drawNoCar, x: 6.7, y: 1.3, z: -7.8, w: 1.35, h: 1.69 });
+    villagerPath(-20);
+    card("cardNoCar", ["MOBIL", "DILARANG"], 5.6, 2, -6, 3.4, 0.5);
+  } else if (id === 5) {
+    // 176 BRIDGES (the mid-video re-hook): low angle under the
+    // arch while a villager crosses over the hero's head
+    heroInBoat("grin", 0.3);
+    const ax = -5.5 + U * 11;
+    const ay = 0.55 + 2.45 * (1 - (ax / 6.2) ** 2) - 0.18;
+    out.places.push(person(cam, VILLAGER_A, ax, ay, BRIDGE_Z - 1.55,
+      { mode: "stroll", phase: (t * 1.5) % 1, expr: "grin", blink: lidAt(t, VILLAGER_A.i), look: 0 }, 0.95));
+    card("cardBridges", ["176", "JEMBATAN!"], 0, 3.6, BRIDGE_Z, 3.0, 0.55);
+  } else if (id === 6) {
+    // WHISPER BOAT: water-level calm — the hero listens to the
+    // near-silence, music notes drifting where an engine should be
+    heroInBoat("relief_open", 0.1);
+    out.fx.push({ key: "noteA", cw: 256, ch: 256, draw: (p) => fxNote(p, 0, "#2c4a6a"), x: 3.0, y: 2.3, z: 7.2, w: 0.55, h: 0.55, soft: true });
+    out.fx.push({ key: "noteB", cw: 256, ch: 256, draw: (p) => fxNote(p, 1, "#2c4a6a"), x: 2.1, y: 2.95, z: 6.3, w: 0.45, h: 0.45, soft: true });
+    villagerPath(-20);
+    card("cardWhisper", ["WHISPER", "BOAT"], HERO_BOAT[0], 2.5, HERO_BOAT[2], 4.8, 0.46);
+  } else if (id === 7) {
+    // VENICE OF THE NORTH: the reverse wide — the same village
+    // from its far end, green and quiet in both directions
+    heroInBoat("grin", 0);
+    villagerBridge();
+    villagerPath();
+    card("cardVenice", ["VENESIA-NYA", "BELANDA"], 0, 2, -45, 4.5, 0.55);
+  } else if (id === 8) {
+    // THE TWIST: close on the hero as a pair of GOAT HORNS sprouts
+    // over his cap — the village's name is a punchline from 1170
+    heroInBoat("shock", 0);
+    out.fx.push({ key: "hornsPair", cw: 512, ch: 288, draw: drawHornPair, x: HERO_BOAT[0], y: 3.3, z: HERO_BOAT[2] - 0.2, w: 2.1, h: 1.1 });
+    card("cardHorns", ["TANDUK", "KAMBING?!"], HERO_BOAT[0], 2.2, HERO_BOAT[2], 3.5, 0.46);
+  } else if (id === 9) {
+    // 1170: horns still bobbing on the water where the flood left
+    // them; a villager bends at the bank, fishing one out
+    heroInBoat("nervous", 0.3);
+    const hornFlat = (x: number, z: number, rot: number) =>
+      out.fx.push({ key: "hornFlat", cw: 256, ch: 160, draw: drawHornOne, x, y: 0.07, z, w: 1.9, h: 1.19, flat: true, rot });
+    hornFlat(-1.2, -6, 0.4); hornFlat(1.8, -11, 2.2); hornFlat(-2.2, -16, 4.0);
+    out.places.push(person(cam, VILLAGER_B, 5.2, 0.18, -6,
+      { mode: "stand", expr: "nervous", blink: lidAt(t, VILLAGER_B.i), look: 0.3 }, 1.0, 0.38));
+    blob(out, 5.2, 0.18, -6);
+    card("card1170", ["1170"], 0, 1, -18, 3.2, 0.38);
+  } else if (id === 10) {
+    // THE PUNCHLINE LOOP: back on the cover framing — same boat,
+    // same claim, but the hero is laughing now. Loop to frame 0.
+    heroInBoat("laugh", -0.15);
+    villagerBridge();
+    villagerPath();
+    card("cardHook2", ["DESA TANPA", "JALAN?!"], 0, 3.5, -30, 5.0, 0.52);
   }
   return out;
 };

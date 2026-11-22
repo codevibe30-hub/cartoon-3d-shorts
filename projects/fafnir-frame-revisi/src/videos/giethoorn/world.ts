@@ -16,7 +16,7 @@ import { LIGHTS, LOOK, LightPreset } from "./lights";
 import { TONE, CHAR, twoTone, untone } from "./shade";
 import { NOINK } from "./ink";
 import { Pool, Actor, Fx, stage } from "./cast";
-import { FPS, SHOTS, camAt, V3, ShotDef, HERO_BOAT, BRIDGE_Z, clamp01 } from "./story";
+import { FPS, SHOTS, camAt, V3, ShotDef, HERO_BOAT, BRIDGE_Z, clamp01, heroBoatAt } from "./story";
 
 export const loadKit = (): Promise<Kit> => Promise.resolve({});
 
@@ -541,6 +541,7 @@ export class World {
   private frustum = new THREE.Frustum();
   private m4 = new THREE.Matrix4(); private v = new THREE.Vector3(); private sph = new THREE.Sphere();
   private heroBoat: THREE.Group;
+  private heroBlob: THREE.Mesh | null = null;
   // ---- ambient-life registries (STANDAR GERAK: what should move, moves) ----
   private waterMap: THREE.Texture | null = null;
   private cloudBase: { x: number; sp: number }[] = [];
@@ -624,7 +625,7 @@ export class World {
       head.position.set(sx, 1.3, sz); head.scale.y = 1.25; this.heroBoat.add(head);
     }
     R.add(this.heroBoat);
-    blob(R, HERO_BOAT[0], 0.06, HERO_BOAT[2], 3.4, 5.6, 0.35);
+    this.heroBlob = blob(R, HERO_BOAT[0], 0.06, HERO_BOAT[2], 3.4, 5.6, 0.35);
   }
 
   // ---------------- the village: canal, banks, houses, bridge ----------------
@@ -756,6 +757,7 @@ export class World {
     const traffic = makeBoat("#8a2f35", 4.4, 1.45);
     traffic.position.set(-1.1, 0.02, -52); traffic.rotation.y = 0.04;
     R.add(traffic);
+    this.mooredBoats.push({ g: traffic, ph: 2.9 }); // traffic bobs too — nothing floats frozen
     blob(R, -1.1, 0.05, -52, 3.2, 5.4, 0.32);
     // flower dots along the towpaths
     const fcols = ["#d83a4a", "#e8c832", "#e86a9a", "#f2f0e6", "#e8542e"];
@@ -903,9 +905,14 @@ export class World {
     scene.fog = this.fog; scene.background = null;
     this.skyDay.visible = true;
     for (const c2 of this.clouds) c2.visible = true;
-    // the hero's boat rides the water: a barely-there bob (zero at frame 0)
-    this.heroBoat.position.y = 0.02 + Math.sin(tt * 1.3) * 0.03;
+    // the hero's boat rides the water: a barely-there bob (zero at
+    // frame 0) — and on shot 3 it actually SAILS down-canal, hull,
+    // contact blob and all (heroBoatAt is shared with cast.ts)
+    const hb = heroBoatAt(id, tt);
+    this.heroBoat.position.set(hb.x, 0.02 + Math.sin(tt * 1.3) * 0.03, hb.z);
+    this.heroBoat.rotation.y = hb.yaw;
     this.heroBoat.rotation.z = Math.sin(tt * 0.9) * 0.012;
+    if (this.heroBlob) this.heroBlob.position.set(hb.x, 0.06, hb.z);
     // ---- STANDAR GERAK: everything that should move, moves ----
     // canal water flows toward the viewer (texture scroll, not a poster)
     if (this.waterMap) this.waterMap.offset.set(0, tt * 0.055);
