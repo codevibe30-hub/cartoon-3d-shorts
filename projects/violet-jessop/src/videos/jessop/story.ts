@@ -164,16 +164,16 @@ const S10a = (f: number) => dolly([11.8, 2.0, 42.5], [4.2, 1.2, 54], pushK(f, L[
 const S10b = (f: number) => dolly([11.1, 1.9, 43.4], [4.2, 1.2, 54], pushK(f, L[9] + 50, 0.0006), { fov: 44 });
 // shot 11 (BACK TO SEA): golden deck — Violet, grey at the
 // temples now, waving from the rail of yet another liner
-const S11a = (f: number) => dolly([67.5, 3.8, 83.5], [76, 3.2, 73.5], pushK(f, L[10], 0.0006), { fov: 46 });
-const S11b = (f: number) => dolly([68.2, 3.7, 82.7], [76, 3.2, 73.5], pushK(f, L[10] + 50, 0.0006), { fov: 44 });
+const S11a = (f: number) => dolly([69.5, 4.1, 63.0], [74.8, 3.3, 75.0], pushK(f, L[10], 0.0006), { fov: 46 });
+const S11b = (f: number) => dolly([70.3, 4.0, 63.8], [74.8, 3.3, 75.0], pushK(f, L[10] + 50, 0.0006), { fov: 44 });
 // shot 12 (THE PHONE CALL): a lamplit room at midnight — the
 // old lady, the telephone, a laugh that explains nothing
 const S12a = (f: number) => dolly([-68.2, 2.4, 83.0], [-75.2, 1.5, 73.2], pushK(f, L[11], 0.0007), { fov: 45 });
 const S12b = (f: number) => dolly([-68.8, 2.3, 82.2], [-75.2, 1.5, 73.2], pushK(f, L[11] + 50, 0.0007), { fov: 43 });
 // shot 13 (CLOSE): the golden deck again — Violet and the
 // storyteller side by side, the calm sea, the moral
-const S13a = (f: number) => dolly([66.8, 4.0, 84.5], [75.5, 3.1, 73.8], pushK(f, L[12], 0.0004), { fov: 50 });
-const S13b = (f: number) => dolly([67.6, 3.9, 83.7], [75.5, 3.1, 73.8], pushK(f, L[12] + 60, 0.0004), { fov: 48 });
+const S13a = (f: number) => dolly([71.0, 4.3, 62.0], [76.3, 3.4, 74.0], pushK(f, L[12], 0.0004), { fov: 50 });
+const S13b = (f: number) => dolly([71.8, 4.2, 62.8], [76.3, 3.4, 74.0], pushK(f, L[12] + 60, 0.0004), { fov: 48 });
 
 const CAMS: Record<number, Key[]> = {
   1: [{ f: L[0], s: S1a }, { f: L[0] + 60, dur: 26, s: S1b }],
