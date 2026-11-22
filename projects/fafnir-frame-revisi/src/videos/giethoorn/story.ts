@@ -58,7 +58,11 @@ const dolly = (pos: V3, look: V3, k: number, rest: Partial<Cam> = {}): Shot =>
 // card centred up-frame, bridge + thatched roofs stacked behind.
 const CAM_BASE: { pos: V3; look: V3 } = { pos: [0, 2.5, 17], look: [0, 2.0, -18] };
 export const camAt = (_id: number, f: number): Cam =>
-  full(dolly(CAM_BASE.pos, CAM_BASE.look, Math.exp(-0.0007 * f), { fov: 46 }));
+  // gentle push-in only: the hero floats ~7.5 units ahead of the lens,
+  // so the original 0.0007 decay closed 28% of that gap in 90 frames
+  // and pushed him out of frame right — 0.00025 keeps the approved
+  // frame-0 composition (k = 1 at f = 0) intact across the live clip
+  full(dolly(CAM_BASE.pos, CAM_BASE.look, Math.exp(-0.00025 * f), { fov: 46 }));
 
 // ---------------- lens: depth of field ----------------
 export type Dof = { f: number; dur?: number; cInf: number; focus?: (f: number) => V3 };
