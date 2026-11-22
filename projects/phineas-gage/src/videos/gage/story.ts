@@ -122,8 +122,8 @@ const dolly = (pos: V3, look: V3, k: number, rest: Partial<Cam> = {}): Shot =>
 // shot 1 (HOOK, DRAMATIC COVER): the blast instant — Gage thrown
 // back at the rock bench, the iron vertical in the air above him,
 // dust bursting, the crew frozen mid-flinch
-const S1a = (f: number) => dolly([6.8, 2.6, -55.5], [1.2, 2.2, -66], pushK(f, L[0], 0.0006), { fov: 47 });
-const S1b = (f: number) => dolly([6.2, 2.5, -56.6], [1.4, 2.3, -66], pushK(f, L[0] + 60, 0.0005), { fov: 45 });
+const S1a = (f: number) => dolly([10.5, 3.8, -49.0], [0.6, 2.6, -65.5], pushK(f, L[0], 0.0006), { fov: 50 });
+const S1b = (f: number) => dolly([9.8, 3.6, -50.2], [0.8, 2.6, -65.5], pushK(f, L[0] + 60, 0.0005), { fov: 48 });
 // shot 2 (THE WORKS): wide down the half-built line — rails and
 // sleepers running to the rock face, Gage walking the line
 const S2a = (f: number) => dolly([-14, 3.2, -44], [0, 1.6, -64], pushK(f, L[1], 0.0006), { fov: 46 });
@@ -146,8 +146,8 @@ const S6a = (f: number) => dolly([73.5, 2.3, -21.5], [80, 1.7, -30.5], pushK(f, 
 const S6b = (f: number) => dolly([74.2, 2.2, -22.4], [80.2, 1.7, -30.5], pushK(f, L[5] + 50, 0.0006), { fov: 44 });
 // shot 7 (THE SICKROOM): warm dim interior — the bed, Harlow
 // seated at its side, the plain coffin waiting in the corner
-const S7a = (f: number) => dolly([-74.5, 2.3, 36.5], [-80.5, 1.2, 28.5], pushK(f, L[6], 0.0006), { fov: 45 });
-const S7b = (f: number) => dolly([-75.1, 2.2, 35.6], [-80.5, 1.2, 28.5], pushK(f, L[6] + 50, 0.0006), { fov: 43 });
+const S7a = (f: number) => dolly([-73.8, 2.4, 37.2], [-80.2, 1.2, 28.0], pushK(f, L[6], 0.0006), { fov: 47 });
+const S7b = (f: number) => dolly([-74.4, 2.3, 36.3], [-80.2, 1.2, 28.0], pushK(f, L[6] + 50, 0.0006), { fov: 45 });
 // shot 8 (THE RECOVERY): the house yard in clean morning light —
 // Gage walks slowly across it, one eye bandaged, and smiles
 const S8a = (f: number) => dolly([73, 2.2, 52], [80, 1.5, 43], pushK(f, L[7], 0.0006), { fov: 46 });

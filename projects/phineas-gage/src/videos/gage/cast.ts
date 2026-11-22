@@ -271,11 +271,11 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
     // HOOK: the blast instant, held — Gage thrown back onto the
     // bench (seated, stunned), the crew frozen mid-flinch, dust
     // still billowing from the drill hole
-    sit(GAGE, 0.2, BENCH_Y, -64.4, "shock", { armL: [-140, -16], armR: [140, 16] });
-    stand(CREW_A, -2.8, BENCH_Y, -65.2, "shock", flinch(1));
-    stand(CREW_B, 4.6, BENCH_Y, -63.8, "shock", flinch(2));
-    burst(DRILL[0], BENCH_Y + 1.1, DRILL[2], clamp01(u * 2.2), 4.4);
-    dust(DRILL[0], BENCH_Y + 0.4, DRILL[2], 0.7, 3);
+    sit(GAGE, 0.4, BENCH_Y, -64.6, "shock", { armL: [-140, -16], armR: [140, 16] });
+    stand(CREW_A, -2.2, BENCH_Y, -64.2, "shock", flinch(1));
+    stand(CREW_B, 4.2, BENCH_Y, -63.4, "shock", flinch(2));
+    burst(DRILL[0], BENCH_Y + 1.1, DRILL[2], clamp01(u * 2.2), 5.2);
+    dust(DRILL[0], BENCH_Y + 0.4, DRILL[2], 0.9, 3);
   } else if (id === 2) {
     // THE WORKS: Gage walks the half-built line toward the rock;
     // two crew work the rails behind him
@@ -330,8 +330,8 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
   } else if (id === 7) {
     // THE SICKROOM: Gage sits up in bed, heavily bandaged, weak;
     // Harlow keeps his seat at the bedside, watchful
-    sit(GAGE_BAND, -81.5, 0.78, 27.6, "pained", { armL: [-16, -8], armR: [20, 8] });
-    sit(HARLOW, -79.2, 0.06, 26.2, "stern", { armL: [-30, -18], armR: [30, 18] });
+    sit(GAGE_BAND, -81.5, 0.78, 27.6, "sad", { armL: [-16, -8], armR: [20, 8] });
+    sit(HARLOW, -78.4, 0.06, 25.6, "stern", { armL: [-30, -18], armR: [30, 18] });
     glowFx("lamp", -83.5, 2.0, 25.5, 3.2, 0.5 + Math.sin(t * 2.1) * 0.05);
   } else if (id === 8) {
     // THE RECOVERY: Gage walks the yard slowly — bandaged eye,

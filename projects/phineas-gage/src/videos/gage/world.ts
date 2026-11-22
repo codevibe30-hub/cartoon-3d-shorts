@@ -179,11 +179,11 @@ export class World {
     // a ring of soft green Vermont hills (dry brown behind Chile)
     for (let i = 0; i < 16; i++) {
       const a = (i / 16) * Math.PI * 2 + r() * 0.2;
-      const d = 190 + r() * 90, x = Math.cos(a) * d, z = Math.sin(a) * d;
+      const d = 230 + r() * 90, x = Math.cos(a) * d, z = Math.sin(a) * d;
       const chileSide = z > 60 && Math.abs(x) < 160;
-      const hill = new THREE.Mesh(new THREE.SphereGeometry(60 + r() * 50, 12, 8),
-        lam2({ color: chileSide ? "#a8845c" : "#6a9a52", flatShading: true }));
-      hill.scale.y = 0.32 + r() * 0.14;
+      const hill = new THREE.Mesh(new THREE.SphereGeometry(42 + r() * 30, 12, 8),
+        lam2({ color: chileSide ? "#b89468" : "#77a85e", flatShading: true }));
+      hill.scale.y = 0.20 + r() * 0.08;
       hill.position.set(x, -6, z); R.add(hill);
     }
     for (let i = 0; i < 26; i++) {
@@ -200,9 +200,20 @@ export class World {
   // ---------------- the railroad cut (shots 1-5, 9) ----------------
   private buildSite(R: THREE.Group, r: () => number) {
     // the rock face: a wall of grey stone the line will pierce
-    const rockM = lam2({ map: rep(stone("gageRock", ["#8d8578", "#7d766a", "#9a9284", "#6e675c"]), 8, 4) });
+    const rockM = lam2({ map: rep(stone("gageRock", ["#a89a83", "#998a72", "#b3a58d", "#8a7a63"]), 3, 1.6) });
     const face = new THREE.Mesh(new THREE.BoxGeometry(56, 15, 3), rockM);
     face.position.set(0, 7.5, -72.5); face.castShadow = true; face.receiveShadow = true; R.add(face);
+    // strata ledges: uneven rock shelves so the face reads as a
+    // blasted cliff, never a brick wall
+    const ledgeM = lam2({ map: rep(stone("gageLedge", ["#97876c", "#a5947a", "#8a7a63", "#ada086"]), 4, 1) });
+    for (const [lx, ly, lw] of [[-14, 4.2, 16], [8, 6.4, 20], [-4, 9.6, 24], [14, 12.2, 15]] as const) {
+      const ledge = new THREE.Mesh(new THREE.BoxGeometry(lw, 1.1, 1.2), ledgeM);
+      ledge.position.set(lx, ly, -70.6); ledge.castShadow = true; ledge.receiveShadow = true; R.add(ledge);
+    }
+    for (const [bx, bz, bs] of [[-11, -68.5, 1.3], [13.5, -69, 1.0], [18, -67.5, 0.7]] as const) {
+      const boulder = new THREE.Mesh(new THREE.DodecahedronGeometry(bs), ledgeM);
+      boulder.position.set(bx, bs * 0.5, bz); boulder.castShadow = true; R.add(boulder);
+    }
     for (const [sx, sw] of [[-33, 14], [33, 14]] as const) {
       const side = new THREE.Mesh(new THREE.BoxGeometry(sw, 10, 3), rockM);
       side.position.set(sx, 5, -72); side.rotation.y = sx < 0 ? 0.5 : -0.5; side.castShadow = true; R.add(side);
@@ -307,7 +318,7 @@ export class World {
     const cx = ROOM[0], cz = ROOM[2];
     const floor = new THREE.Mesh(new THREE.BoxGeometry(13, 0.15, 11), lam2({ map: rep(planks(), 5, 4) }));
     floor.position.set(cx, 0.02, cz); floor.receiveShadow = true; R.add(floor);
-    const wallM = lam2({ color: "#cbbfa6", map: rep(planks(), 6, 3) });
+    const wallM = lam2({ color: "#e0d2b2", map: rep(planks(), 6, 3) });
     const back = new THREE.Mesh(new THREE.BoxGeometry(13, 5.4, 0.3), wallM);
     back.position.set(cx, 2.7, cz - 5.5); back.receiveShadow = true; R.add(back);
     const sideL = new THREE.Mesh(new THREE.BoxGeometry(0.3, 5.4, 11), wallM);
