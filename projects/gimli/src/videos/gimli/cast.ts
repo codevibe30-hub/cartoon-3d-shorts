@@ -284,7 +284,7 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
     // (cockpit framing), the claim as one GIANT board from frame 0
     out.places.push(stand(HERO, -131.3, 60.3, -6.8, "shock", -0.2, {}, 1.5));
     cardAerial("cardHook", drawCardFit(["KEHABISAN", "BENSIN!"], "#f2c018", "#1c1503", 104),
-      0, 2.9, SKY_C[0], SKY_C[1] + 6, SKY_C[2], 1.0, 4.4, 0.52);
+      0, 2.9, SKY_C[0], SKY_C[1] + 6, SKY_C[2], 0.5, 5.5, 0.5);
   }
   if (id === 2) {
     // MONTREAL 1983: the crew at the parked jet, the hero waving
@@ -324,9 +324,9 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
     // steady, jaw set — he has done this a thousand times, just
     // never in a 767. Quintal behind him, doing the math
     out.places.push(stand(CAPTAIN, -134.9, 59.6, -11.6, "stern", -0.1, {}, 1.55));
-    out.places.push(stand(COPILOT, -137.2, 59.0, -14.8, "nervous", 0.2, {}, 1.3));
+    out.places.push(stand(COPILOT, -136.8, 59.0, -15.8, "nervous", 0.2, {}, 1.3));
     cardAerial("cardGlider", drawCardFit(["PILOT LAYANG", "17 MENIT!"], "#1e7a46", "#ffffff", 96),
-      S0(5) + 0.35, 2.6, SKY_C[0], SKY_C[1], SKY_C[2], 0.42, 1.3, 0.58);
+      S0(5) + 0.35, 2.6, SKY_C[0], SKY_C[1], SKY_C[2], 0.42, 4.0, 0.42);
   }
   if (id === 7) {
     // GIMLI FROM ABOVE: race day — the crowd at the rails, the
