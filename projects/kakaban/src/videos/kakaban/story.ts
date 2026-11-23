@@ -120,7 +120,7 @@ export const camAt = (id: number, f: number): Cam => {
     case 5: // LOW ANGLE across the water, looking UP at the karst wall
       return full({ pos: [5.5, 2.1 + lf * 0.004, -28], look: [-6, 10, RIDGE_Z], fov: 44 });
     case 6: // SURFACE CALM: skimming the warm pool, jellies glowing below the ripples
-      return full(dolly([-4.6, 1.8, 14.6], [1.2, 0.8, 9.0], Math.exp(-0.0004 * lf), { fov: 42 }));
+      return full(dolly([-7.5, 2.6, 19], [0.8, 0.9, 6], Math.exp(-0.0004 * lf), { fov: 42 }));
     case 7: // THE SHALLOWS: low over the sand bar where Cassiopea lie upside-down
       return full(dolly([5.8, 2.5, 14.8], [-6.8, 0.2, -4.5], Math.exp(-0.0005 * lf), { fov: 42 }));
     case 8: // MEDIUM on the jetty: the rules of the lake, enforced by the hero
