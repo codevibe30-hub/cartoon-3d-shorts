@@ -11,7 +11,7 @@ import { bundle } from "@remotion/bundler";
 import { selectComposition, renderMedia } from "@remotion/renderer";
 import { execFileSync } from "node:child_process";
 
-const TOTAL = 1790; // DerinkuyuFrame full episode (1790 frames)
+const TOTAL = 1751; // DerinkuyuFrame full episode (1751 frames = story.ts TOTAL / audio 58.363s x 30fps; was stale 1790 copied from Giethoorn template — fixed by patroli 2026-11-23 22:52 WIB)
 const CHUNK = Number(process.argv[2] || 75);
 // Optional frame window [FROM, TO) on the chunk grid, for hybrid multi-machine renders.
 const FROM = Number(process.env.FROM || 0);
