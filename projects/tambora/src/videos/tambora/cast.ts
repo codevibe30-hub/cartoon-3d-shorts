@@ -404,7 +404,7 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
   } else if (id === 3) {
     // 2,600 KM: low angle up the erupting cone — the hero small
     // below, hands clamped over his ears at the blast
-    out.places.push(stand(HERO, 11.5, 0.1, 2, "shock", 0.25, {}, 1.3)); blob(out, 11.5, 0.1, 2, 1.3);
+    out.places.push(stand(HERO, 12.5, 0.1, -2, "shock", 0.25, {}, 1.3)); blob(out, 12.5, 0.1, -2, 1.3);
     card("cardSound", ["2.600 KM!"], 0, 24, -70, 3.4, 0.5);
   } else if (id === 4) {
     // 150 KM³: the sky gone black at noon — the hero stares up
