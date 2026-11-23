@@ -61,7 +61,7 @@ export const CAPTIONS: Cap[] = [
  { "from": 1161, "to": 1178, "text": "perak tahun" },
  { "from": 1178, "to": 1202, "text": "sembilan puluhan!" },
  { "from": 1202, "to": 1227, "text": "Finalnya di" },
- { "from": 1227, "to": 1264, "text": "Pamekasan, memperebutkan", "scale": 0.767 },
+ { "from": 1227, "to": 1264, "text": "Pamekasan, memperebutkan", "scale": 0.69 },
  { "from": 1264, "to": 1285, "text": "Piala Bergilir" },
  { "from": 1285, "to": 1316, "text": "Presiden —" },
  { "from": 1316, "to": 1332, "text": "tradisi pesta" },

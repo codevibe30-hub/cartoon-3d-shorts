@@ -58,8 +58,11 @@ try:
         pass
     for c in caps:
         w = _font.getlength(c["text"]) + 0.5 * len(c["text"])
-        if w > 1000:
-            c["scale"] = round(1000.0 / w, 3)
+        if w > 900:
+            # target 900 (bukan 1000): PIL mengukur ~7% lebih sempit dari
+            # render browser — 1000px terukur ternyata masih kepotong di
+            # frame 1245 (terbukti 23 Nov 2026).
+            c["scale"] = round(900.0 / w, 3)
 except Exception as _e:
     print("fit guard skipped:", _e)
 

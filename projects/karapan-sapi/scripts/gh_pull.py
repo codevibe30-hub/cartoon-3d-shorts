@@ -74,6 +74,10 @@ def main():
         try:
             z = zipfile.ZipFile(io.BytesIO(data))
             names = [n for n in z.namelist() if n.startswith("chunk-") and n.endswith(".mp4")]
+            want_names = {n for n, c in want}
+            if set(names) != want_names:
+                print(f"[FAIL] {frm}-{to} (run {rid}) window mismatch: zip has {sorted(names)}, want {sorted(want_names)} — NOT extracted")
+                continue
             for n in names:
                 z.extract(n, chunks_dir)
         except zipfile.BadZipFile:
