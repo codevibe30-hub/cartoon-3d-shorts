@@ -115,12 +115,13 @@ const full = (c: Shot): Cam => ({ fov: 40, roll: 0, ...c });
 const dolly = (pos: V3, look: V3, k: number, rest: Partial<Cam> = {}): Shot =>
   ({ pos: [look[0] + (pos[0] - look[0]) * k, look[1] + (pos[1] - look[1]) * k, look[2] + (pos[2] - look[2]) * k], look, ...rest });
 
-// The cover camera: the hero stands ON Tiwu Nua Muri's rim
-// crest and the lens hovers over the turquoise lake looking
-// back at him — from the terrace the lakes are INVISIBLE
-// (a 9.5 m rim hides any lake from any near-ground camera;
-// only a high or inside-the-rim lens ever sees the water).
-const CAM_COVER: { pos: V3; look: V3 } = { pos: [-17, 9, -50], look: [-6, 10.5, -39.5] };
+// The cover camera: a high drone over the turquoise lake
+// looking back at the hero on the rim — the first try (lens
+// inside the bowl at the hero's height) looked UP past the
+// water entirely, so the lake never entered the frame: hero
+// and lake are 10+ m apart vertically, the lens must stand
+// far back and look DOWN to hold both.
+const CAM_COVER: { pos: V3; look: V3 } = { pos: [-24, 20, -62], look: [-9, 3, -42] };
 
 export const camAt = (id: number, f: number): Cam => {
   const s = SHOTS[id - 1];
