@@ -57,8 +57,8 @@ export const WALL_Y = 6.0;
 export const WALL_Z0 = -18;
 export const WALL_Z1 = -42;
 // standing spots on the crater rims (cast.ts)
-export const RIM_TNM: V3 = [-6.5, 5.9, -29.5];
-export const RIM_TAP: V3 = [7.0, 5.9, -31.0];
+export const RIM_TNM: V3 = [-5.8, 9.5, -39.2]; // ON the TNM rim crest (east, facing the wall)
+export const RIM_TAP: V3 = [4.5, 9.5, -41.8]; // ON the TAP rim crest (west, facing the wall)
 
 /** The hero's walk along the shared wall (shot 3): he strolls
  *  the crest path between the two lakes — five metres of rock
@@ -115,11 +115,13 @@ const full = (c: Shot): Cam => ({ fov: 40, roll: 0, ...c });
 const dolly = (pos: V3, look: V3, k: number, rest: Partial<Cam> = {}): Shot =>
   ({ pos: [look[0] + (pos[0] - look[0]) * k, look[1] + (pos[1] - look[1]) * k, look[2] + (pos[2] - look[2]) * k], look, ...rest });
 
-// The cover camera: just behind/above the viewpoint terrace,
-// looking down the summit — the hero big in the near foreground
-// right, the claim card centred up-frame, the twin lakes spread
-// behind him in turquoise and rust.
-const CAM_COVER: { pos: V3; look: V3 } = { pos: [0, 9.4, 17.5], look: [0, 4.6, -24] };
+// The cover camera: raised behind the viewpoint terrace and
+// tilted DOWN the summit — a level camera hides the lakes
+// behind the foreground slope (they sit in bowls at y = 0), so
+// the lens looks down at ±15°: the hero big in the lower right,
+// the claim card centred up-frame, the twin lakes spread in the
+// middle band in turquoise and rust.
+const CAM_COVER: { pos: V3; look: V3 } = { pos: [0, 13.5, 19.5], look: [0, 0.5, -28] };
 
 export const camAt = (id: number, f: number): Cam => {
   const s = SHOTS[id - 1];
@@ -131,23 +133,23 @@ export const camAt = (id: number, f: number): Cam => {
       // shot's first frame) stays intact
       return full(dolly(CAM_COVER.pos, CAM_COVER.look, Math.exp(-0.00025 * lf), { fov: 46 }));
     case 2: // HIGH WIDE: all three lakes in one sweep from above
-      return full(dolly([18, 27, 4], [-9, 0, -54], Math.exp(-0.00035 * lf), { fov: 46 }));
-    case 3: { // TRACKING: glide alongside the hero on the wall crest
-      const hp = heroWalkAt(3, f / FPS);
-      return full({ pos: [hp.x + 6.4, hp.y + 2.4, hp.z + 8.2], look: [hp.x, hp.y + 1.0, hp.z - 1], fov: 42 });
-    }
-    case 4: // MEDIUM over TNM from its rim: the colour changes here
-      return full(dolly([-1.5, 7.2, -16], [-17, 0.2, -47], Math.exp(-0.0004 * lf), { fov: 44 }));
-    case 5: // CLOSE on TNM's surface: bubbles + steam, hero at the rim
-      return full(dolly([-9.5, 4.2, -24], [-17.5, 0.1, -43], Math.exp(-0.0005 * lf), { fov: 42 }));
-    case 6: // WATER-LEVEL across TNM: dead trees, depth, slow creep
-      return full(dolly([-26, 2.0, -30], [-13, 0.6, -50], Math.exp(-0.0005 * lf), { fov: 42 }));
-    case 7: // REVERSE WIDE from beyond the lakes, looking back at the terrace
-      return full(dolly([-7, 15, -98], [1, 5, -6], Math.exp(-0.0003 * lf), { fov: 46 }));
+      return full(dolly([10, 36, 2], [-10, 0, -55], Math.exp(-0.00035 * lf), { fov: 46 }));
+    case 3: // WIDE along the wall: hero walks the 5 m crest,
+      // TNM turquoise on his left, TAP rust on his right
+      return full(dolly([7.5, 11, -6], [-1, 5.5, -32], Math.exp(-0.0003 * lf), { fov: 44 }));
+    case 4: // HIGH over TNM: the colour changes here (the lens
+      // must clear the 9.5 m rim: height ≥ 0.76 × distance)
+      return full(dolly([-8, 20, -24.5], [-15, 0, -45], Math.exp(-0.0004 * lf), { fov: 44 }));
+    case 5: // INSIDE TNM's rim: bubbles + steam over the surface
+      return full(dolly([-11, 10.5, -36], [-17, 0, -47], Math.exp(-0.0005 * lf), { fov: 42 }));
+    case 6: // INSIDE TNM's rim, across: dead trees, depth card
+      return full(dolly([-21, 8, -37], [-13, 0.2, -50], Math.exp(-0.0005 * lf), { fov: 42 }));
+    case 7: // OVER TIWU ATA BUPU: the blue lake of the elders' souls
+      return full(dolly([-26, 12, -62], [-40, 0, -88], Math.exp(-0.0003 * lf), { fov: 44 }));
     case 8: // CLOSE-UP: the twist lands on the hero's face
       return full(dolly([3.8, 8.8, 14.6], [HERO_SPOT[0], 8.9, HERO_SPOT[2]], Math.exp(-0.0008 * lf), { fov: 38 }));
-    case 9: // MEDIUM on TAP: the red-brown lake + the offering
-      return full(dolly([1.5, 7.0, -15], [13.5, 0.6, -45], Math.exp(-0.0004 * lf), { fov: 44 }));
+    case 9: // AT TAP's rim: the red-brown lake + the offering
+      return full(dolly([10, 12, -34], [14, 0, -47], Math.exp(-0.0004 * lf), { fov: 44 }));
     default:
       return full(dolly(CAM_COVER.pos, CAM_COVER.look, 1, { fov: 46 }));
   }
@@ -159,7 +161,7 @@ export const dofAt = (f: number): Dof => {
   const id = shotAt(f).id;
   switch (id) {
     case 2: return { f: 0, cInf: 0.45, focus: () => [-9, 0, -54] };
-    case 3: return { f: 0, cInf: 0.8, focus: (ff) => { const hp = heroWalkAt(3, ff / FPS); return [hp.x, hp.y + 1.1, hp.z]; } };
+    case 3: return { f: 0, cInf: 0.8, focus: () => [-1, 6, -30] };
     case 4: return { f: 0, cInf: 0.75, focus: () => [-16, 0.2, -46] };
     case 5: return { f: 0, cInf: 0.9, focus: () => [-17.5, 0.2, -43] };
     case 6: return { f: 0, cInf: 0.9, focus: () => [-16, 0.4, -46] };

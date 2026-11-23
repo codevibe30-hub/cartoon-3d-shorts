@@ -339,10 +339,10 @@ const makeCrater = (cx: number, cz: number, rx: number, rz: number, lakeCol: str
   const g = new THREE.Group();
   g.position.set(cx, 0, cz);
   const r = rng(seed);
-  const rockM = lam2({ map: rep(rockTex(key + "In", "#7d6c56"), 7, 2), side: THREE.DoubleSide });
+  const rockM = lam2({ map: rep(rockTex(key + "In", "#71604a"), 7, 2), side: THREE.DoubleSide });
   const bowl = new THREE.Mesh(new THREE.CylinderGeometry(1.52, 0.97, 9.5, 44, 1, true), rockM);
   bowl.scale.set(rx, 1, rz); bowl.position.y = 4.75; bowl.castShadow = true; bowl.receiveShadow = true; g.add(bowl);
-  const outerM = lam2({ map: rep(grassDryTex(), 8, 3), side: THREE.DoubleSide, color: "#b9b489" });
+  const outerM = lam2({ map: rep(grassDryTex(), 8, 3), side: THREE.DoubleSide, color: "#a09c66" });
   const outer = new THREE.Mesh(new THREE.CylinderGeometry(1.52, 2.75, 9.5, 44, 1, true), outerM);
   outer.scale.set(rx, 1, rz); outer.position.y = 4.75; outer.receiveShadow = true; g.add(outer);
   // rim: a rock ring + scattered boulders breaking the silhouette
@@ -388,8 +388,8 @@ export class World {
   private trees: { g: THREE.Group; ph: number }[] = [];
   private lakeFlows: { map: THREE.Texture; sx: number; sy: number }[] = [];
   private tnmMat: THREE.MeshLambertMaterial | null = null;
-  private tnmTurq = new THREE.Color("#35c2a8");
-  private tnmGreen = new THREE.Color("#58b04a");
+  private tnmTurq = new THREE.Color("#2fd2ac");
+  private tnmGreen = new THREE.Color("#4cab41");
   private mists: { sp: THREE.Sprite; x0: number; drift: number; op: number }[] = [];
   private steams: { sp: THREE.Sprite; x: number; z: number; ph: number }[] = [];
   private bubbles: { m: THREE.Mesh; ph: number }[] = [];
@@ -444,10 +444,10 @@ export class World {
     const tnm = makeCrater(LAKE_TNM[0], LAKE_TNM[2], 13, 11, "#35c2a8", "#e6dda6", "kelimutuTnm", 11);
     R.add(tnm.group); this.tnmMat = tnm.lakeMat as THREE.MeshLambertMaterial;
     this.lakeFlows.push({ map: tnm.lakeMap, sx: 0.011, sy: 0.007 });
-    const tap = makeCrater(LAKE_TAP[0], LAKE_TAP[2], 12, 10.5, "#9c4f2e", "#c46a35", "kelimutuTap", 23);
+    const tap = makeCrater(LAKE_TAP[0], LAKE_TAP[2], 12, 10.5, "#a34d20", "#c46a35", "kelimutuTap", 23);
     R.add(tap.group);
     this.lakeFlows.push({ map: tap.lakeMap, sx: -0.006, sy: 0.009 });
-    const tab = makeCrater(LAKE_TAB[0], LAKE_TAB[2], 10, 8.5, "#2c5f9e", "#e8e6da", "kelimutuTab", 37);
+    const tab = makeCrater(LAKE_TAB[0], LAKE_TAB[2], 10, 8.5, "#1e4f9e", "#e8e6da", "kelimutuTab", 37);
     R.add(tab.group);
     this.lakeFlows.push({ map: tab.lakeMap, sx: 0.004, sy: -0.003 });
     // ---- the shared wall between the twins: a rock ridge with

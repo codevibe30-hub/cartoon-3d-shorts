@@ -345,7 +345,7 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
   // a giant fact card glued to the view axis for the whole shot
   const card = (key: string, lines: string[], tx: number, ty: number, tz: number, up: number, sf = 0.52) =>
     cardAerial(key, drawCardFit(lines, "#f2c018", "#1c1503", 100), S0, SLEN, tx, ty, tz, 0.5, up, sf, true);
-  const localTerrace = () => { out.places.push(stand(LOCAL_A, -2.6, HERO_SPOT[1], 11.8, "grin", 0.15, { wave: 1 }, 0.95)); blob(out, -2.6, HERO_SPOT[1], 11.8, 0.95); };
+  const localTerrace = () => { out.places.push(stand(LOCAL_A, -2.8, HERO_SPOT[1], 4.8, "grin", 0.15, { wave: 1 }, 0.95)); blob(out, -2.8, HERO_SPOT[1], 4.8, 0.95); };
 
   if (id === 1) {
     // THE COVER (frame 0): the hero's SHOCK face big on the
@@ -380,7 +380,7 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
   } else if (id === 5) {
     // VOLCANIC GAS: close on the bubbling, steaming surface —
     // the hero crouches at the rim, listening to the mountain
-    out.places.push(stand(HERO, RIM_TNM[0] + 1.5, RIM_TNM[1], RIM_TNM[2] + 2.5, "relief_open", 0.2, {}, 1.05)); blob(out, RIM_TNM[0] + 1.5, RIM_TNM[1], RIM_TNM[2] + 2.5, 1.05);
+    out.places.push(stand(HERO, RIM_TNM[0] + 1.5, RIM_TNM[1], RIM_TNM[2] - 3.0, "relief_open", 0.2, {}, 1.05)); blob(out, RIM_TNM[0] + 1.5, RIM_TNM[1], RIM_TNM[2] - 3.0, 1.05);
     card("cardGas", ["GAS", "VULKANIK"], -16, 1.5, -44, 3.6, 0.48);
   } else if (id === 6) {
     // 127 METRES: water-level across TNM past the dead trees —
@@ -408,11 +408,11 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
   } else if (id === 9) {
     // THE WICKED LAKE: TAP's rust water below; a local bends to
     // set down a sesajen offering at the rim, the hero watching
-    out.places.push(stand(HERO, RIM_TAP[0] - 2.2, RIM_TAP[1], RIM_TAP[2] + 1.5, "nervous", -0.25, {}, 1.05)); blob(out, RIM_TAP[0] - 2.2, RIM_TAP[1], RIM_TAP[2] + 1.5, 1.05);
+    out.places.push(stand(HERO, RIM_TAP[0] + 5.0, RIM_TAP[1], RIM_TAP[2] + 4.8, "nervous", -0.25, {}, 1.05)); blob(out, RIM_TAP[0] + 5.0, RIM_TAP[1], RIM_TAP[2] + 4.8, 1.05);
     out.places.push(person(cam, LOCAL_B, RIM_TAP[0], RIM_TAP[1], RIM_TAP[2],
       { mode: "stand", expr: "neutral", blink: lidAt(t, LOCAL_B.i), look: 0.3 }, 1.0, 0.38));
     blob(out, RIM_TAP[0], RIM_TAP[1], RIM_TAP[2]);
-    out.fx.push({ key: "sesajen", cw: 256, ch: 160, draw: drawSesajen, x: RIM_TAP[0] + 0.9, y: RIM_TAP[1] + 0.28, z: RIM_TAP[2] - 0.7, w: 1.15, h: 0.72 });
+    out.fx.push({ key: "sesajen", cw: 256, ch: 160, draw: drawSesajen, x: RIM_TAP[0] + 0.4, y: RIM_TAP[1] + 0.05, z: RIM_TAP[2] + 0.4, w: 1.15, h: 0.72 });
     card("cardWicked", ["DANAU ORANG", "JAHAT"], 14, 1.5, -46, 3.4, 0.5);
   } else if (id === 10) {
     // THE PUNCHLINE LOOP: back on the cover framing — same
