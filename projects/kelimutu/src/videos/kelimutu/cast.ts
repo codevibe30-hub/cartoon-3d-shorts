@@ -342,18 +342,31 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
     out.places.push(stand(HERO, HERO_SPOT[0], y, HERO_SPOT[2], expr, look, {}, scale));
     blob(out, HERO_SPOT[0], HERO_SPOT[1], HERO_SPOT[2], scale);
   };
+  // the hero ON Tiwu Nua Muri's rim crest — the cover framing:
+  // turquoise lake behind him, wall and summit beyond
+  const heroRim = (expr: Expr, look = -0.15, scale = 1.5) => {
+    const y = RIM_TNM[1] + Math.sin(t * 1.6) * 0.012;
+    out.places.push(stand(HERO, RIM_TNM[0], y, RIM_TNM[2], expr, look, {}, scale));
+    blob(out, RIM_TNM[0], RIM_TNM[1], RIM_TNM[2], scale);
+  };
+  const wispAt = (key: string, col: string, glow: string, bx: number, by: number, bz: number, ph: number, w: number) => {
+    const yy = by + Math.sin(t * 0.9 + ph) * 0.35 + U * 0.9;
+    const xx = bx + Math.sin(t * 0.5 + ph * 1.7) * 0.3;
+    out.fx.push({ key, cw: 256, ch: 256, draw: drawWisp(col, glow), x: xx, y: yy, z: bz, w, h: w, soft: true });
+  };
   // a giant fact card glued to the view axis for the whole shot
   const card = (key: string, lines: string[], tx: number, ty: number, tz: number, up: number, sf = 0.52) =>
     cardAerial(key, drawCardFit(lines, "#f2c018", "#1c1503", 100), S0, SLEN, tx, ty, tz, 0.5, up, sf, true);
   const localTerrace = () => { out.places.push(stand(LOCAL_A, -2.8, HERO_SPOT[1], 4.8, "grin", 0.15, { wave: 1 }, 0.95)); blob(out, -2.8, HERO_SPOT[1], 4.8, 0.95); };
 
   if (id === 1) {
-    // THE COVER (frame 0): the hero's SHOCK face big on the
-    // terrace — behind him two lakes in two impossible colours
-    // sharing one summit, and the claim as one GIANT board.
-    heroTerrace("shock", -0.15);
-    localTerrace();
-    card("cardHook", ["3 WARNA", "BERUBAH?!"], 0, 4, -30, 5.2, 0.52);
+    // THE COVER (frame 0): the hero's SHOCK face big on Tiwu
+    // Nua Muri's rim — the turquoise lake fills the frame
+    // behind him, a soul-wisp drifting over it, and the claim
+    // as one GIANT board.
+    heroRim("shock", -0.15);
+    wispAt("wispCover", "rgba(110,225,205,0.82)", "rgba(60,220,190,0.55)", -13, 2.5, -44, 1.2, 1.2);
+    card("cardHook", ["3 WARNA", "BERUBAH?!"], -10, 13, -45, 5.2, 0.52);
   } else if (id === 2) {
     // THE NAME: high wide over all three lakes — hero small on
     // the terrace below, the summit running away to the ridges
@@ -416,10 +429,10 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
     card("cardWicked", ["DANAU ORANG", "JAHAT"], 14, 1.5, -46, 3.4, 0.5);
   } else if (id === 10) {
     // THE PUNCHLINE LOOP: back on the cover framing — same
-    // terrace, same claim, but the hero is laughing now.
-    heroTerrace("laugh", -0.15);
-    localTerrace();
-    card("cardHook2", ["3 WARNA", "BERUBAH?!"], 0, 4, -30, 5.2, 0.52);
+    // rim, same lake, same claim, but the hero is laughing now.
+    heroRim("laugh", -0.15);
+    wispAt("wispCover", "rgba(110,225,205,0.82)", "rgba(60,220,190,0.55)", -13, 2.5, -44, 1.2, 1.2);
+    card("cardHook2", ["3 WARNA", "BERUBAH?!"], -10, 13, -45, 5.2, 0.52);
   }
   return out;
 };

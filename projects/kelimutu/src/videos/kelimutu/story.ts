@@ -115,13 +115,12 @@ const full = (c: Shot): Cam => ({ fov: 40, roll: 0, ...c });
 const dolly = (pos: V3, look: V3, k: number, rest: Partial<Cam> = {}): Shot =>
   ({ pos: [look[0] + (pos[0] - look[0]) * k, look[1] + (pos[1] - look[1]) * k, look[2] + (pos[2] - look[2]) * k], look, ...rest });
 
-// The cover camera: raised behind the viewpoint terrace and
-// tilted DOWN the summit — a level camera hides the lakes
-// behind the foreground slope (they sit in bowls at y = 0), so
-// the lens looks down at ±15°: the hero big in the lower right,
-// the claim card centred up-frame, the twin lakes spread in the
-// middle band in turquoise and rust.
-const CAM_COVER: { pos: V3; look: V3 } = { pos: [0, 13.5, 19.5], look: [0, 0.5, -28] };
+// The cover camera: the hero stands ON Tiwu Nua Muri's rim
+// crest and the lens hovers over the turquoise lake looking
+// back at him — from the terrace the lakes are INVISIBLE
+// (a 9.5 m rim hides any lake from any near-ground camera;
+// only a high or inside-the-rim lens ever sees the water).
+const CAM_COVER: { pos: V3; look: V3 } = { pos: [-17, 9, -50], look: [-6, 10.5, -39.5] };
 
 export const camAt = (id: number, f: number): Cam => {
   const s = SHOTS[id - 1];
@@ -137,19 +136,22 @@ export const camAt = (id: number, f: number): Cam => {
     case 3: // WIDE along the wall: hero walks the 5 m crest,
       // TNM turquoise on his left, TAP rust on his right
       return full(dolly([7.5, 11, -6], [-1, 5.5, -32], Math.exp(-0.0003 * lf), { fov: 44 }));
-    case 4: // HIGH over TNM: the colour changes here (the lens
-      // must clear the 9.5 m rim: height ≥ 0.76 × distance)
-      return full(dolly([-8, 20, -24.5], [-15, 0, -45], Math.exp(-0.0004 * lf), { fov: 44 }));
-    case 5: // INSIDE TNM's rim: bubbles + steam over the surface
-      return full(dolly([-11, 10.5, -36], [-17, 0, -47], Math.exp(-0.0005 * lf), { fov: 42 }));
-    case 6: // INSIDE TNM's rim, across: dead trees, depth card
-      return full(dolly([-21, 8, -37], [-13, 0.2, -50], Math.exp(-0.0005 * lf), { fov: 42 }));
-    case 7: // OVER TIWU ATA BUPU: the blue lake of the elders' souls
-      return full(dolly([-26, 12, -62], [-40, 0, -88], Math.exp(-0.0003 * lf), { fov: 44 }));
+    case 4: // TOP-DOWN over TNM: the colour flips across the
+      // whole surface (low lenses see only the cone's grass)
+      return full(dolly([-16, 30, -30], [-16, 0, -46], Math.exp(-0.0004 * lf), { fov: 44 }));
+    case 5: // OBLIQUE over TNM from the NE rim: bubbles + steam
+      return full(dolly([-6, 18, -34], [-16, 0, -46], Math.exp(-0.0005 * lf), { fov: 42 }));
+    case 6: // OBLIQUE over TNM from the W rim: dead trees + depth
+      return full(dolly([-26, 22, -40], [-14, 0, -48], Math.exp(-0.0005 * lf), { fov: 40 }));
+    case 7: // OBLIQUE over TIWU ATA BUPU: the blue lake of the
+      // elders' souls (the old reverse-wide saw only plateau)
+      return full(dolly([-28, 20, -70], [-40, 0, -88], Math.exp(-0.0003 * lf), { fov: 44 }));
     case 8: // CLOSE-UP: the twist lands on the hero's face
       return full(dolly([3.8, 8.8, 14.6], [HERO_SPOT[0], 8.9, HERO_SPOT[2]], Math.exp(-0.0008 * lf), { fov: 38 }));
-    case 9: // AT TAP's rim: the red-brown lake + the offering
-      return full(dolly([10, 12, -34], [14, 0, -47], Math.exp(-0.0004 * lf), { fov: 44 }));
+    case 9: // HIGH over TAP's rim: hero + offering + rust lake
+      // (y 15 grazed the rim and the hero fell out of frame —
+      // this vantage puts both hero and lake centre on-axis)
+      return full(dolly([2, 21, -28], [12, 2, -44], Math.exp(-0.0004 * lf), { fov: 44 }));
     default:
       return full(dolly(CAM_COVER.pos, CAM_COVER.look, 1, { fov: 46 }));
   }
@@ -165,7 +167,9 @@ export const dofAt = (f: number): Dof => {
     case 4: return { f: 0, cInf: 0.75, focus: () => [-16, 0.2, -46] };
     case 5: return { f: 0, cInf: 0.9, focus: () => [-17.5, 0.2, -43] };
     case 6: return { f: 0, cInf: 0.9, focus: () => [-16, 0.4, -46] };
-    case 7: return { f: 0, cInf: 0.4, focus: () => [0, 2, -50] };
+    case 1:
+    case 10: return { f: 0, cInf: 0.9, focus: () => [RIM_TNM[0], 10.5, RIM_TNM[2]] };
+    case 7: return { f: 0, cInf: 0.4, focus: () => [-40, 0.5, -88] };
     case 8: return { f: 0, cInf: 1.0, focus: () => [HERO_SPOT[0], 9.1, HERO_SPOT[2]] };
     case 9: return { f: 0, cInf: 0.8, focus: () => [14, 0.6, -46] };
     default: return { f: 0, cInf: 0.9, focus: () => [HERO_SPOT[0], 7.6, HERO_SPOT[2]] };
