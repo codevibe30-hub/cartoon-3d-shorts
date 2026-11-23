@@ -43,7 +43,7 @@ export const lin = (pts: [number, number][], x: number) => {
 // stands at the mat's front-right corner. The grandstand closes
 // the field at z ~ -58; the Bukit Barisan ridges rise behind it.
 export const SYEKH_POS: V3 = [0, 0, 4.4];
-export const HERO_POS: V3 = [8.2, 0, 9.2];
+export const HERO_POS: V3 = [1.3, 0, 9.5];
 // near block: 5 rows x 10 dancers (the troupe shots 1-7, 10 see)
 export const ROW_ZS = [0.5, -3.0, -6.5, -10.0, -13.5];
 export const ROW_X0 = -13.95, ROW_DX = 3.1, ROW_N = 10;
