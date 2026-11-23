@@ -53,6 +53,12 @@ export const lin = (pts: [number, number][], x: number) => {
 // SET C — the school + church hall, far east at x = 320.
 // SET D — the rolling-door tunnel, far east at x = 420.
 export const HERO_SPOT: V3 = [1.2, 0, 9.5];
+// the cover hero spot (shots 1 + 10): on the terrace near its
+// south edge, east of the olive tree at (-6.5, 12.5) so the
+// south-west cover camera has a clean sight line to him — the
+// hero reads BIG in the near foreground at the right of frame
+// while the cutaway galleries drop away at the left and below
+export const COVER_SPOT: V3 = [-3.2, 0, 13.4];
 export const FACE_Z = -2;
 export const CUT_BOTTOM = -27;
 export const BAND_Y: number[] = [-3.4, -7.6, -11.8, -16.0, -20.2, -24.4];
@@ -127,13 +133,19 @@ const full = (c: Shot): Cam => ({ fov: 40, roll: 0, ...c });
 const dolly = (pos: V3, look: V3, k: number, rest: Partial<Cam> = {}): Shot =>
   ({ pos: [look[0] + (pos[0] - look[0]) * k, look[1] + (pos[1] - look[1]) * k, look[2] + (pos[2] - look[2]) * k], look, ...rest });
 
-// The cover camera: FAR EAST and level with the terrace rim —
-// from 50+ units out, the terrace top (hero), the town, and all
-// six glowing galleries fit inside one 46° frame, and every
-// sight line to the face passes east of or below the terrace
-// box. Closer frontal cameras are always blocked by the box;
-// closer high ones see only slab tops.
-const CAM_COVER: { pos: V3; look: V3 } = { pos: [38, -2, 34], look: [0, -9, -5] };
+// The cover camera: SOUTH-WEST of the terrace promontory,
+// ~25 units from the cover hero spot on the terrace's west
+// corner — the hero (scale 1.5) reads big at the right of
+// frame with his shock face clear, and every sight line to
+// the cutaway face passes west of the terrace box, over its
+// top, or under the jutting promontory, so all six glowing
+// galleries stay visible at the left and below him. Two
+// cameras failed before this one: the far-east camera at
+// [38,-2,34] pushed the hero ~17° off-axis (outside the
+// 13.4° horizontal half-FOV) and clipped him at the left
+// edge; a close south-east camera hid the face and the
+// claim card behind the terrace box.
+const CAM_COVER: { pos: V3; look: V3 } = { pos: [-26, 3, 30], look: [10, -10, -5] };
 
 export const camAt = (id: number, f: number): Cam => {
   const s = SHOTS[id - 1];
@@ -195,7 +207,7 @@ export const dofAt = (f: number): Dof => {
     case 8: return { f: 0, cInf: 0.95, focus: () => [DOOR_X + 0.9, 1.2, 0.6] };
     case 9: return { f: 0, cInf: 0.9, focus: () => [DOOR_X, 1.25, 0.5] };
     case 1:
-    case 10: return { f: 0, cInf: 0.9, focus: () => [HERO_SPOT[0], 1.6, HERO_SPOT[2]] };
+    case 10: return { f: 0, cInf: 0.9, focus: () => [COVER_SPOT[0], 1.6, COVER_SPOT[2]] };
     default: return { f: 0, cInf: 0.9, focus: () => [HERO_SPOT[0], 1.4, HERO_SPOT[2]] };
   }
 };

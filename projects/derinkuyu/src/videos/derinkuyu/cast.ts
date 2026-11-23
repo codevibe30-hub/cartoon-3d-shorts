@@ -14,7 +14,7 @@ import {
   Outfit, Expr, FrontOpts,
 } from "./toon";
 import {
-  FPS, SHOTS, clamp01, camAt, HERO_SPOT, BAND_Y, BASE_X, SCHOOL_X,
+  FPS, SHOTS, clamp01, camAt, HERO_SPOT, COVER_SPOT, BAND_Y, BASE_X, SCHOOL_X,
   DOOR_X, SHAFT_X, SHAFT_Z, heroSpotAt, wallBreakAt,
 } from "./story";
 import { rng } from "./paint";
@@ -274,10 +274,10 @@ const STUDENT_C: Who = { i: 73, o: { jacket: "#4a7a3a", pants: "#3b3f52", boots:
 const STUDENTS: Who[] = [STUDENT_A, STUDENT_B, STUDENT_C];
 
 // ---------------- staging ----------------
-// the cover hero spot: the terrace's front-right corner — near
+// the cover hero spot lives in story.ts (COVER_SPOT) so the
+// cover camera and the DoF focus share the same point — near
 // the camera, right of the centred claim board, so the board is
 // never occluded (shots 1 + 10 share it for the loop)
-const COVER_SPOT: [number, number, number] = [6.6, 0, 13.8];
 export const stage = (id: number, t: number, cam: CamInfo): Stage => {
   const out: Stage = { places: [], fx: [] };
   const s = SHOTS[id - 1], tt = s.tau(t);
@@ -341,9 +341,9 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
     // the glowing cutaway galleries dropping away, and the claim
     // as one GIANT board. He stands at the terrace's front-right
     // corner, clear of the centred claim board.
-    heroAt("shock", COVER_SPOT, 1.5);
+    heroAt("shock", COVER_SPOT, 2.2);
     stroll(VILLAGER_A, -8 + U * 4, 0, -6);
-    card("cardHook", ["18 TINGKAT", "BAWAH TANAH!"], 0, 3.5, -30, 4.2, 0.52);
+    card("cardHook", ["18 TINGKAT", "BAWAH TANAH!"], 0, 3.5, -30, 10.5, 0.52);
   } else if (id === 2) {
     // THE DEPTH: high wide over the whole town — hero small on his
     // terrace below, the town running back to the fairy chimneys
@@ -419,9 +419,9 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
   } else if (id === 10) {
     // THE PUNCHLINE LOOP: back on the cover framing — same terrace,
     // same claim, but the hero is laughing now. Loop to frame 0.
-    heroAt("laugh", COVER_SPOT, 1.5);
+    heroAt("laugh", COVER_SPOT, 2.2);
     stroll(VILLAGER_A, -8 + U * 4, 0, -6);
-    card("cardHook2", ["18 TINGKAT", "BAWAH TANAH!"], 0, 3.5, -30, 4.2, 0.52);
+    card("cardHook2", ["18 TINGKAT", "BAWAH TANAH!"], 0, 3.5, -30, 10.5, 0.52);
   }
   return out;
 };
