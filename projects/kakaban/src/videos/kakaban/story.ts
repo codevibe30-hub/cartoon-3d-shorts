@@ -120,13 +120,13 @@ export const camAt = (id: number, f: number): Cam => {
     case 5: // LOW ANGLE across the water, looking UP at the karst wall
       return full({ pos: [5.5, 2.1 + lf * 0.004, -28], look: [-6, 10, RIDGE_Z], fov: 44 });
     case 6: // SURFACE CALM: skimming the warm pool, jellies glowing below the ripples
-      return full(dolly([6.4, 1.6, 14], [-2, 0.2, -14], Math.exp(-0.0004 * lf), { fov: 42 }));
+      return full(dolly([-4.6, 1.8, 14.6], [1.2, 0.8, 9.0], Math.exp(-0.0004 * lf), { fov: 42 }));
     case 7: // THE SHALLOWS: low over the sand bar where Cassiopea lie upside-down
       return full(dolly([5.8, 2.5, 14.8], [-6.8, 0.2, -4.5], Math.exp(-0.0005 * lf), { fov: 42 }));
     case 8: // MEDIUM on the jetty: the rules of the lake, enforced by the hero
-      return full(dolly([1.2, 2.2, 13.5], [JETTY_X, 1.3, 6], Math.exp(-0.0004 * lf), { fov: 42 }));
+      return full(dolly([4.2, 2.0, 15.5], [7.6, 1.0, 5.5], Math.exp(-0.0004 * lf), { fov: 42 }));
     case 9: // REVERSE WIDE from the far shore, looking back across the whole lake
-      return full(dolly([-8, 8.5, -95], [2, 1, -25], Math.exp(-0.0003 * lf), { fov: 46 }));
+      return full(dolly([-6, 7, -68], [2, 1, -8], Math.exp(-0.0003 * lf), { fov: 46 }));
     default:
       return full(dolly(CAM_COVER.pos, CAM_COVER.look, 1, { fov: 46 }));
   }
