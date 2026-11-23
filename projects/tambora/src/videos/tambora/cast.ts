@@ -417,7 +417,7 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
   } else if (id === 5) {
     // THE RE-HOOK: a pale, sick sun behind the ash veil — the
     // hero points up at the light that stopped warming the world
-    out.places.push(stand(HERO, HERO_SPOT[0], HERO_SPOT[1], 8, "nervous", 0.35, { wave: 1 }, 1.45));
+    out.places.push(stand(HERO, 0.7, 0.35, 8.5, "nervous", 0.35, { wave: 1 }, 1.35)); blob(out, 0.7, 0.35, 8.5, 1.35);
     card("card1816", ["TAHUN TANPA", "MUSIM PANAS"], 0, 10, -70, 4.6, 0.5);
   } else if (id === 6) {
     // SNOW IN JULY: the hero shivering in a buried northern
