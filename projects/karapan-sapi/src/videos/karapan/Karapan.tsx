@@ -142,7 +142,7 @@ const TextOverlay: React.FC = () => {
     <AbsoluteFill style={{ pointerEvents: "none" }}>
       <div style={{
         position: "absolute", bottom: 124, left: 0, right: 0, display: "flex", justifyContent: "center",
-        transform: `scale(${popIn})`,
+        transform: `scale(${popIn * (cap.scale ?? 1)})`,
       }}>
         <div style={{
           maxWidth: "96%", whiteSpace: "nowrap", color: "#ffffff",

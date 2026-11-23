@@ -38,7 +38,7 @@ def main():
     raw = json.load(open(sys.argv[1]))
     runs = raw["jobs"] if isinstance(raw, dict) else raw
     status = {r["databaseId"]: (r["status"], r["conclusion"]) for r in json.loads(
-        gh("run", "list", "-R", REPO, "--workflow", "render.yml", "--limit", "30",
+        gh("run", "list", "-R", REPO, "--workflow", "render.yml", "--limit", "100",
            "--json", "databaseId,status,conclusion"))}
     chunks_dir = os.path.join(ROOT, "out", "chunks")
     os.makedirs(chunks_dir, exist_ok=True)
