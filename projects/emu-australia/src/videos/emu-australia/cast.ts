@@ -294,8 +294,11 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
   // axis-glued cards: placed on the camera's TRUE view axis (cam.dir)
   // so they are always centred in frame. Size scales with the card's
   // distance so the board spans a fixed share of the frame WIDTH.
+  // lat: lateral offset in metres along the camera's right vector
+  // (negative = left) — used by the cover claim card so the hero's
+  // head never covers the last word.
   const cardAerial = (key: string, draw: (p: Pen) => void, t0: number, dur: number,
-    tx: number, ty: number, tz: number, frac: number, up: number, screenFrac = 0.60, soft = false) => {
+    tx: number, ty: number, tz: number, frac: number, up: number, screenFrac = 0.60, soft = false, lat = 0) => {
     let x: number, y: number, z: number, d: number;
     if (cam.dir) {
       const distT = cam.pos.distanceTo(tmp.set(tx, ty, tz)) * frac;
@@ -320,14 +323,15 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
       d = Math.hypot(x - cam.pos.x, y - cam.pos.y, z - cam.pos.z);
     }
     const w = 2 * d * 0.466 * 0.5625 * screenFrac;
+    if (lat) { x += cam.right.x * lat; y += cam.right.y * lat; z += cam.right.z * lat; }
     cardFx(key, draw, t0, dur, x, y, z, w, w / 2, soft);
   };
 
   const S0 = (s.a - SHOTS[0].a) / FPS, SLEN = (s.b - s.a) / FPS;
   const U = clamp01((t - S0) / Math.max(0.01, SLEN)); // shot-local progress 0..1
   // a giant fact card glued to the view axis for the whole shot
-  const card = (key: string, lines: string[], tx: number, ty: number, tz: number, up: number, sf = 0.52) =>
-    cardAerial(key, drawCardFit(lines, "#f2c018", "#1c1503", 100), S0, SLEN, tx, ty, tz, 0.5, up, sf, true);
+  const card = (key: string, lines: string[], tx: number, ty: number, tz: number, up: number, sf = 0.52, lat = 0) =>
+    cardAerial(key, drawCardFit(lines, "#f2c018", "#1c1503", 100), S0, SLEN, tx, ty, tz, 0.5, up, sf, true, lat);
   const heroAt = (expr: Expr, spot: [number, number, number], scale = 1, look = -0.15, pitch = 0) => {
     out.places.push(stand(HERO, spot[0], spot[1], spot[2], expr, look, {}, scale, pitch));
     blob(out, spot[0], spot[1], spot[2], scale);
@@ -346,7 +350,7 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
     // of the centred claim board.
     heroAt("shock", COVER_SPOT, 1.5);
     stroll(FARMER_A, -10 + U * 4, 0, -2);
-    card("cardHook", ["TENTARA KALAH", "LAWAN EMU!"], 0, 3.5, -30, 4.2, 0.52);
+    card("cardHook", ["TENTARA KALAH", "LAWAN EMU!"], 0, 3.5, -30, 4.2, 0.52, -0.9);
   } else if (id === 2) {
     // THE FLOOD: high wide over the wheat sea — hero small in his
     // field below, the farmhouse behind, the emu flood pouring in
@@ -446,7 +450,7 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
     // same claim, but the hero is laughing now. Loop to frame 0.
     heroAt("laugh", COVER_SPOT, 1.5);
     stroll(FARMER_A, -10 + U * 4, 0, -2);
-    card("cardHook2", ["TENTARA KALAH", "LAWAN EMU!"], 0, 3.5, -30, 4.2, 0.52);
+    card("cardHook2", ["TENTARA KALAH", "LAWAN EMU!"], 0, 3.5, -30, 4.2, 0.52, -0.9);
   }
   return out;
 };
