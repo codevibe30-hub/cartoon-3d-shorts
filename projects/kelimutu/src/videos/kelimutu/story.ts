@@ -142,17 +142,19 @@ export const camAt = (id: number, f: number): Cam => {
       return full(dolly([-16, 30, -30], [-16, 0, -46], Math.exp(-0.0004 * lf), { fov: 44 }));
     case 5: // OBLIQUE over TNM from the NE rim: bubbles + steam
       return full(dolly([-6, 18, -34], [-16, 0, -46], Math.exp(-0.0005 * lf), { fov: 42 }));
-    case 6: // OBLIQUE over TNM from the W rim: dead trees + depth
-      return full(dolly([-26, 22, -40], [-14, 0, -48], Math.exp(-0.0005 * lf), { fov: 40 }));
+    case 6: // TOP-DOWN over TNM from the S: dead trees + depth
+      // (the W oblique filled the frame with cone grass — only
+      // a steep downward lens shows the lake at all)
+      return full(dolly([-10, 26, -56], [-16, 0, -46], Math.exp(-0.0005 * lf), { fov: 40 }));
     case 7: // OBLIQUE over TIWU ATA BUPU: the blue lake of the
       // elders' souls (the old reverse-wide saw only plateau)
       return full(dolly([-28, 20, -70], [-40, 0, -88], Math.exp(-0.0003 * lf), { fov: 44 }));
     case 8: // CLOSE-UP: the twist lands on the hero's face
       return full(dolly([3.8, 8.8, 14.6], [HERO_SPOT[0], 8.9, HERO_SPOT[2]], Math.exp(-0.0008 * lf), { fov: 38 }));
-    case 9: // HIGH over TAP's rim: hero + offering + rust lake
-      // (y 15 grazed the rim and the hero fell out of frame —
-      // this vantage puts both hero and lake centre on-axis)
-      return full(dolly([2, 21, -28], [12, 2, -44], Math.exp(-0.0004 * lf), { fov: 44 }));
+    case 9: // HIGH over TAP's rim from the W: hero + offering
+      // + rust lake (the earlier vantage cut the local and the
+      // sesajen out of the narrow portrait frame)
+      return full(dolly([-6, 24, -30], [10, 4, -42], Math.exp(-0.0004 * lf), { fov: 44 }));
     default:
       return full(dolly(CAM_COVER.pos, CAM_COVER.look, 1, { fov: 46 }));
   }
