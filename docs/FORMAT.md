@@ -38,6 +38,13 @@ Berlaku untuk SEMUA seri/produksi animasi (Fafnir-ID dan jalur lain), bukan cuma
 - Adegan yang isinya elemen "hidup" tapi semuanya beku = GAGAL, wajib diperbaiki sebelum finalisasi.
 - Berlaku untuk SEMUA seri/produksi animasi (Fafnir-ID dan jalur lain).
 
+### STANDAR KAMERA SINEMATIK, GLOSS & PROPORSI (ditetapkan 23 Nov 2026, perintah Baginda Raja — berlaku mulai PRODUKSI BERIKUTNYA)
+
+1. **KAMERA SINEMATIK:** angle kamera WAJIB sinematik seperti film — komposisi rule-of-thirds, lapisan foreground/background dengan kedalaman, sudut dramatis (low angle heroik, tilt seperlunya), gerakan kamera sinematik (dolly/tracking/pan halus bermotif). Kamera datar statis ala dokumenter = GAGAL.
+2. **EFEK GLOSSY DI SEMUA ELEMEN LAYOUT:** setiap elemen layout — kartu klaim, papan, ornamen, props, elemen dalam adegan — WAJIB punya sentuhan glossy: highlight/refleksi lembut di permukaan, kesan mengkilap bersih premium. Elemen kusam flat tanpa highlight = GAGAL.
+3. **PROPORSI KARAKTER WAJIB SAMA:** proporsi karakter (tinggi, rasio kepala:badan, ukuran relatif antar karakter dan terhadap props/lingkungan) WAJIB konsisten persis di SEMUA adegan dan SEMUA episode.
+4. **DILARANG BENTUK GEPENG/PENDEK TAK JELAS:** tidak boleh ada karakter/elemen yang tampil gepeng (ter-squash), menyusut pendek menyimpang, atau bentuknya tidak jelas — semua bentuk WAJIB proporsional dan terbaca jelas di frame.
+
 ## Alur produksi (WAJIB)
 - **Storyboard DIHAPUS dari alur produksi (aturan terbaru):** produksi langsung render video final TANPA tahap storyboard — riset → naskah → kode adegan → VO → render. Perkakas storyboard (`scripts/stills.mjs` + `scripts/make_storyboard.py`) tetap tersedia di repo ini, tapi sifatnya OPSIONAL dan secara default DILEWATI; pakai hanya bila kamu memang ingin meninjau still adegan sebelum render penuh.
 - **QA STILLS DIHAPUS dari alur produksi (aturan terbaru, perintah Baginda Raja 21 Nov 2026: 'Gausah ada QA'):** alur produksi = naskah → VO → LANGSUNG fan-out render hybrid total. TIDAK ADA tahap QA stills pra-render sama sekali. Yang TETAP wajib hanya verifikasi teknis file FINAL: ffprobe (durasi, 1080×1920, 30fps, codec, frame count) + loudness ±−14 LUFS.
