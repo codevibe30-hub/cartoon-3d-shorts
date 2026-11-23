@@ -115,13 +115,12 @@ const full = (c: Shot): Cam => ({ fov: 40, roll: 0, ...c });
 const dolly = (pos: V3, look: V3, k: number, rest: Partial<Cam> = {}): Shot =>
   ({ pos: [look[0] + (pos[0] - look[0]) * k, look[1] + (pos[1] - look[1]) * k, look[2] + (pos[2] - look[2]) * k], look, ...rest });
 
-// The cover camera: a high drone over the turquoise lake
-// looking back at the hero on the rim — the first try (lens
-// inside the bowl at the hero's height) looked UP past the
-// water entirely, so the lake never entered the frame: hero
-// and lake are 10+ m apart vertically, the lens must stand
-// far back and look DOWN to hold both.
-const CAM_COVER: { pos: V3; look: V3 } = { pos: [-24, 20, -62], look: [-9, 3, -42] };
+// The cover camera: a steep drone above the lake's NE shore
+// looking DOWN at the hero on the rim — two earlier tries
+// failed (inside the bowl looked up past the water; from
+// outside the crater the near cone slope ate the frame).
+// Only a lens already over the bowl sees hero + water together.
+const CAM_COVER: { pos: V3; look: V3 } = { pos: [-8, 24, -32], look: [-6, 9.5, -39.2] };
 
 export const camAt = (id: number, f: number): Cam => {
   const s = SHOTS[id - 1];

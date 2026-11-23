@@ -366,7 +366,7 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
     // as one GIANT board.
     heroRim("shock", -0.15);
     wispAt("wispCover", "rgba(110,225,205,0.82)", "rgba(60,220,190,0.55)", -13, 2.5, -44, 1.2, 1.2);
-    card("cardHook", ["3 WARNA", "BERUBAH?!"], -10, 13, -45, 5.2, 0.52);
+    card("cardHook", ["3 WARNA", "BERUBAH?!"], -7, 12, -42, 5.2, 0.52);
   } else if (id === 2) {
     // THE NAME: high wide over all three lakes — hero small on
     // the terrace below, the summit running away to the ridges
@@ -432,7 +432,7 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
     // rim, same lake, same claim, but the hero is laughing now.
     heroRim("laugh", -0.15);
     wispAt("wispCover", "rgba(110,225,205,0.82)", "rgba(60,220,190,0.55)", -13, 2.5, -44, 1.2, 1.2);
-    card("cardHook2", ["3 WARNA", "BERUBAH?!"], -10, 13, -45, 5.2, 0.52);
+    card("cardHook2", ["3 WARNA", "BERUBAH?!"], -7, 12, -42, 5.2, 0.52);
   }
   return out;
 };
