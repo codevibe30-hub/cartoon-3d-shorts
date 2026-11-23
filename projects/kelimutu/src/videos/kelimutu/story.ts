@@ -115,12 +115,18 @@ const full = (c: Shot): Cam => ({ fov: 40, roll: 0, ...c });
 const dolly = (pos: V3, look: V3, k: number, rest: Partial<Cam> = {}): Shot =>
   ({ pos: [look[0] + (pos[0] - look[0]) * k, look[1] + (pos[1] - look[1]) * k, look[2] + (pos[2] - look[2]) * k], look, ...rest });
 
-// The cover camera: a steep drone above the lake's NE shore
-// looking DOWN at the hero on the rim — two earlier tries
-// failed (inside the bowl looked up past the water; from
-// outside the crater the near cone slope ate the frame).
-// Only a lens already over the bowl sees hero + water together.
-const CAM_COVER: { pos: V3; look: V3 } = { pos: [-8, 24, -32], look: [-6, 9.5, -39.2] };
+// The cover camera: straight down into the bowl from above
+// its north rim — the hero stands on that rim point at the
+// top of the frame, the turquoise lake filling the rest.
+// (Three earlier tries failed on the same geometry: in a
+// steep top-down view the lake sits ~45° off-axis unless the
+// lens is directly over the bowl — a side angle can never
+// hold hero + lake together in a 9:16 frame.)
+const CAM_COVER: { pos: V3; look: V3 } = { pos: [-16, 20, -28], look: [-16, 0, -46] };
+// The cover hero's footing: TNM's north rim crest, the rim
+// point nearest the cover lens (the east rim point put the
+// lake 45° off-axis).
+export const HERO_RIM: V3 = [-16, 9.5, -33.7];
 
 export const camAt = (id: number, f: number): Cam => {
   const s = SHOTS[id - 1];
@@ -170,7 +176,7 @@ export const dofAt = (f: number): Dof => {
     case 5: return { f: 0, cInf: 0.9, focus: () => [-17.5, 0.2, -43] };
     case 6: return { f: 0, cInf: 0.9, focus: () => [-16, 0.4, -46] };
     case 1:
-    case 10: return { f: 0, cInf: 0.9, focus: () => [RIM_TNM[0], 10.5, RIM_TNM[2]] };
+    case 10: return { f: 0, cInf: 0.9, focus: () => [HERO_RIM[0], 10.5, HERO_RIM[2]] };
     case 7: return { f: 0, cInf: 0.4, focus: () => [-40, 0.5, -88] };
     case 8: return { f: 0, cInf: 1.0, focus: () => [HERO_SPOT[0], 9.1, HERO_SPOT[2]] };
     case 9: return { f: 0, cInf: 0.8, focus: () => [14, 0.6, -46] };

@@ -14,7 +14,7 @@ import {
   Pen, bodyFront, fxShadow, fxContact, INK,
   Outfit, Expr, FrontOpts,
 } from "./toon";
-import { FPS, SHOTS, clamp01, camAt, HERO_SPOT, RIM_TNM, RIM_TAP, heroWalkAt } from "./story";
+import { FPS, SHOTS, clamp01, camAt, HERO_SPOT, HERO_RIM, RIM_TNM, RIM_TAP, heroWalkAt } from "./story";
 import { rng } from "./paint";
 import type { LightName } from "./lights";
 import { NOINK } from "./ink";
@@ -342,12 +342,12 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
     out.places.push(stand(HERO, HERO_SPOT[0], y, HERO_SPOT[2], expr, look, {}, scale));
     blob(out, HERO_SPOT[0], HERO_SPOT[1], HERO_SPOT[2], scale);
   };
-  // the hero ON Tiwu Nua Muri's rim crest — the cover framing:
-  // turquoise lake behind him, wall and summit beyond
+  // the hero ON Tiwu Nua Muri's north rim crest — the cover
+  // framing: the turquoise lake fills the frame below him
   const heroRim = (expr: Expr, look = -0.15, scale = 1.5) => {
-    const y = RIM_TNM[1] + Math.sin(t * 1.6) * 0.012;
-    out.places.push(stand(HERO, RIM_TNM[0], y, RIM_TNM[2], expr, look, {}, scale));
-    blob(out, RIM_TNM[0], RIM_TNM[1], RIM_TNM[2], scale);
+    const y = HERO_RIM[1] + Math.sin(t * 1.6) * 0.012;
+    out.places.push(stand(HERO, HERO_RIM[0], y, HERO_RIM[2], expr, look, {}, scale));
+    blob(out, HERO_RIM[0], HERO_RIM[1], HERO_RIM[2], scale);
   };
   const wispAt = (key: string, col: string, glow: string, bx: number, by: number, bz: number, ph: number, w: number) => {
     const yy = by + Math.sin(t * 0.9 + ph) * 0.35 + U * 0.9;
@@ -366,7 +366,7 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
     // as one GIANT board.
     heroRim("shock", -0.15);
     wispAt("wispCover", "rgba(110,225,205,0.82)", "rgba(60,220,190,0.55)", -13, 2.5, -44, 1.2, 1.2);
-    card("cardHook", ["3 WARNA", "BERUBAH?!"], -7, 12, -42, 5.2, 0.52);
+    card("cardHook", ["3 WARNA", "BERUBAH?!"], -16, 8, -40, 5.2, 0.52);
   } else if (id === 2) {
     // THE NAME: high wide over all three lakes — hero small on
     // the terrace below, the summit running away to the ridges
@@ -432,7 +432,7 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
     // rim, same lake, same claim, but the hero is laughing now.
     heroRim("laugh", -0.15);
     wispAt("wispCover", "rgba(110,225,205,0.82)", "rgba(60,220,190,0.55)", -13, 2.5, -44, 1.2, 1.2);
-    card("cardHook2", ["3 WARNA", "BERUBAH?!"], -7, 12, -42, 5.2, 0.52);
+    card("cardHook2", ["3 WARNA", "BERUBAH?!"], -16, 8, -40, 5.2, 0.52);
   }
   return out;
 };
