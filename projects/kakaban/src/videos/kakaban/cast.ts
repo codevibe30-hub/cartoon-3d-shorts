@@ -363,7 +363,7 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
     // THE FARMERS: over the sand bar, where Cassiopea lie
     // upside-down so their algae can cook in the sun
     heroInBoat("grin", 0.3);
-    card("cardFlip", ["RENANG", "TERBALIK!"], 2.5, 1.2, -3, 3.0, 0.5);
+    card("cardFlip", ["RENANG", "TERBALIK!"], -6.5, 1.2, -5, 3.0, 0.5);
   } else if (id === 8) {
     // THE RULES: the hero plants himself on the jetty by the
     // no-fins sign, stern as a lifeguard with no waves to fight;

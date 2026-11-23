@@ -524,7 +524,7 @@ export class World {
     // so update() can scroll it — the surface MOVES, no posters)
     const lakeMap = rep(water(), 10, 12);
     this.waterMap = lakeMap;
-    const lake = new THREE.Mesh(new THREE.PlaneGeometry(150, 190), lam2({ map: lakeMap, color: "#6fc7ad" }));
+    const lake = new THREE.Mesh(new THREE.PlaneGeometry(150, 190), lam2({ map: lakeMap, color: "#57bfa5" }));
     lake.rotation.x = -Math.PI / 2; lake.position.set(0, 0, -55); lake.receiveShadow = true; R.add(lake);
     // soft sky-reflection sheen bands drifting on the surface
     const reflM = (col: string, op: number) => new THREE.MeshBasicMaterial({ color: col, transparent: true, opacity: op, depthWrite: false });
@@ -533,10 +533,10 @@ export class World {
       band.rotation.x = -Math.PI / 2; band.position.set(x, 0.015, z); band.renderOrder = 1; R.add(band);
     }
     // ---- the sand bar: pale shallows where Cassiopea rest ----
-    const bar = new THREE.Mesh(new THREE.CircleGeometry(5.2, 20), lam2({ map: rep(sandTex(), 3, 3) }));
+    const bar = new THREE.Mesh(new THREE.CircleGeometry(4.2, 20), lam2({ map: rep(sandTex(), 3, 3) }));
     bar.rotation.x = -Math.PI / 2; bar.position.set(SAND_BAR[0], 0.02, SAND_BAR[2]); bar.receiveShadow = true; R.add(bar);
     const bar2 = new THREE.Mesh(new THREE.CircleGeometry(3.4, 16), lam2({ map: rep(sandTex(), 2, 2) }));
-    bar2.rotation.x = -Math.PI / 2; bar2.position.set(-8.5, 0.02, 4.5); R.add(bar2);
+    bar2.rotation.x = -Math.PI / 2; bar2.position.set(10.5, 0.02, -6); R.add(bar2);
     // ---- THE JELLYFISH ----
     const GOLD = "#e8a34c", GOLD2 = "#eebd72", MOON = "#cfe4ee", PINK = "#eda4bc";
     const addJelly = (col: string, s: number, x: number, z: number, y0: number, opts: { flip?: boolean; simple?: boolean; drift?: number } = {}) => {
@@ -547,10 +547,10 @@ export class World {
       this.jellies.push({ g, bell, ph: r() * 6.28, y0, cx: x, cz: z, drift: opts.drift ?? 0.7, flip: !!opts.flip });
     };
     // the GIANTS around the hero's boat — the frame-0 shock
-    addJelly(GOLD, 2.7, -3.1, 5.2, 0.10);
-    addJelly(MOON, 2.1, 4.6, 3.2, 0.08);
-    addJelly(GOLD2, 1.8, -5.2, -1.5, 0.10);
-    addJelly(PINK, 1.5, 6.4, -3.5, 0.06);
+    addJelly(GOLD, 2.9, -2.3, 4.8, 0.16);
+    addJelly(MOON, 2.2, 2.6, 2.4, 0.14);
+    addJelly(GOLD2, 1.8, -3.6, -3.8, 0.15);
+    addJelly(PINK, 1.5, 3.8, -5.5, 0.12);
     // mediums patrolling the near + middle field
     const medSpots: [number, number][] = [[-8, -8], [9, -12], [-3, -18], [5, -24], [12, -30], [-11, -28], [0, -34], [-6, -42], [8, -48], [14, -6]];
     medSpots.forEach(([x, z], i) => addJelly(i % 3 === 0 ? MOON : i % 3 === 1 ? GOLD : GOLD2, 0.9 + (i % 4) * 0.16, x, z, 0.05));
@@ -564,9 +564,9 @@ export class World {
     // Cassiopea: upside-down on the sand bars, farming sunlight
     for (let i = 0; i < 7; i++) {
       const a = (i / 7) * Math.PI * 2 + r() * 0.6, d = 1.2 + r() * 2.8;
-      addJelly(i % 2 ? GOLD2 : PINK, 0.85 + r() * 0.3, SAND_BAR[0] + Math.cos(a) * d, SAND_BAR[2] + Math.sin(a) * d, 0.30, { flip: true, drift: 0 });
+      addJelly(i % 2 ? GOLD2 : PINK, 0.85 + r() * 0.3, SAND_BAR[0] + Math.cos(a) * d, SAND_BAR[2] + Math.sin(a) * d, 0.30, { flip: true, simple: true, drift: 0 });
     }
-    for (let i = 0; i < 3; i++) addJelly(GOLD2, 0.8 + r() * 0.25, -8.5 + (r() - 0.5) * 3.4, 4.5 + (r() - 0.5) * 3, 0.28, { flip: true, drift: 0 });
+    for (let i = 0; i < 3; i++) addJelly(GOLD2, 0.8 + r() * 0.25, 10.5 + (r() - 0.5) * 3.4, -6 + (r() - 0.5) * 3, 0.28, { flip: true, simple: true, drift: 0 });
     // ---- the karst ridge: the 50 m wall that traps the lake ----
     const rockM = lam2({ map: rep(rockTex(), 2, 1) });
     const folM = (col: string) => lam2({ color: col, map: rep(foliageTex("kakabanFoliageRidge"), 2, 1) });
@@ -630,7 +630,7 @@ export class World {
       }
       blob(R, x, 0.04, z, 3.4, 3.4, 0.3);
     };
-    mangrove(-19, 7, 55); mangrove(23, 2, 71); mangrove(-25, -12, 83); mangrove(28, -20, 97);
+    mangrove(-19, 7, 55); mangrove(23, 2, 71); mangrove(-25, -12, 83); mangrove(28, -20, 97); mangrove(-13, -16, 61); mangrove(15, -24, 88);
     // ---- the jetty + its boats ----
     const jetty = makeJetty();
     jetty.position.set(JETTY_X, 0, 10.5);
@@ -652,13 +652,6 @@ export class World {
       reed.position.set(-26 + i * 1.15 + (r() - 0.5), 0.3, 14.6 + (r() - 0.5) * 0.8);
       R.add(reed);
       this.reeds.push({ m: reed, ph: i * 0.83 });
-    }
-    for (let i = 0; i < 14; i++) {
-      const a = (i / 14) * Math.PI * 2;
-      const reed = new THREE.Mesh(new THREE.ConeGeometry(0.08, 0.6 + r() * 0.4, 5), reedM);
-      reed.position.set(SAND_BAR[0] + Math.cos(a) * 5.4, 0.26, SAND_BAR[2] + Math.sin(a) * 5.4);
-      R.add(reed);
-      this.reeds.push({ m: reed, ph: 40 + i * 1.13 });
     }
     // ---- grass dressing on the near shore ----
     for (let i = 0; i < 8; i++) {
