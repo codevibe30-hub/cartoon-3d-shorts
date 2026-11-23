@@ -137,15 +137,15 @@ export const camAt = (id: number, f: number): Cam => {
       return full(dolly([5.4, -6.5, -12.5], [d.x, d.y - 1, d.z], Math.exp(-0.0004 * lf), { fov: 44 }));
     }
     case 5: // CLOSE-UP: the re-hook lands on the hero's face at the surface
-      return full(dolly([3.6, 2.0, 14.8], [HERO_BOAT[0], 1.9, HERO_BOAT[2]], Math.exp(-0.0008 * lf), { fov: 38 }));
+      return full(dolly([5.2, 2.6, 19.5], [HERO_BOAT[0], 1.8, HERO_BOAT[2]], Math.exp(-0.0008 * lf), { fov: 40 }));
     case 6: { // UNDERWATER: track the bottom walk across the sand
       const w = walkAt(f / FPS);
       return full({ pos: [w.x + 4.6, -17.6, -13.5], look: [w.x, -20.6, -25], fov: 44 });
     }
     case 7: // MEDIUM across the channel at the walkway village life
-      return full(dolly([-8.6, 2.1, 3.5], [5.6, 1.5, -6.5], Math.exp(-0.0004 * lf), { fov: 42 }));
+      return full(dolly([6.4, 2.4, 21], [0.2, 1.3, 0], Math.exp(-0.0004 * lf), { fov: 42 }));
     case 8: // THE KIDS: low over the water toward the swimming children
-      return full(dolly([6.8, 2.3, 1.5], [-4.2, 0.2, -13], Math.exp(-0.0004 * lf), { fov: 42 }));
+      return full(dolly([2.6, 2.0, 4.5], [-2.2, 0.1, -12], Math.exp(-0.0004 * lf), { fov: 46 }));
     case 9: // REVERSE WIDE from the island end, looking back at the village
       return full(dolly([-6, 9, -92], [1.5, 1, -30], Math.exp(-0.0003 * lf), { fov: 46 }));
     default:
@@ -163,8 +163,8 @@ export const dofAt = (f: number): Dof => {
     case 4: return { f: 0, cInf: 0.85, focus: (ff) => { const d = diveAt(ff / FPS); return [d.x, d.y, d.z]; } };
     case 5: return { f: 0, cInf: 1.0, focus: () => [HERO_BOAT[0], 2.2, HERO_BOAT[2]] };
     case 6: return { f: 0, cInf: 0.85, focus: (ff) => { const w = walkAt(ff / FPS); return [w.x, w.y + 1.2, w.z]; } };
-    case 7: return { f: 0, cInf: 0.8, focus: () => [5.6, 1.4, -6] };
-    case 8: return { f: 0, cInf: 0.85, focus: () => [-4.4, 0.2, -12.5] };
+    case 7: return { f: 0, cInf: 0.8, focus: () => [HERO_BOAT[0], 1.6, HERO_BOAT[2]] };
+    case 8: return { f: 0, cInf: 0.85, focus: () => [-2.2, 0.1, -12] };
     case 9: return { f: 0, cInf: 0.4, focus: () => [0, 1, -55] };
     default: return { f: 0, cInf: 0.9, focus: () => [HERO_BOAT[0], 1.3, HERO_BOAT[2]] };
   }

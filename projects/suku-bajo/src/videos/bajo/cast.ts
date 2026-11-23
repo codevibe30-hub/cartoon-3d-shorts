@@ -418,9 +418,9 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
     // stilt houses while a kid swims alongside and a villager
     // strolls the walkway — traffic here is hulls and splashes
     heroInBoat("grin", 0.15);
-    const kz = -2 - U * 9;
-    out.places.push(stand(KID_A, -3.6, -0.55, kz, "grin", 0.15, {}, 0.62));
-    blob(out, -3.6, 0.02, kz, 0.8);
+    const bpK = heroBoatAt(3, t);
+    out.places.push(stand(KID_A, bpK.x + 2.6, -0.55, bpK.z + 2.2, "grin", 0.15, {}, 0.62));
+    blob(out, bpK.x + 2.6, 0.02, bpK.z + 2.2, 0.8);
     out.places.push(person(cam, BAJO_B, 6.9, 1.08, -26 + U * 16,
       { mode: "stroll", phase: (t * 1.35) % 1, expr: "grin", blink: lidAt(t, BAJO_B.i), look: 0.15 }, 1.0));
     const bp = heroBoatAt(3, t);
@@ -443,9 +443,9 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
     // spleen appears beside him — 50 percent bigger, a built-in
     // oxygen tank science measured in 2018
     heroInBoat("shock", 0);
-    out.fx.push({ key: "spleenA", cw: 256, ch: 256, draw: drawSpleen, x: 3.15, y: 2.4, z: 6.9, w: 1.2, h: 1.2, soft: true });
+    out.fx.push({ key: "spleenA", cw: 256, ch: 256, draw: drawSpleen, x: 2.5, y: 2.0, z: 10.2, w: 0.62, h: 0.62, soft: true });
     villagerPorch(-20);
-    card("cardSpleen", ["LIMPA +50%!"], HERO_BOAT[0], 2.5, HERO_BOAT[2], 4.6, 0.46);
+    card("cardSpleen", ["LIMPA +50%!"], HERO_BOAT[0], 3.35, HERO_BOAT[2], 5.4, 0.44);
   } else if (id === 6) {
     // THE BOTTOM WALK (underwater): the hero walks the sand
     // between corals like a Bajau hunter, his spleen glowing at
@@ -463,7 +463,7 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
     // village — a double helix turning beside him; a thousand
     // years of sea life rewrote this DNA
     heroInBoat("grin", 0.1);
-    out.fx.push({ key: "helixA", cw: 256, ch: 320, draw: drawHelix, x: 3.05, y: 2.7, z: 6.6, w: 0.85, h: 1.06, soft: true });
+    out.fx.push({ key: "helixA", cw: 256, ch: 320, draw: drawHelix, x: 2.35, y: 2.6, z: 10.4, w: 0.85, h: 1.06, soft: true });
     villagerWalkway();
     villagerPorch();
     card("cardEvo", ["EVOLUSI", "NYATA!"], 0, 2.5, -20, 4.2, 0.5);
@@ -471,12 +471,13 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
     // THE KIDS: two children swimming by the houses like fish,
     // the hero watching open-mouthed from the walkway — they
     // swam before they could walk
-    out.places.push(stand(KID_A, -5.2, -0.55, -11, "grin", 0.15, {}, 0.62));
-    blob(out, -5.2, 0.02, -11, 0.8);
-    out.places.push(stand(KID_B, -3.1, -0.55, -15.5, "laugh", 0.1, {}, 0.58));
-    blob(out, -3.1, 0.02, -15.5, 0.75);
-    out.places.push(stand(HERO, 5.9, 1.08, -6, "shock", -0.25, {}, 1.1));
-    card("cardKids", ["BERENANG", "DULUAN!"], -4.2, 0.4, -13, 3.2, 0.5);
+    out.places.push(stand(KID_A, -4.2, -0.55, -8.5, "grin", 0.15, {}, 0.62));
+    blob(out, -4.2, 0.02, -8.5, 0.8);
+    out.places.push(stand(KID_B, -0.2, -0.55, -14.5, "laugh", 0.1, {}, 0.58));
+    blob(out, -0.2, 0.02, -14.5, 0.75);
+    out.places.push(stand(HERO, -1.2, -0.12, -9.5, "shock", -0.25, {}, 1.05));
+    blob(out, -1.2, 0.02, -9.5, 1.1);
+    card("cardKids", ["BERENANG", "DULUAN!"], -1.6, 0.4, -11, 3.2, 0.5);
   } else if (id === 9) {
     // AVATAR 2: the reverse wide — the same sea village from its
     // far end; somewhere a film crew is taking notes
