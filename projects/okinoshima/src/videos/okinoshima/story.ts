@@ -137,7 +137,11 @@ export const camAt = (id: number, f: number): Cam => {
       return full(dolly([4, 2.2, 12], [2.5, 2, 6], Math.exp(-0.0006 * lf), { fov: 40 }));
     }
     case 8: { // CLOSE-UP: the silence taboo lands on the hero's face
-      return full(dolly([3.6, 2.0, 2.5], [HERO_BOAT[0], 1.9, HERO_BOAT[2]], Math.exp(-0.0008 * lf), { fov: 38 }));
+      // (pulled back 2026-11-25: the old close camera put the
+      // claim card over the hero's eyes — head now fully in frame
+      // with the card clear above it; slower push-in so the head
+      // never grows back into the card by the shot's end)
+      return full(dolly([5.0, 2.2, -2.0], [HERO_BOAT[0], 2.0, HERO_BOAT[2]], Math.exp(-0.0003 * lf), { fov: 38 }));
     }
     case 9: { // MEDIUM on the treasure — mirror, sword and beads glinting on the sand
       return full(dolly([1.5, 2.0, -8], [0, 0.5, -14], Math.exp(-0.0004 * lf), { fov: 42 }));
