@@ -451,13 +451,14 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
     out.fx.push({ key: "noteA", cw: 256, ch: 256, draw: (p) => fxNote(p, 0, "#2c4a6a"), x: -4.5, y: 7.5, z: -38, w: 0.55, h: 0.55, soft: true });
     card("cardPriest", ["CUMA", "PENDETA!"], -6, 6, -40, 3.0, 0.5);
   } else if (id === 7) {
-    // THE LEAF: the hero holds up one green leaf — the priest
-    // shakes his head. Even a leaf may not leave the island.
+    // THE LEAF: the hero holds up one green leaf — even a leaf may
+    // not leave the island. (The priest waits on the beach, out of
+    // this shot's frame; his stern refusal is the card + the VO.)
     heroInBoat("nervous", 0.1);
     out.fx.push({ key: "leafHeld", cw: 256, ch: 256, draw: drawLeaf, x: HERO_BOAT[0] + 1.05, y: 2.6, z: HERO_BOAT[2] - 0.2, w: 0.7, h: 0.7 });
     out.places.push(stand(PRIEST, 0.5, BEACH_Y, -16, "stern", -0.2, { headTilt: 0.15 }, 1.0));
     blob(out, 0.5, BEACH_Y, -16);
-    card("cardLeaf", ["DAUN PUN", "DILARANG!"], 0, 2, -16, 3.4, 0.5);
+    card("cardLeaf", ["DAUN PUN", "DILARANG!"], HERO_BOAT[0], 3.6, HERO_BOAT[2], 2.4, 0.5);
   } else if (id === 8) {
     // THE SILENCE: close on the hero's nervous face — what is
     // seen on the island must never be spoken of

@@ -133,8 +133,8 @@ export const camAt = (id: number, f: number): Cam => {
     case 6: { // MEDIUM at the shrine steps — the lone priest praying, island quiet
       return full(dolly([-14, 7, -28], [-6, 5, -40], Math.exp(-0.0004 * lf), { fov: 42 }));
     }
-    case 7: { // CLOSE on the leaf — hero holds it up, priest shakes his head
-      return full(dolly([2.5, 1.8, -10], [0, 1.2, -16], Math.exp(-0.0006 * lf), { fov: 40 }));
+    case 7: { // MEDIUM on the hero in his boat, holding up one green leaf
+      return full(dolly([4, 2.2, 12], [2.5, 2, 6], Math.exp(-0.0006 * lf), { fov: 40 }));
     }
     case 8: { // CLOSE-UP: the silence taboo lands on the hero's face
       return full(dolly([3.6, 2.0, 2.5], [HERO_BOAT[0], 1.9, HERO_BOAT[2]], Math.exp(-0.0008 * lf), { fov: 38 }));
@@ -159,7 +159,7 @@ export const dofAt = (f: number): Dof => {
     case 4: return { f: 0, cInf: 0.8, focus: () => [-1, 0.8, -12] };
     case 5: return { f: 0, cInf: 0.4, focus: () => [0, 1.5, -16] };
     case 6: return { f: 0, cInf: 0.8, focus: () => [-6, 5.5, -40] };
-    case 7: return { f: 0, cInf: 0.95, focus: () => [0, 1.2, -16] };
+    case 7: return { f: 0, cInf: 0.95, focus: () => [2.5, 2, 6] };
     case 8: return { f: 0, cInf: 1.0, focus: () => [HERO_BOAT[0], 2.2, HERO_BOAT[2]] };
     case 9: return { f: 0, cInf: 0.6, focus: () => [0, 0.5, -14] };
     default: return { f: 0, cInf: 0.9, focus: () => [HERO_BOAT[0], 1.3, HERO_BOAT[2]] };
