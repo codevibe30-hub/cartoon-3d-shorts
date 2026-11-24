@@ -143,8 +143,13 @@ export const camAt = (id: number, f: number): Cam => {
       // gentle push-in only (0.00025 decay): the approved frame-0
       // composition (k = 1 at the shot's first frame) stays intact
       return full(dolly(CAM_COVER.pos, CAM_COVER.look, Math.exp(-0.00025 * lf), { fov: 44 }));
-    case 2: // HIGH WIDE: the whole saddle — village ring, ridges, cloud sea below
-      return full(dolly([20, 18, 28], [0, 2, -12], Math.exp(-0.0004 * lf), { fov: 46 }));
+    case 2: // HIGH WIDE: the whole saddle — village ring, ridges, cloud sea below.
+      // Round 7 (midpoint check caught it): the old camera at
+      // (20, 18, 28) sat 30 m from the south-east house, which
+      // filled the frame's bottom 2/3 and hid the hero. Centred
+      // on the south axis now — hero + compang + main house read
+      // down the middle, the south houses flank the edges.
+      return full(dolly([0, 20, 36], [0, 2, -12], Math.exp(-0.0004 * lf), { fov: 46 }));
     case 3: // MEDIUM on the trail — hero hiking up through forest + coffee
       return full(dolly([4.5, 2.2, 26], [0, 1.5, 16], Math.exp(-0.0004 * lf), { fov: 42 }));
     case 4: { // INSIDE the ring, looking north across the compang —
