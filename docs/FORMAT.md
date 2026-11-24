@@ -79,3 +79,8 @@ Yang ditiru dari channel referensi HANYA GAYA/format (ritme, struktur, formula j
 - DILARANG: hapus + upload ulang video (dianggap spam, views YPP hilang), beli views/subscriber, sub4sub. Mengganti judul/metadata SETELAH tayang itu AMAN (tidak mereset distribusi).
 - RISIKO KEBIJAKAN "inauthentic content": konten massal bertemplat dengan variasi minimal tidak bisa dimonetisasi — mitigasi kita: naskah 100% orisinal per episode, dunia visual + struktur shot BERBEDA nyata antar episode (bukan ganti kata benda doang).
 - Triase mingguan dari YouTube Studio: topik dengan VVSA <60% tiga kali berturut = ganti pendekatan; VVSA >75% = gandakan polanya.
+
+## Tools baru (2026-11-24)
+
+- **Lottie** (`@remotion/lottie` + `lottie-web`, terpasang di root + template): komponen `src/fx/LottieLayer.tsx` (di template fafnir-frame-revisi) memutar animasi Lottie JSON dari `public/lottie/` sebagai lapisan efek deterministik per frame — hujan, confetti, kilau, ombak. Bukti render: lingkaran pulse emas ter-render bersih dari still uji.
+- **RIFE** (interpolasi frame, terpasang lokal di VM `~/workspace/tools/rife` + venv `~/workspace/.venv-rife`, model HDv3): terbukti jalan di CPU, frame tengah Vinicunca bersih tanpa artefak warp. Kecepatan ±15–20 dtk/pasangan frame 1080x1920 di kelas VM ini — TIDAK layak di VM; bila mau 60fps, integrasikan sebagai langkah per-window paralel di runner GitHub, bukan di VM.
