@@ -70,7 +70,11 @@ export const planeAt = (tSec: number): { x: number; y: number; z: number } | nul
   const a = L[6] / FPS, b = L[7] / FPS;
   if (tSec < a || tSec >= b) return null;
   const u = (tSec - a) / Math.max(0.01, b - a);
-  return { x: -42 + u * 84, y: 15.5 - u * 1.5, z: -38 };
+  // Lower + closer than the first pass (y 15.5/z -38): up there the
+  // plane crossed BEHIND the 1986 card, tiny and fog-faded — the
+  // beat's key visual was unreadable. At y ~10/z -34 it crosses
+  // below the card, above the rooftops, ~30% of frame width.
+  return { x: -42 + u * 84, y: 10.5 - u * 1.0, z: -34 };
 };
 
 // The lake's ice sheet, shared by world.ts (the mesh) and
