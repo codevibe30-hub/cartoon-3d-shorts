@@ -104,7 +104,7 @@ export const camAt = (id: number, f: number): Cam => {
     case 1:
     case 10:
       // gentle push-in only: the frame-0 composition stays intact
-      return full(dolly(CAM_COVER.pos, CAM_COVER.look, Math.exp(-0.00025 * lf), { fov: 46 }));
+      return full(dolly(CAM_COVER.pos, CAM_COVER.look, Math.exp(-0.0001 * lf), { fov: 46 }));
     case 2: // MEDIUM on the kid at the house yard, mum beside him
       return full(dolly([-4.4, 1.8, 13.8], [KID_POS[0], 1.15, KID_POS[2]], Math.exp(-0.0004 * lf), { fov: 42 }));
     case 3: // HIGH WIDE: the whole plateau village + temples + crater smoke
