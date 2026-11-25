@@ -1,0 +1,31 @@
+{
+ "dependencies": {
+  "@react-three/fiber": "^9.3.0",
+  "@react-three/postprocessing": "^3.0.4",
+  "@remotion/cli": "4.0.535",
+  "@remotion/lottie": "^4.0.535",
+  "@remotion/three": "4.0.535",
+  "lottie-web": "^5.13.0",
+  "postprocessing": "^6.37.8",
+  "react": "19.2.3",
+  "react-dom": "19.2.3",
+  "remotion": "4.0.535",
+  "three": "0.180.0"
+ },
+ "description": "Lake Nyos, Cameroon (Fafnir-ID format): the crater lake that erupted without a sound in 1986 \u2014 a limnic eruption of magmatic CO2 that suffocated 1,746 people; today it degasses slowly through pipes. Full episode composition (Remotion + three.js), rendered in chunks on GitHub Actions.",
+ "devDependencies": {
+  "@types/react": "19.2.7",
+  "@types/three": "0.180.0",
+  "typescript": "5.9.3"
+ },
+ "license": "UNLICENSED",
+ "name": "fafnir-nyos-danau-meledak",
+ "private": true,
+ "scripts": {
+  "render": "remotion render src/index.ts",
+  "still": "remotion still src/index.ts",
+  "studio": "remotion studio src/index.ts",
+  "typecheck": "tsc --noEmit"
+ },
+ "version": "1.0.0"
+}
