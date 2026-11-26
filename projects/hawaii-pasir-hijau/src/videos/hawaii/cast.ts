@@ -416,7 +416,7 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
     // frame 0. The hero, shocked, at its side; the claim as
     // one GIANT board; the sign says it all.
     heroAt("shock", -0.15);
-    local(LOCAL_A, -2.6, 3.0, "grin", 1.0);
+    local(LOCAL_A, -0.9, 3.0, "grin", 1.0);
     sign();
     sparkleFx(-1.0, 1.9, -2.0, 1.1);
     sparkleFx(2.2, 1.1, -4.5, 0.8);
@@ -501,7 +501,7 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
     // green sand still sparkling, the hero laughing now.
     // You are walking on gemstones. Loop to frame 0.
     heroAt("laugh", -0.15);
-    local(LOCAL_A, -2.6, 3.0, "laugh", 1.0);
+    local(LOCAL_A, -0.9, 3.0, "laugh", 1.0);
     sign();
     sparkleFx(-1.0, 1.9, -2.0, 1.1);
     sparkleFx(2.2, 1.1, -4.5, 0.8);

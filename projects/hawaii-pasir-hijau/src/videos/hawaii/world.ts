@@ -282,7 +282,7 @@ const makeCone = () => {
     lam2({ color: "#5d7d24", map: rep(greenSandTex(), 6, 1) }));
   skirt.position.y = 1.4; g.add(skirt);
   const crater = new THREE.Mesh(new THREE.CircleGeometry(2.6, 20), lam2({ color: "#2c2c2b" }));
-  crater.rotation.x = -Math.PI / 2; crater.position.y = 14.65; g.add(crater);
+  crater.rotation.x = -Math.PI / 2; crater.position.y = 13.0; g.add(crater);
   return g;
 };
 
