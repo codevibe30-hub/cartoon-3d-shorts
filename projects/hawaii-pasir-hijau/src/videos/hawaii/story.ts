@@ -51,7 +51,7 @@ export const lin = (pts: [number, number][], x: number) => {
 // SAND_POS. The giant peridot of shot 4 rests at GEM_POS. The
 // no-taking sign is planted at SIGN_POS. Palms edge the beach.
 export const BEACH_C: V3 = [0, 0, -4];
-export const CONE: V3 = [0, 0, -34];
+export const CONE: V3 = [-4, 0, -52];
 export const HERO_POS: V3 = [2.4, 0, 4.2];
 export const SAND_POS: V3 = [-1.0, 0, -2.0];
 export const GEM_POS: V3 = [0, 0, -5.5];
@@ -113,13 +113,13 @@ export const camAt = (id: number, f: number): Cam => {
       // gentle push-in only: the frame-0 composition stays intact
       return full(dolly(CAM_COVER.pos, CAM_COVER.look, Math.exp(-0.00025 * lf), { fov: 46 }));
     case 2: // HIGH WIDE: the whole bay — cone wrapping the green beach, turquoise sea
-      return full(dolly([13, 12.5, 27], [-1, 1.5, -32], Math.exp(-0.00035 * lf), { fov: 46 }));
+      return full(dolly([13, 12.5, 27], [-2, 2, -50], Math.exp(-0.00035 * lf), { fov: 46 }));
     case 3: // CLOSE on the hero's cupped hands: a pile of green crystals
       return full(dolly([0.4, 1.7, 10.5], [-1.0, 1.05, 4.4], Math.exp(-0.0004 * lf), { fov: 42 }));
     case 4: // LOW on the giant peridot resting on the green sand
       return full(dolly([1.8, 2.2, 3.5], [0, 1.4, -5.5], Math.exp(-0.0004 * lf), { fov: 42 }));
     case 5: // THE CONE: low angle up at Pu'u Mahana's ash strata
-      return full(dolly([7, 4, 6], [-0.5, 6.5, -32], Math.exp(-0.0003 * lf), { fov: 46 }));
+      return full(dolly([6, 4, 6], [-4, 5, -52], Math.exp(-0.0003 * lf), { fov: 46 }));
     case 6: // LOW at the waterline: waves sorting the grains
       return full(dolly([2.6, 1.15, 6.8], [-0.6, 0.25, -9], Math.exp(-0.0003 * lf), { fov: 44 }));
     case 7: { // TRACKING: alongside the hero hiking the dirt trail
@@ -129,7 +129,7 @@ export const camAt = (id: number, f: number): Cam => {
     case 8: // CLOSE on the no-taking sign + the reaching hand
       return full(dolly([0.6, 1.9, 10.2], [-1.4, 1.1, 4.6], Math.exp(-0.0005 * lf), { fov: 42 }));
     case 9: // THE TWIST: wide on the cone + the beach as the green drains away
-      return full(dolly([6, 4.5, 9], [0, 3.5, -30], Math.exp(-0.0003 * lf), { fov: 46 }));
+      return full(dolly([6, 4.5, 9], [-2, 3.5, -48], Math.exp(-0.0003 * lf), { fov: 46 }));
     default:
       return full(dolly(CAM_COVER.pos, CAM_COVER.look, 1, { fov: 46 }));
   }
@@ -140,14 +140,14 @@ export type Dof = { f: number; dur?: number; cInf: number; focus?: (f: number) =
 export const dofAt = (f: number): Dof => {
   const id = shotAt(f).id;
   switch (id) {
-    case 2: return { f: 0, cInf: 0.4, focus: () => [0, 2, -32] };
+    case 2: return { f: 0, cInf: 0.4, focus: () => [-4, 2, -50] };
     case 3: return { f: 0, cInf: 1.0, focus: () => [CRYSTAL_POS[0], 1.15, CRYSTAL_POS[2]] };
     case 4: return { f: 0, cInf: 0.95, focus: () => [GEM_POS[0], 1.6, GEM_POS[2]] };
-    case 5: return { f: 0, cInf: 0.7, focus: () => [-0.5, 6, -32] };
+    case 5: return { f: 0, cInf: 0.7, focus: () => [-4, 5, -50] };
     case 6: return { f: 0, cInf: 0.85, focus: () => [-0.6, 0.3, -8] };
     case 7: return { f: 0, cInf: 0.8, focus: (ff) => { const hp = heroTrailAt(7, ff / FPS); return [hp.x, 1.1, hp.z]; } };
     case 8: return { f: 0, cInf: 0.95, focus: () => [SIGN_POS[0], 1.2, SIGN_POS[2]] };
-    case 9: return { f: 0, cInf: 0.5, focus: () => [0, 3, -28] };
+    case 9: return { f: 0, cInf: 0.5, focus: () => [-2, 3, -48] };
     default: return { f: 0, cInf: 0.9, focus: () => [SAND_POS[0], 1.2, SAND_POS[2]] };
   }
 };

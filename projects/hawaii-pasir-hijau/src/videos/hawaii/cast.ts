@@ -416,7 +416,7 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
     // frame 0. The hero, shocked, at its side; the claim as
     // one GIANT board; the sign says it all.
     heroAt("shock", -0.15);
-    local(LOCAL_A, -6.5, 1.5, "grin", 1.0);
+    local(LOCAL_A, -2.6, 3.0, "grin", 1.0);
     sign();
     sparkleFx(-1.0, 1.9, -2.0, 1.1);
     sparkleFx(2.2, 1.1, -4.5, 0.8);
@@ -427,7 +427,7 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
     heroAt("grin", 0, 1.05);
     local(LOCAL_A, -5.5, 0.5, "grin", 0.95);
     local(LOCAL_B, 5.8, 1.2, "laugh", 0.95);
-    card("cardBay", ["PAPAKOLEA"], 0, 3, -30, 4.6, 0.5);
+    card("cardBay", ["PAPAKOLEA"], -4, 3, -50, 4.6, 0.5);
   } else if (id === 3) {
     // THE PROOF: close on the hero's hands — a heap of green
     // crystals, sparkling. Not lumut, not editan: gemstone.
@@ -452,7 +452,7 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
       const fall = (U * 1.6 + j * 0.17) % 1;
       out.fx.push({
         key: "crumb", cw: 128, ch: 128, draw: drawChunk,
-        x: -3.5 + j * 1.4, y: 12.5 - fall * 10.5, z: -27.5, w: 0.55, h: 0.55,
+        x: -6.5 + j * 1.4, y: 10.5 - fall * 8.5, z: -40, w: 0.55, h: 0.55,
       });
     }
     card("cardCone", ["49.000", "TAHUN"], CONE[0], 7, CONE[2], 3.8, 0.5);
@@ -495,13 +495,13 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
     // (world.ts) creeps over the green — the supply is finite
     heroAt("nervous", -0.1, 1.3, 2.8, 2.0);
     local(LOCAL_B, -4.5, 0.8, "nervous", 1.0);
-    card("cardFinite", ["STOK", "TERBATAS!"], 0, 4, -28, 3.9, 0.5);
+    card("cardFinite", ["STOK", "TERBATAS!"], -4, 4, -48, 3.9, 0.5);
   } else if (id === 10) {
     // THE PUNCHLINE LOOP: back on the cover framing — the
     // green sand still sparkling, the hero laughing now.
     // You are walking on gemstones. Loop to frame 0.
     heroAt("laugh", -0.15);
-    local(LOCAL_A, -6.5, 1.5, "laugh", 1.0);
+    local(LOCAL_A, -2.6, 3.0, "laugh", 1.0);
     sign();
     sparkleFx(-1.0, 1.9, -2.0, 1.1);
     sparkleFx(2.2, 1.1, -4.5, 0.8);

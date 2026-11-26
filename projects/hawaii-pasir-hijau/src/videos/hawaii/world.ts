@@ -184,16 +184,24 @@ const strataTex = () => ctex("hawaiiStrata", 512, 512, (g, r) => {
   const bands = ["#4a3826", "#6b4a2e", "#2e2a26", "#8a6a3e", "#3a3a32", "#5d4028", "#7a5a34", "#2c2622"];
   let y = 0;
   while (y < 512) {
-    const h = 18 + r() * 42;
+    const h = 10 + r() * 22;
     g.fillStyle = bands[Math.floor(r() * bands.length)];
     g.fillRect(0, y, 512, h);
     g.fillStyle = "rgba(0,0,0,0.18)";
-    g.fillRect(0, y + h - 3, 512, 3);
+    g.fillRect(0, y + h - 2, 512, 2);
     y += h;
   }
   for (let i = 0; i < 2600; i++) {
     g.fillStyle = `rgba(${r() > 0.5 ? "190,186,170" : "10,10,10"},${0.05 + r() * 0.1})`;
     g.fillRect(r() * 512, r() * 512, 2, 2);
+  }
+  // green-olive patches weathering down the slopes
+  for (let i = 0; i < 46; i++) {
+    const x = r() * 512, yy = r() * 512, rad = 8 + r() * 26;
+    const gr = g.createRadialGradient(x, yy, rad * 0.1, x, yy, rad);
+    gr.addColorStop(0, "rgba(110,140,50,0.5)"); gr.addColorStop(1, "rgba(110,140,50,0)");
+    g.fillStyle = gr;
+    g.beginPath(); g.ellipse(x, yy, rad, rad * 0.6, r() * 3, 0, 7); g.fill();
   }
   // olivine speckle near the base (bottom of the canvas)
   for (let i = 0; i < 900; i++) {
@@ -273,10 +281,8 @@ const makeCone = () => {
   const skirt = new THREE.Mesh(new THREE.ConeGeometry(27.5, 3.2, 24, 1, true),
     lam2({ color: "#5d7d24", map: rep(greenSandTex(), 6, 1) }));
   skirt.position.y = 1.4; g.add(skirt);
-  const crater = new THREE.Mesh(new THREE.CircleGeometry(4.2, 20), lam2({ color: "#2c2c2b" }));
-  crater.rotation.x = -Math.PI / 2; crater.position.y = 14.9; g.add(crater);
-  const rim = new THREE.Mesh(new THREE.TorusGeometry(4.2, 0.55, 8, 20), lam2({ map: rep(basaltTex(), 2, 1) }));
-  rim.rotation.x = Math.PI / 2; rim.position.y = 14.9; g.add(rim);
+  const crater = new THREE.Mesh(new THREE.CircleGeometry(2.6, 20), lam2({ color: "#2c2c2b" }));
+  crater.rotation.x = -Math.PI / 2; crater.position.y = 14.65; g.add(crater);
   return g;
 };
 
@@ -329,7 +335,7 @@ const makeGem = () => {
 const grassTuftGeo = () => {
   const tr = rng(4242);
   const pos: number[] = [], col: number[] = [], idx: number[] = [];
-  const root = new THREE.Color("#4a5a22"), tip = new THREE.Color("#b8c46a"), tmp = new THREE.Color();
+  const root = new THREE.Color("#5a6a2a"), tip = new THREE.Color("#c8d47a"), tmp = new THREE.Color();
   let vi = 0;
   for (let i = 0; i < 7; i++) {
     const a = (i / 7) * Math.PI * 2 + tr() * 0.9;
@@ -370,6 +376,7 @@ export class World {
   private washMat: THREE.MeshBasicMaterial | null = null;
   private fadeMat: THREE.MeshBasicMaterial | null = null;
   private fadeMesh: THREE.Mesh | null = null;
+  private trail: THREE.Mesh | null = null;
   private gem: THREE.Group | null = null;
   private sparkles: THREE.Sprite[] = [];
   private sparkleBase: { x: number; y: number; z: number; s: number; ph: number }[] = [];
@@ -418,7 +425,9 @@ export class World {
     }
     this.buildShore(R, r);
     // ---- Pu'u Mahana, the old tuff ring wrapping the bay ----
+    // (scaled down so it reads as a distant cone, not a wall)
     const cone = makeCone();
+    cone.scale.setScalar(0.72);
     cone.position.set(CONE[0], 0, CONE[2]);
     R.add(cone);
     // ---- the giant peridot, resting on the green sand ----
@@ -439,8 +448,8 @@ export class World {
     ocean.rotation.x = -Math.PI / 2; ocean.position.set(0, 0.0, -105);
     ocean.receiveShadow = true; R.add(ocean);
     // rocky headland under the cone so it does not sit in the sea
-    const headland = new THREE.Mesh(new THREE.CircleGeometry(36, 32), lam2({ map: rep(basaltTex(), 10, 10) }));
-    headland.rotation.x = -Math.PI / 2; headland.position.set(0, 0.015, -40);
+    const headland = new THREE.Mesh(new THREE.CircleGeometry(26, 32), lam2({ map: rep(basaltTex(), 8, 8) }));
+    headland.rotation.x = -Math.PI / 2; headland.position.set(CONE[0], 0.015, CONE[2]);
     headland.receiveShadow = true; R.add(headland);
     // THE GREEN SAND BEACH: the ellipse the whole episode is about
     const beach = new THREE.Mesh(new THREE.CircleGeometry(13, 44), lam2({ map: rep(greenSandTex(), 6, 6) }));
@@ -458,7 +467,7 @@ export class World {
     const glintSpots: [number, number, number, number][] = [
       [-1.0, 1.35, -2.0, 0.9], [-3.2, 0.9, -0.5, 0.7], [1.2, 0.8, -3.5, 0.8],
       [5.5, 0.75, -6.5, 0.7], [-5.5, 0.35, -6.0, 0.6], [3.0, 0.3, 1.5, 0.6],
-      [0, 3.6, -5.5, 0.8], [1.6, 2.6, -4.6, 0.55],
+      [-2.5, 1.0, -3.0, 0.8], [0.5, 0.6, -5.0, 0.55],
     ];
     glintSpots.forEach(([x, y, z, s], i) => {
       const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex(), transparent: true, depthWrite: false, fog: false, opacity: 0.7 }));
@@ -490,20 +499,26 @@ export class World {
     };
     for (let i = 0; i < 20; i++) {
       const a = (i / 20) * Math.PI * 2 + r() * 0.2;
-      // ring the beach rim, skipping the north waterline gap
+      // ring the beach rim, skipping the north waterline gap AND
+      // the south side facing the cover camera (no boulders in
+      // the foreground)
       if (Math.sin(a) < -0.55 && Math.abs(Math.cos(a)) < 0.45) continue;
-      rockAt(BEACH_C[0] + Math.cos(a) * 13.4, BEACH_C[2] + Math.sin(a) * 9.4, 0.35 + r() * 0.6);
+      if (Math.sin(a) > 0.5) continue;
+      rockAt(BEACH_C[0] + Math.cos(a) * 13.4, BEACH_C[2] + Math.sin(a) * 9.4, 0.25 + r() * 0.3);
     }
-    for (let i = 0; i < 16; i++) rockAt((r() - 0.5) * 90, 14 - r() * 90, 0.5 + r() * 1.1);
+    for (let i = 0; i < 16; i++) rockAt((r() - 0.5) * 90, 4 - r() * 70, 0.4 + r() * 0.8);
     // cone-base debris: olivine-rich rubble at the foot of Pu'u Mahana
     for (let i = 0; i < 12; i++) {
       const a = r() * Math.PI * 2;
       rockAt(CONE[0] + Math.cos(a) * (24 + r() * 4), CONE[2] + Math.sin(a) * (24 + r() * 4) * 0.6, 0.4 + r() * 0.7);
     }
     // ---- the hiking trail: dirt path from the lava field to the beach ----
-    const trail = new THREE.Mesh(new THREE.PlaneGeometry(1.7, 10.5), lam2({ map: rep(gravelTex(), 1, 4) }));
+    // (only visible in shot 7 — everywhere else it would read as a
+    // grey slab in the foreground)
+    const trail = new THREE.Mesh(new THREE.PlaneGeometry(1.3, 10.5), lam2({ color: "#6b543a", map: rep(gravelTex(), 1, 4) }));
     trail.rotation.x = -Math.PI / 2; trail.rotation.z = Math.PI / 4;
     trail.position.set(4.25, 0.02, 10.25); trail.receiveShadow = true; R.add(trail);
+    this.trail = trail;
     // ---- palms edging the beach ----
     const palmSpots: [number, number, number][] = [
       [-15.5, 2.5, 4.2], [15.8, 3.5, 3.8], [-17.5, -7, 4.6], [17.5, -9, 4.0], [11.5, 9.5, 3.4],
@@ -525,20 +540,15 @@ export class World {
       const s = r() < 0.5 ? 1 : -1;
       softPatch(R, patchTex(), "#4a5a3a", s * (9 + r() * 15), 0.021, 6 - r() * 55, 5 + r() * 5, 6 + r() * 6, 0.16 + r() * 0.08, r() * 3);
     }
-    // ---- instanced dry-grass tufts over the lava field (never on the beach) ----
+    // ---- instanced dry-grass tufts over the lava field (never on the beach,
+    // never in the foreground strip in front of the cover camera) ----
     const inBeach = (x: number, z: number) => ((x - BEACH_C[0]) / 13.6) ** 2 + ((z - BEACH_C[2]) / 9.6) ** 2 < 1.12;
     const inOcean = (x: number, z: number) => z < -12 && Math.hypot(x, z + 105) < 96;
     const tuftPts: { x: number; z: number; s: number }[] = [];
-    for (let i = 0; i < 1500; i++) {
+    for (let i = 0; i < 1100; i++) {
       const x = (r() - 0.5) * 110, z = 18 - r() * 105;
-      if (inBeach(x, z) || inOcean(x, z)) continue;
-      tuftPts.push({ x, z, s: 0.7 + r() * 0.85 });
-    }
-    for (let i = 0; i < 260; i++) { // dense fringe hugging the beach rim
-      const a = r() * Math.PI * 2;
-      const x = BEACH_C[0] + Math.cos(a) * (13.8 + r() * 1.6), z = BEACH_C[2] + Math.sin(a) * (10.3 + r() * 1.2);
-      if (z < -12) continue;
-      tuftPts.push({ x, z, s: 0.9 + r() * 0.8 });
+      if (inBeach(x, z) || inOcean(x, z) || z > 2) continue;
+      tuftPts.push({ x, z, s: 0.5 + r() * 0.5 });
     }
     const tufts = new THREE.InstancedMesh(grassTuftGeo(), lam2({ vertexColors: true, side: THREE.DoubleSide }), tuftPts.length);
     const dummy = new THREE.Object3D(); const tint = new THREE.Color();
@@ -639,7 +649,14 @@ export class World {
       if (id === 9) this.fadeMat.opacity = 0.82 * U;
     }
     // the giant peridot turns slowly in its close-up (shot 4)
-    if (this.gem) this.gem.rotation.y = id === 4 ? tt * 0.9 : 0.25;
+    // and stays hidden everywhere else — it must not photobomb
+    // the cover frame
+    if (this.gem) {
+      this.gem.visible = id === 4;
+      this.gem.rotation.y = id === 4 ? tt * 0.9 : 0.25;
+    }
+    // the hiking trail only exists in its own shot
+    if (this.trail) this.trail.visible = id === 7;
     // clouds drift on the wind, each at its own pace
     this.clouds.forEach((c2, i) => { const b = this.cloudBase[i]; if (b) c2.position.x = b.x + tt * b.sp; });
     // bird flocks cross the sky with a gentle bob
