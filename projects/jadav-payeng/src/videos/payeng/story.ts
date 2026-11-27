@@ -44,8 +44,8 @@ export const lin = (pts: [number, number][], x: number) => {
 // clearing at z ~-12 (shot 5).
 export const RIVER_Z = -16;
 export const FOREST_Z = -26;
-export const HERO_SPOT: V3 = [5.4, 0, 5];
-export const JADAV_SPOT: V3 = [-4.4, 0, 4];
+export const HERO_SPOT: V3 = [2.6, 0, 5]; // inside cover-cam portrait FOV (was 5.4: out of frame)
+export const JADAV_SPOT: V3 = [-2.6, 0, 4]; // inside cover-cam portrait FOV (was -4.4: out of frame)
 export const SAPLING_ROW_Z = 2;
 export const ANIMAL_C: V3 = [0, 0, -12];
 export const SNAKE_C: V3 = [1.5, 0, -4];

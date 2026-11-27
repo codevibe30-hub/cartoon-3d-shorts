@@ -333,7 +333,9 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
     // blazing sun — young Jadav kneels by the snakes, horrified.
     out.places.push(stand(JADAV_YOUNG, -1.5, 0, -2, "nervous", 0.1, {}, 1.45));
     blob(out, -1.5, 0, -2);
-    heroSpot("shock", -0.15);
+    // hero explicit: HERO_SPOT is out of shot-2 cam FOV, stand beside Jadav
+    out.places.push(stand(HERO, 1.5, 0, -1, "shock", -0.15, {}, 1.5));
+    blob(out, 1.5, 0, -1, 1.5);
     card("cardSnakes", ["ULAR-ULAR", "MATI!"], 0, 3.5, -18, 5.0, 0.52);
   } else if (id === 3) {
     // THE PLANTING: Jadav waters the sapling row as it grows
@@ -341,7 +343,9 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
     // shot); the hero counts along, grinning.
     out.places.push(stand(JADAV_YOUNG, -3, 0, 0, "grin", 0.1, {}, 1.45));
     blob(out, -3, 0, 0);
-    heroSpot("grin", -0.15);
+    // hero explicit: HERO_SPOT is behind shot-3 cam, stand in the sapling row
+    out.places.push(stand(HERO, 1.5, 0, 2, "grin", -0.15, {}, 1.5));
+    blob(out, 1.5, 0, 2, 1.5);
     card("cardYears", ["TIAP HARI,", "40 TAHUN!"], 0, 3.5, -18, 5.0, 0.52);
   } else if (id === 4) {
     // THE FOREST NOW: high wide — the grown Molai forest wall,
@@ -349,7 +353,9 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
     // edge, arms wide, hero shocked at the scale.
     out.places.push(stand(JADAV_OLD, -2, 0, -8, "grin", 0.1, {}, 1.45));
     blob(out, -2, 0, -8);
-    heroSpot("shock", -0.15);
+    // hero explicit: HERO_SPOT is out of the high-wide cam FOV, stand by Jadav
+    out.places.push(stand(HERO, 2, 0, -6, "shock", -0.15, {}, 1.5));
+    blob(out, 2, 0, -6, 1.5);
     card("cardPark", ["LEBIH GEDE DARI", "CENTRAL PARK!"], 0, 3.5, -22, 5.0, 0.55);
   } else if (id === 5) {
     // THE WILDLIFE: the clearing — elephants, rhino and tiger
@@ -357,7 +363,9 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
     // the middle, hero grinning beside him.
     out.places.push(stand(JADAV_OLD, 2.5, 0, -8, "grin", -0.1, {}, 1.45));
     blob(out, 2.5, 0, -8);
-    heroSpot("grin", -0.15);
+    // hero explicit: HERO_SPOT is behind shot-5 cam, stand centre between elephant and Jadav
+    out.places.push(stand(HERO, 0.5, 0, -6, "grin", -0.15, {}, 1.5));
+    blob(out, 0.5, 0, -6, 1.5);
     card("cardFound", ["BARU KETAHUAN", "2008!"], 0, 3.5, -20, 5.0, 0.52);
   } else if (id === 6) {
     // THE PUNCHLINE LOOP: golden hour — the grown forest, old
