@@ -140,7 +140,7 @@ const patchTex = () => ctex("vatikanPatch", 256, 256, (g) => {
 /** ATM screen face: dark blue glass, amber Latin lines, a soft
  *  scanline sheen — the one glowing modern object in the square. */
 const screenTex = (key: string, lines: string[], hi = -1) => ctex(key, 512, 640, (g) => {
-  g.fillStyle = "#0a1a3a"; g.fillRect(0, 0, 512, 640);
+  g.fillStyle = "#123a6e"; g.fillRect(0, 0, 512, 640);
   const grad = g.createLinearGradient(0, 0, 0, 640);
   grad.addColorStop(0, "rgba(64,140,255,0.28)"); grad.addColorStop(0.5, "rgba(64,140,255,0.05)"); grad.addColorStop(1, "rgba(64,140,255,0.18)");
   g.fillStyle = grad; g.fillRect(0, 0, 512, 640);
@@ -155,7 +155,7 @@ const screenTex = (key: string, lines: string[], hi = -1) => ctex(key, 512, 640,
   const n = lines.length;
   lines.forEach((t, i) => {
     const y = 640 * ((i + 1) / (n + 1));
-    const s = fs(t, i === 0 ? 54 : 40);
+    const s = fs(t, i === 0 ? 62 : 48);
     g.font = `700 ${s}px Arial, sans-serif`;
     if (i === hi) { g.fillStyle = "#fff3c0"; g.fillRect(26, y - 34, 460, 68); g.fillStyle = "#0a1a3a"; }
     else g.fillStyle = "#ffd94d";
@@ -202,10 +202,10 @@ const makeObelisk = () => {
   base.position.y = 0.4; base.castShadow = true; base.receiveShadow = true; g.add(base);
   const base2 = new THREE.Mesh(new THREE.BoxGeometry(2.6, 0.7, 2.6), stone);
   base2.position.y = 1.15; base2.castShadow = true; g.add(base2);
-  const shaft = new THREE.Mesh(new THREE.CylinderGeometry(0.85, 1.25, 11, 4), lam2({ color: "#cbb98f" }));
-  shaft.position.y = 7.0; shaft.rotation.y = Math.PI / 4; shaft.castShadow = true; g.add(shaft);
+  const shaft = new THREE.Mesh(new THREE.CylinderGeometry(0.85, 1.25, 8, 4), lam2({ color: "#cbb98f" }));
+  shaft.position.y = 5.5; shaft.rotation.y = Math.PI / 4; shaft.castShadow = true; g.add(shaft);
   const tip = new THREE.Mesh(new THREE.ConeGeometry(1.2, 1.6, 4), lam2({ color: "#8a7a5a" }));
-  tip.position.y = 13.3; tip.rotation.y = Math.PI / 4; tip.castShadow = true; g.add(tip);
+  tip.position.y = 10.3; tip.rotation.y = Math.PI / 4; tip.castShadow = true; g.add(tip);
   return g;
 };
 
@@ -230,12 +230,20 @@ const makeBasilica = () => {
   const stone = lam2({ map: rep(travertineTex("vatikanTravBasilica"), 3, 1), color: "#e9dcc0" });
   const facade = new THREE.Mesh(new THREE.BoxGeometry(34, 13, 3), stone);
   facade.position.set(0, 6.5, 0); facade.castShadow = true; facade.receiveShadow = true; g.add(facade);
+  // entablature band across the facade top, breaking the flat slab
+  const band = new THREE.Mesh(new THREE.BoxGeometry(34, 1.0, 0.6), stone);
+  band.position.set(0, 12.6, 1.4); band.castShadow = true; g.add(band);
+  // three dark doors on the facade face
+  for (const dx of [-9, 0, 9]) {
+    const door = new THREE.Mesh(new THREE.BoxGeometry(2.0, 5, 0.2), lam2({ color: "#6b5a44" }));
+    door.position.set(dx, 2.5, 1.6); g.add(door);
+  }
   const ped = new THREE.Mesh(new THREE.CylinderGeometry(5.5, 5.5, 2.2, 3, 1), stone);
   ped.rotation.z = Math.PI; ped.rotation.y = Math.PI / 2; ped.scale.set(1, 1, 0.5);
   ped.position.set(0, 14.6, 0); ped.castShadow = true; g.add(ped);
   for (let i = -3; i <= 3; i++) {
-    const col = new THREE.Mesh(new THREE.CylinderGeometry(0.55, 0.62, 11, 10), lam2({ color: "#f2e8d0" }));
-    col.position.set(i * 4.4, 5.5, 1.8); col.castShadow = true; g.add(col);
+    const col = new THREE.Mesh(new THREE.CylinderGeometry(0.75, 0.82, 11, 10), lam2({ color: "#f2e8d0" }));
+    col.position.set(i * 4.4, 5.5, 2.3); col.castShadow = true; g.add(col);
   }
   const drum = new THREE.Mesh(new THREE.CylinderGeometry(7.5, 8, 6, 18), lam2({ color: "#d8c9a4" }));
   drum.position.set(0, 16, -4); drum.castShadow = true; g.add(drum);
@@ -464,11 +472,11 @@ export class World {
     // ---- sun pools + shade pools over the piazza ----
     for (let i = 0; i < 9; i++) {
       const s = r() < 0.5 ? 1 : -1;
-      softPatch(R, patchTex(), "#e8f4a4", s * (3 + r() * 6), 0.128, 10 - r() * 30, 4.5 + r() * 5, 6 + r() * 7, 0.16 + r() * 0.10, r() * 3);
+      softPatch(R, patchTex(), "#e8f4a4", s * (3 + r() * 6), 0.128, 10 - r() * 30, 4.5 + r() * 5, 6 + r() * 7, 0.10 + r() * 0.05, r() * 3);
     }
     for (let i = 0; i < 7; i++) {
       const s = r() < 0.5 ? 1 : -1;
-      softPatch(R, blobTex(), "#2c5420", s * (3 + r() * 6), 0.129, 8 - r() * 28, 5 + r() * 5, 6 + r() * 6, 0.26 + r() * 0.10, r() * 3);
+      softPatch(R, blobTex(), "#2c5420", s * (3 + r() * 6), 0.129, 8 - r() * 28, 5 + r() * 5, 6 + r() * 6, 0.18 + r() * 0.05, r() * 3);
     }
     void r;
   }
@@ -482,14 +490,11 @@ export class World {
     const steelLight = lam2({ color: "#565e68" });
     const stone = lam2({ map: rep(travertineTex("vatikanTravATM"), 1, 1), color: "#e6d9b8" });
     // pedestal
-    const ped = new THREE.Mesh(new THREE.BoxGeometry(2.2, 0.5, 1.6), stone);
+    const ped = new THREE.Mesh(new THREE.BoxGeometry(1.9, 0.5, 1.5), stone);
     ped.position.y = 0.25; ped.castShadow = true; ped.receiveShadow = true; g.add(ped);
     // body
     const body = new THREE.Mesh(new THREE.BoxGeometry(1.7, 2.5, 1.0), steel);
     body.position.y = 1.75; body.castShadow = true; g.add(body);
-    // slanted brow above the screen
-    const brow = new THREE.Mesh(new THREE.BoxGeometry(1.8, 0.16, 1.15), steelLight);
-    brow.position.set(0, 2.55, 0.05); brow.rotation.x = 0.12; brow.castShadow = true; g.add(brow);
     // the glowing screen (front face, +Z)
     const screen = new THREE.Mesh(new THREE.PlaneGeometry(1.15, 1.35), this.screenMat);
     screen.position.set(0, 2.15, 0.52); g.add(screen);
@@ -522,9 +527,12 @@ export class World {
       const strip = new THREE.Mesh(new THREE.BoxGeometry(0.05, 2.2, 0.06), new THREE.MeshBasicMaterial({ color: "#ffd94d" }));
       strip.position.set(s * 0.87, 1.75, 0.51); g.add(strip);
     }
+    // the whole kiosk is scaled up so the anomaly reads GIANT
+    // against the hero (frame-0 hook rule) — children scale with it
+    g.scale.setScalar(1.35);
     g.position.set(ax, 0, az);
     R.add(g);
-    blob(R, ax, 0.06, az + 0.4, 3.0, 2.6, 0.35);
+    blob(R, ax, 0.06, az + 0.4, 4.0, 3.4, 0.35);
     return { g, glow };
   }
 
@@ -592,7 +600,7 @@ export class World {
       n.visible = id === 4;
       if (id === 4) {
         const k = Math.max(0, Math.min(1, (U - i * 0.18) / 0.55));
-        n.position.set(ATM_C[0] + (i - 1) * 0.16, 0.82, ATM_C[2] + 0.55 + k * 0.55);
+        n.position.set(ATM_C[0] + (i - 1) * 0.16, 1.08, ATM_C[2] + 0.75 + k * 0.6);
         n.rotation.set(-0.25 - k * 0.35, (i - 1) * 0.2, (i - 1) * 0.12);
       }
     });

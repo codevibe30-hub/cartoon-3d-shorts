@@ -46,16 +46,16 @@ export const lin = (pts: [number, number][], x: number) => {
 export const PIAZZA_Z = -30;
 export const ATM_C: V3 = [0, 0, -2]; // the ATM kiosk, cover
 export const OBELISK_C: V3 = [0, 0, -30]; // the square's obelisk
-export const HERO_SPOT: V3 = [2.4, 0, 4]; // inside cover-cam portrait FOV
-export const CARDINAL_SPOT: V3 = [-2.2, 0, 3]; // inside cover-cam portrait FOV
+export const HERO_SPOT: V3 = [2.2, 0, 3.5]; // inside cover-cam portrait FOV
+export const CARDINAL_SPOT: V3 = [-2.0, 0, 3.0]; // inside cover-cam portrait FOV
 // The ATM never moves; the hero + cardinal spots per shot.
 export const HERO_AT: Record<number, V3> = {
-  1: [2.4, 0, 4], 2: [2.6, 0, -0.5], 3: [2.2, 0, 0.5], 4: [1.8, 0, 1.5],
-  5: [1.8, 0, 2.5], 6: [2.4, 0, 4],
+  1: [2.2, 0, 3.5], 2: [2.6, 0, -0.5], 3: [1.5, 0, 0.5], 4: [1.9, 0, -1.2],
+  5: [-2.3, 0, -1.7], 6: [2.2, 0, 3.5],
 };
 export const CARDINAL_AT: Record<number, V3> = {
-  1: [-2.2, 0, 3], 2: [-2.4, 0, -0.5], 3: [-2.0, 0, 0.5], 4: [-1.6, 0, 1.5],
-  5: [-1.8, 0, 2.5], 6: [-2.2, 0, 3],
+  1: [-2.0, 0, 3.0], 2: [-2.4, 0, -0.5], 3: [-2.0, 0, 0.5], 4: [-1.7, 0, -1.2],
+  5: [-1.8, 0, 2.5], 6: [-2.0, 0, 3.0],
 };
 
 // ---------------- shots ----------------
@@ -90,7 +90,7 @@ const dolly = (pos: V3, look: V3, k: number, rest: Partial<Cam> = {}): Shot =>
 // with the obelisk + dome behind it — the ATM big in the
 // mid-ground, the claim card centred up-frame, hero + cardinal
 // in the foreground.
-const CAM_COVER: { pos: V3; look: V3 } = { pos: [0.5, 2.3, 18], look: [0, 3.2, -14] };
+const CAM_COVER: { pos: V3; look: V3 } = { pos: [0.5, 2.3, 14], look: [0, 3.0, -10] };
 
 export const camAt = (id: number, f: number): Cam => {
   const s = SHOTS[id - 1];
@@ -104,9 +104,9 @@ export const camAt = (id: number, f: number): Cam => {
     case 2: // THE ONLY ONE: three-quarter from the left — ATM side-on, hero pointing at the screen, cardinal nodding
       return full(dolly([-7, 2.4, 6], [2, 1.8, -6], Math.exp(-0.0004 * lf), { fov: 44 }));
     case 3: // THE SCREEN: close on the ATM face — the Latin screen fills the frame, hero reading at the right edge
-      return full(dolly([1.4, 2.0, 3.2], [0, 2.1, -2.2], Math.exp(-0.0005 * lf), { fov: 40 }));
+      return full(dolly([1.8, 2.1, 5.0], [0, 2.0, -2.2], Math.exp(-0.0005 * lf), { fov: 40 }));
     case 4: // THE CASH: low front angle — euro notes sliding out of the dispenser, hero holding cash
-      return full(dolly([3.5, 2.0, 4.5], [-0.5, 1.5, -2], Math.exp(-0.0004 * lf), { fov: 42 }));
+      return full(dolly([3.0, 3.0, 7.0], [0, 1.6, -2], Math.exp(-0.0004 * lf), { fov: 44 }));
     case 5: // THE TWIST: medium from the right — hero + cardinal in front of the ATM, both shrugging
       return full(dolly([-5, 2.6, 8], [0.5, 1.8, -4], Math.exp(-0.0005 * lf), { fov: 44 }));
     default:
@@ -122,7 +122,7 @@ export const dofAt = (f: number): Dof => {
     case 2: return { f: 0, cInf: 0.6, focus: () => [ATM_C[0], 1.8, ATM_C[2]] };
     case 3: return { f: 0, cInf: 0.9, focus: () => [ATM_C[0], 2.1, ATM_C[2]] };
     case 4: return { f: 0, cInf: 0.9, focus: () => [ATM_C[0], 1.5, ATM_C[2]] };
-    case 5: return { f: 0, cInf: 0.6, focus: () => [HERO_SPOT[0], 1.4, HERO_SPOT[2]] };
+    case 5: return { f: 0, cInf: 0.6, focus: () => [ATM_C[0], 1.8, ATM_C[2]] };
     default: return { f: 0, cInf: 0.9, focus: () => [HERO_SPOT[0], 1.3, HERO_SPOT[2]] };
   }
 };

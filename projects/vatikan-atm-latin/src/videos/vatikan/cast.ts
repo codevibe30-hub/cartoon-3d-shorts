@@ -311,9 +311,9 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
     // its screen cycling Latin — hero shocked BESIDE it (right),
     // cardinal on the other side (left), the claim as one GIANT
     // board up-frame.
-    hero(2.4, 4, "shock", -0.15);
-    cardinal(-2.2, 3, "grin", 0.15);
-    card("cardHook", ["ATM BAHASA", "LATIN!"], 0, 3.5, -2, 5.0, 0.52);
+    hero(2.2, 3.5, "shock", -0.15);
+    cardinal(-2.0, 3.0, "grin", 0.15);
+    card("cardHook", ["ATM BAHASA", "LATIN!"], 0, 3.5, -2, 5.4, 0.52);
   } else if (id === 2) {
     // THE ONLY ONE: three-quarter on the kiosk — hero points at
     // the Latin screen, cardinal nods beside the machine.
@@ -323,28 +323,28 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
   } else if (id === 3) {
     // THE SCREEN: close on the ATM face — the Latin screen fills
     // the frame. Hero reads at the right edge, cardinal watches.
-    hero(2.2, 0.5, "nervous", -0.25);
+    hero(1.5, 0.5, "nervous", -0.25);
     cardinal(-2.0, 0.5, "grin", 0.25);
     card("cardScreen", ["MASUKIN", "KARTU!"], 0, 2.6, -2, 3.4, 0.5);
   } else if (id === 4) {
     // THE CASH: euro notes slide out of the dispenser — hero
     // holds cash up, cardinal counts along.
-    hero(1.8, 1.5, "laugh", -0.15);
-    cardinal(-1.6, 1.5, "grin", 0.15);
+    hero(1.9, -1.2, "laugh", -0.15);
+    cardinal(-1.7, -1.2, "grin", 0.15);
     card("cardCash", ["DEDUCTIO", "EX PECUNIA"], 0, 2.6, -2, 3.4, 0.5);
   } else if (id === 5) {
     // THE TWIST: hero + cardinal in front of the ATM, shrugging
     // at the "dead language" that still hands out cash.
-    hero(1.8, 2.5, "nervous", -0.1);
+    hero(-2.3, -1.7, "nervous", -0.1);
     cardinal(-1.8, 2.5, "nervous", 0.1);
     card("cardTwist", ["BAHASA", "MATI?!"], 0, 2.6, -2, 3.4, 0.5);
   } else if (id === 6) {
     // THE PUNCHLINE LOOP: back on the cover framing, golden hour
     // — same piazza, same claim. The hero starts thoughtful over
     // the "dead language" line, then laughs at the payoff.
-    hero(2.4, 4, U > 0.62 ? "laugh" : "nervous", -0.15);
-    cardinal(-2.2, 3, U > 0.62 ? "laugh" : "grin", 0.15);
-    card("cardHook2", ["ATM BAHASA", "LATIN!"], 0, 3.5, -2, 5.0, 0.52);
+    hero(2.2, 3.5, U > 0.62 ? "laugh" : "nervous", -0.15);
+    cardinal(-2.0, 3.0, U > 0.62 ? "laugh" : "grin", 0.15);
+    card("cardHook2", ["ATM BAHASA", "LATIN!"], 0, 3.5, -2, 5.4, 0.52);
   }
   return out;
 };
