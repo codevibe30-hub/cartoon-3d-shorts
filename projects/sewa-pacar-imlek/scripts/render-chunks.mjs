@@ -11,7 +11,7 @@ import { bundle } from "@remotion/bundler";
 import { selectComposition, renderMedia } from "@remotion/renderer";
 import { execFileSync } from "node:child_process";
 
-const TOTAL = 1790; // ImlekFrame full episode (1790 frames)
+const TOTAL = 819; // ImlekFrame full episode (819 frames)
 const CHUNK = Number(process.argv[2] || 75);
 // Optional frame window [FROM, TO) on the chunk grid, for hybrid multi-machine renders.
 const FROM = Number(process.env.FROM || 0);
