@@ -559,6 +559,15 @@ export class World {
     // a thin gold centre stripe along the whole line
     const stripe = new THREE.Mesh(new THREE.BoxGeometry(60, 0.02, 0.08), lam2({ color: "#d9a441" }));
     stripe.position.set(0, 0.09, EQUATOR_Z); R.add(stripe);
+    // the line's middle run is buried under the monument platform
+    // (top y 0.24), so paint it ON the platform too — two flat
+    // stripes continuing the red-white line across the platform
+    for (const [sx, col] of [[-3.5, "#d42f2f"], [3.5, "#f6f0e0"]] as [number, string][]) {
+      const pseg = new THREE.Mesh(new THREE.BoxGeometry(7, 0.02, 0.55), lam2({ color: col }));
+      pseg.position.set(sx, 0.25, EQUATOR_Z); R.add(pseg);
+    }
+    const pstripe = new THREE.Mesh(new THREE.BoxGeometry(14, 0.02, 0.08), lam2({ color: "#d9a441" }));
+    pstripe.position.set(0, 0.26, EQUATOR_Z); R.add(pstripe);
     // ---- THE monument ----
     const mon = makeMonument();
     mon.position.set(MON[0], 0.24, MON[2]);

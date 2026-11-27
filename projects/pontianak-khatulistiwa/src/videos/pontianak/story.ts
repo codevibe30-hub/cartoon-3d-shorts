@@ -52,8 +52,10 @@ export const DOME_POS: V3 = [-9, 0, -20];
 // the line, clear of the card's up-frame zone.
 export const HERO_SPOT: V3 = [2.3, 0, -8.2];
 export const GUIDE_SPOT: V3 = [-2.5, 0, -8.2];
-// The egg for shot 6 stands on the equator line, centre frame.
-export const EGG_POS: V3 = [0, 0, -12];
+// The egg for shot 6 stands on the equator line EAST of the
+// monument, in the open plaza — NEVER at the monument's base,
+// where the pedestal would hide it from every camera.
+export const EGG_POS: V3 = [8, 0, -12];
 
 // ---------------- shots ----------------
 export type Light = LightName;
@@ -99,17 +101,22 @@ export const camAt = (id: number, f: number): Cam => {
       // gentle push-in only (0.00025 decay): the approved frame-0
       // composition (k = 1 at the shot's first frame) stays intact
       return full(dolly(CAM_COVER.pos, CAM_COVER.look, Math.exp(-0.00025 * lf), { fov: 46 }));
-    case 2: // LOW at the line: the hero's feet straddling 0 degrees
-      return full(dolly([1.9, 1.15, -3.2], [0.3, 0.85, -12], Math.exp(-0.0005 * lf), { fov: 42 }));
-    case 3: // CLOSE on the monument's crown: ring, arrow, 1928 plate
-      return full(dolly([3.4, 4.4, -0.5], [0, 5.6, -12], Math.exp(-0.0004 * lf), { fov: 40 }));
+    case 2: // LOW at the line: the hero's feet straddling 0 degrees —
+      // the hero stands EAST of the monument, in the OPEN plaza,
+      // so the pillar can never hide him from this camera
+      return full(dolly([8, 1.3, -4.5], [8, 0.9, -12], Math.exp(-0.0005 * lf), { fov: 42 }));
+    case 3: // CLOSE on the monument's crown: ring, arrow, 1928 plate —
+      // pulled back so the WHOLE monument (0–11 m) fits the frame
+      return full(dolly([4.8, 3.6, 2.5], [0, 5.4, -12], Math.exp(-0.0004 * lf), { fov: 44 }));
     case 4: // WIDE: the whole plaza, the river closing the horizon
       return full(dolly([-6.5, 8, 16], [0, 1, -14], Math.exp(-0.0003 * lf), { fov: 46 }));
     case 5: // HIGH: looking down the plaza at culmination — the
       // shadows shrink to nothing under the overhead sun
       return full(dolly([0, 12.5, 5], [0, 0.3, -12], Math.exp(-0.0002 * lf), { fov: 44 }));
-    case 6: // CLOSE on the egg standing on the line
-      return full(dolly([1.7, 1.05, -7.2], [0, 0.55, -12], Math.exp(-0.0006 * lf), { fov: 40 }));
+    case 6: // CLOSE on the egg standing on the line — the egg sits
+      // EAST of the monument in the open plaza, hero + guide
+      // flanking it; the monument stays visible in the background
+      return full(dolly([8, 1.2, -6.5], [8, 0.5, -12], Math.exp(-0.0006 * lf), { fov: 40 }));
     default:
       return full(dolly(CAM_COVER.pos, CAM_COVER.look, 1, { fov: 46 }));
   }
@@ -124,7 +131,7 @@ export const dofAt = (f: number): Dof => {
     case 3: return { f: 0, cInf: 0.7, focus: () => [0, 5.6, -12] };
     case 4: return { f: 0, cInf: 0.4, focus: () => [0, 1, -40] };
     case 5: return { f: 0, cInf: 0.5, focus: () => [0, 0.5, -12] };
-    case 6: return { f: 0, cInf: 0.95, focus: () => [0, 0.55, -12] };
+    case 6: return { f: 0, cInf: 0.95, focus: () => [8, 0.55, -12] };
     default: return { f: 0, cInf: 0.9, focus: () => [0, 3.2, -12] };
   }
 };

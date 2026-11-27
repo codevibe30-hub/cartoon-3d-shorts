@@ -357,15 +357,18 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
   } else if (id === 2) {
     // THE STRADDLE: the hero mid-stride ON the line — one foot
     // north, one foot south — the red-white line running under
-    // his feet. The guide points at the line from the side.
-    out.places.push(person(cam, HERO, 0.3, 0, EQUATOR_Z, { mode: "stroll", phase: 0.5, expr: "grin", blink: lidAt(t, HERO.i), look: -0.1 }, 1.5));
-    blobS(0.3, 0, EQUATOR_Z);
-    out.places.push(stand(GUIDE, -2.2, 0, -10.2, "grin", 0.3, { wave: 1 }, 1.4)); blobS(-2.2, 0, -10.2);
-    card("cardStraddle", ["SATU KAKI", "DUA DUNIA!"], 0.3, 2, EQUATOR_Z, 3.4, 0.5);
+    // his feet. He stands EAST of the monument (x 8), in the open
+    // plaza, so the pillar can never hide him. The guide points
+    // at the line from the side.
+    out.places.push(person(cam, HERO, 8, 0, EQUATOR_Z, { mode: "stroll", phase: 0.5, expr: "grin", blink: lidAt(t, HERO.i), look: -0.1 }, 1.5));
+    blobS(8, 0, EQUATOR_Z);
+    out.places.push(stand(GUIDE, 5.6, 0, -10.4, "grin", 0.3, { wave: 1 }, 1.4)); blobS(5.6, 0, -10.4);
+    card("cardStraddle", ["SATU KAKI", "DUA DUNIA!"], 8, 2, EQUATOR_Z, 3.4, 0.5);
   } else if (id === 3) {
     // 1928: close on the monument's crown — the gold ring, the
-    // arrow, the EVENAR plaque — the hero pointing up at it.
-    out.places.push(stand(HERO, 2.6, 0.24, -6.4, "grin", -0.3, {}, 1.3)); blobS(2.6, 0.24, -6.4);
+    // arrow, the EVENAR plaque — the hero pointing up at it from
+    // the plaza floor, clear of the pillar.
+    out.places.push(stand(HERO, 3.6, 0, -5.6, "grin", -0.3, {}, 1.3)); blobS(3.6, 0, -5.6);
     guideAt("grin", 0.2);
     card("card1928", ["SEJAK 1928!"], MON[0], 5.6, MON[2], 3.2, 0.5);
   } else if (id === 4) {
@@ -384,10 +387,11 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
   } else if (id === 6) {
     // THE EGG: close on the egg standing upright on the line —
     // the hero and the guide leaning in, amazed, at the edges.
+    // The egg stands EAST of the monument, in the open plaza.
     out.fx.push({ key: "eggStand", cw: 256, ch: 288, draw: drawEgg, x: EGG_POS[0], y: 0.55, z: EGG_POS[2], w: 0.55, h: 0.62, soft: true });
     blobS(EGG_POS[0], 0, EGG_POS[2], 0.6);
-    out.places.push(stand(HERO, 1.6, 0, -10.6, "shock", -0.4, {}, 1.25)); blobS(1.6, 0, -10.6);
-    out.places.push(stand(GUIDE, -1.7, 0, -10.6, "shock", 0.4, {}, 1.25)); blobS(-1.7, 0, -10.6);
+    out.places.push(stand(HERO, 6.3, 0, -10.6, "shock", -0.4, {}, 1.25)); blobS(6.3, 0, -10.6);
+    out.places.push(stand(GUIDE, 9.7, 0, -10.6, "shock", 0.4, {}, 1.25)); blobS(9.7, 0, -10.6);
     card("cardEgg", ["TELUR", "BERDIRI!"], EGG_POS[0], 1.2, EGG_POS[2], 3.2, 0.5);
   } else if (id === 7) {
     // THE PUNCHLINE LOOP (golden): back on the cover framing —
