@@ -108,7 +108,7 @@ export const boxLidAt = (tSec: number): number => {
 // ---------------- shots ----------------
 export type Light = LightName;
 export type ShotDef = { id: number; a: number; b: number; light: Light; tau: (t: number) => number };
-const SHOT_LIGHTS: Light[] = ["day", "day", "day", "day", "day", "day", "golden"];
+const SHOT_LIGHTS: Light[] = ["day", "day", "day", "day", "day", "day", "day"]; // shot 7 = day, not golden: golden turned the snow into a sandy beach
 export const SHOTS: ShotDef[] = L.slice(0, 7).map((a, i) => ({
   id: i + 1, a, b: L[i + 1], light: SHOT_LIGHTS[i], tau: (t: number) => t,
 }));
@@ -159,8 +159,8 @@ export const camAt = (id: number, f: number): Cam => {
       return full(dolly([-2.0, 2.4, 8], [-6.5, 2.2, -13], Math.exp(-0.0005 * lf), { fov: 42 }));
     case 5: // TRACKING the coffin race — pulled back so coffins + racers read, crowd both sides
       return full(dolly([9, 3.2, 20], [-2, 1.0, -14], Math.exp(-0.0003 * lf), { fov: 44 }));
-    case 6: // CLOSE on the gate table: the ice coffin opens
-      return full(dolly([1.5, 2.2, -4], [3.5, 1.7, -15], Math.exp(-0.0006 * lf), { fov: 40 }));
+    case 6: // CLOSE on the gate table: pulled back so hero + official read beside the coffin
+      return full(dolly([0.5, 2.4, -1], [3.0, 1.6, -14.5], Math.exp(-0.0006 * lf), { fov: 44 }));
     default:
       return full(dolly(CAM_COVER.pos, CAM_COVER.look, 1, { fov: 46 }));
   }

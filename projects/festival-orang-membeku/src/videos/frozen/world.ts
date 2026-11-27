@@ -745,9 +745,9 @@ export class World {
     const slope = new THREE.Mesh(new THREE.PlaneGeometry(18, 16), lam2({ map: rep(snowTex(), 4, 4) }));
     slope.rotation.x = -Math.PI / 2 + 0.18; slope.rotation.z = 0.12;
     slope.position.set(cx, 0.4, cz); slope.receiveShadow = true; R.add(slope);
-    const mtnM = lam2({ color: "#c8d8ea" });
-    const mtnM2 = lam2({ color: "#aebfd8" });
-    for (const [mx, mz, w, h, m] of [[-52, -44, 16, 13, mtnM], [-38, -45, 12, 10, mtnM2], [-28, -44, 10, 8, mtnM]] as [number, number, number, number, THREE.MeshLambertMaterial][]) {
+    const mtnM = lam2({ color: "#8fb0d8" });
+    const mtnM2 = lam2({ color: "#7a9cc8" });
+    for (const [mx, mz, w, h, m] of [[-54, -50, 13, 11, mtnM], [-38, -51, 10, 9, mtnM2], [-26, -50, 9, 7, mtnM]] as [number, number, number, number, THREE.MeshLambertMaterial][]) {
       const tri = new THREE.Mesh(new THREE.ConeGeometry(w / 2, h, 4), m);
       tri.position.set(mx, h / 2 - 0.5, mz); tri.rotation.y = Math.PI / 4; R.add(tri);
       const cap = new THREE.Mesh(new THREE.ConeGeometry(w / 4, h * 0.32, 4), lam2({ color: "#ffffff" }));

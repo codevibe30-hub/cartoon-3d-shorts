@@ -356,8 +356,8 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
     // NORWAY 1989: Grandpa Bredo skis down the snowy mountainside,
     // pines + peaks behind him; the hero narrates from the side.
     ski();
-    out.places.push(stand(HERO, -46.5, 0, -30.5, "stern", -0.2, {}, 1.0));
-    blob(out, -46.5, 0, -30.5);
+    out.places.push(stand(HERO, -44.5, 0, -31.5, "stern", -0.2, {}, 1.0));
+    blob(out, -44.5, 0, -31.5);
     card("cardName", ["BREDO", "MORSTOEL"], SLOPE_C[0], 2, SLOPE_C[2] - 6, 4.2, 0.5);
   } else if (id === 3) {
     // THE DRY ICE: the truck crawls to the shed — the caretaker
@@ -395,8 +395,8 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
   } else if (id === 6) {
     // THE TWIST: the ice coffin opens at the gate and the town
     // rule exempts Bredo — he was here first. Hero shocked.
-    out.places.push(stand(HERO, 1.2, 0, -11.5, "shock", 0.1, {}, 1.3)); blob(out, 1.2, 0, -11.5);
-    out.places.push(stand(OFFICIAL, 5.8, 0, -13.8, "stern", -0.1, {}, 1.05)); blob(out, 5.8, 0, -13.8);
+    out.places.push(stand(HERO, 0.8, 0, -11, "shock", 0.1, {}, 1.3)); blob(out, 0.8, 0, -11);
+    out.places.push(stand(OFFICIAL, 6.6, 0, -12.5, "stern", -0.1, {}, 1.05)); blob(out, 6.6, 0, -12.5);
     card("cardTwist", ["DIKECUALIKAN!"], 3.5, 2.5, -14.5, 3.8, 0.5);
   } else if (id === 7) {
     // THE PUNCHLINE LOOP: golden hour — the festival crowd pours
