@@ -412,8 +412,13 @@ const makeLantern = () => {
 };
 
 /** A lantern string across the street: two poles, a sagging rope,
- *  and five swaying lanterns. Exposes the lantern groups for sway. */
-const makeLanternString = (span: number) => {
+ *  and five swaying lanterns. Exposes the lantern groups for sway.
+ *  lanternDX shifts ONLY the lanterns (poles/rope stay put): the
+ *  cover camera is centred on x≈0, so a lantern at x=0 hangs its
+ *  cord + body right across the claim card ("SEHARI!" — the E was
+ *  covered in shot 6, 2026-11-27). Half-spacing (3) puts the
+ *  nearest lanterns at x=±3, clear of the card in every shot. */
+const makeLanternString = (span: number, lanternDX = 0) => {
   const g = new THREE.Group();
   const poleM = lam2({ color: "#3a2a10" });
   for (const s of [1, -1]) {
@@ -426,7 +431,7 @@ const makeLanternString = (span: number) => {
   rope.rotation.z = Math.PI / 2; rope.position.y = 7.2; g.add(rope);
   const lanterns: THREE.Group[] = [];
   for (let i = 0; i < 5; i++) {
-    const x = -span / 2 + (span * (i + 0.5)) / 5;
+    const x = -span / 2 + (span * (i + 0.5)) / 5 + lanternDX;
     const sag = 0.9 - Math.abs(i - 2) * 0.28;
     const lg = makeLantern();
     lg.position.set(x, 7.2 - sag, 0);
@@ -628,8 +633,11 @@ export class World {
     const runner2 = new THREE.Mesh(new THREE.PlaneGeometry(3.2, 12), lam2({ color: "#a81218" }));
     runner2.rotation.x = -Math.PI / 2; runner2.position.set(0, 0.065, -25); runner2.receiveShadow = true; R.add(runner2);
     // ---- lantern strings across the street (swaying) ----
-    for (const z of [8, -8]) {
-      const ls = makeLanternString(30);
+    // Front string (z=8) hangs between the cover camera and the
+    // claim card: its lanterns are shifted +3 so none sits at x≈0
+    // (see makeLanternString — a centred lantern covers the card).
+    for (const [z, dx] of [[8, 3], [-8, 0]] as [number, number][]) {
+      const ls = makeLanternString(30, dx);
       ls.position.set(0, 0, z);
       R.add(ls);
       this.lanterns.push(...(ls as unknown as { userData: { lanterns: THREE.Group[] } }).userData.lanterns);
