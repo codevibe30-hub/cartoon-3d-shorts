@@ -311,8 +311,8 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
     // its screen cycling Latin — hero shocked BESIDE it (right),
     // cardinal on the other side (left), the claim as one GIANT
     // board up-frame.
-    hero(2.2, 3.5, "shock", -0.15);
-    cardinal(-2.0, 3.0, "grin", 0.15);
+    hero(2.0, 3.0, "shock", -0.15);
+    cardinal(-1.7, 2.2, "grin", 0.15);
     card("cardHook", ["ATM BAHASA", "LATIN!"], 0, 3.5, -2, 5.4, 0.52);
   } else if (id === 2) {
     // THE ONLY ONE: three-quarter on the kiosk — hero points at
@@ -342,8 +342,8 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
     // THE PUNCHLINE LOOP: back on the cover framing, golden hour
     // — same piazza, same claim. The hero starts thoughtful over
     // the "dead language" line, then laughs at the payoff.
-    hero(2.2, 3.5, U > 0.62 ? "laugh" : "nervous", -0.15);
-    cardinal(-2.0, 3.0, U > 0.62 ? "laugh" : "grin", 0.15);
+    hero(2.0, 3.0, U > 0.62 ? "laugh" : "nervous", -0.15);
+    cardinal(-1.7, 2.2, U > 0.62 ? "laugh" : "grin", 0.15);
     card("cardHook2", ["ATM BAHASA", "LATIN!"], 0, 3.5, -2, 5.4, 0.52);
   }
   return out;

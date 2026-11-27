@@ -140,9 +140,9 @@ const patchTex = () => ctex("vatikanPatch", 256, 256, (g) => {
 /** ATM screen face: dark blue glass, amber Latin lines, a soft
  *  scanline sheen — the one glowing modern object in the square. */
 const screenTex = (key: string, lines: string[], hi = -1) => ctex(key, 512, 640, (g) => {
-  g.fillStyle = "#123a6e"; g.fillRect(0, 0, 512, 640);
+  g.fillStyle = "#0a1a3a"; g.fillRect(0, 0, 512, 640);
   const grad = g.createLinearGradient(0, 0, 0, 640);
-  grad.addColorStop(0, "rgba(64,140,255,0.28)"); grad.addColorStop(0.5, "rgba(64,140,255,0.05)"); grad.addColorStop(1, "rgba(64,140,255,0.18)");
+  grad.addColorStop(0, "rgba(64,140,255,0.15)"); grad.addColorStop(0.5, "rgba(64,140,255,0.03)"); grad.addColorStop(1, "rgba(64,140,255,0.10)");
   g.fillStyle = grad; g.fillRect(0, 0, 512, 640);
   for (let y = 0; y < 640; y += 6) { g.fillStyle = "rgba(0,0,0,0.10)"; g.fillRect(0, y, 512, 2); }
   g.fillStyle = "#ffd94d"; g.textAlign = "center"; g.textBaseline = "middle";
@@ -157,7 +157,7 @@ const screenTex = (key: string, lines: string[], hi = -1) => ctex(key, 512, 640,
     const y = 640 * ((i + 1) / (n + 1));
     const s = fs(t, i === 0 ? 62 : 48);
     g.font = `700 ${s}px Arial, sans-serif`;
-    if (i === hi) { g.fillStyle = "#fff3c0"; g.fillRect(26, y - 34, 460, 68); g.fillStyle = "#0a1a3a"; }
+    if (i === hi) { g.fillStyle = "#ffd94d"; g.fillRect(26, y - 34, 460, 68); g.fillStyle = "#0a1a3a"; }
     else g.fillStyle = "#ffd94d";
     g.fillText(t, 256, y);
   });
@@ -472,11 +472,11 @@ export class World {
     // ---- sun pools + shade pools over the piazza ----
     for (let i = 0; i < 9; i++) {
       const s = r() < 0.5 ? 1 : -1;
-      softPatch(R, patchTex(), "#e8f4a4", s * (3 + r() * 6), 0.128, 10 - r() * 30, 4.5 + r() * 5, 6 + r() * 7, 0.10 + r() * 0.05, r() * 3);
+      softPatch(R, patchTex(), "#e8f4a4", s * (3 + r() * 6), 0.128, 10 - r() * 30, 4.5 + r() * 5, 6 + r() * 7, 0.06 + r() * 0.03, r() * 3);
     }
     for (let i = 0; i < 7; i++) {
       const s = r() < 0.5 ? 1 : -1;
-      softPatch(R, blobTex(), "#2c5420", s * (3 + r() * 6), 0.129, 8 - r() * 28, 5 + r() * 5, 6 + r() * 6, 0.18 + r() * 0.05, r() * 3);
+      softPatch(R, blobTex(), "#2c5420", s * (3 + r() * 6), 0.129, 8 - r() * 28, 5 + r() * 5, 6 + r() * 6, 0.12 + r() * 0.03, r() * 3);
     }
     void r;
   }
@@ -501,7 +501,7 @@ export class World {
     const frame = new THREE.Mesh(new THREE.BoxGeometry(1.3, 1.5, 0.06), steelLight);
     frame.position.set(0, 2.15, 0.49); g.add(frame);
     // screen light spilling onto the piazza
-    const glow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex(), transparent: true, depthWrite: false, opacity: 0.5, color: "#9cc8ff" }));
+    const glow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex(), transparent: true, depthWrite: false, opacity: 0.2, color: "#9cc8ff" }));
     glow.position.set(0, 2.15, 1.1); glow.scale.set(3.2, 3.6, 1); glow.layers.set(NOINK); g.add(glow);
     // keypad: dark slab + 12 tiny buttons
     const pad = new THREE.Mesh(new THREE.BoxGeometry(0.62, 0.5, 0.06), lam2({ color: "#22262c" }));
@@ -592,7 +592,7 @@ export class World {
     else if (id === 4) this.screenMat.map = this.screenCash;
     else this.screenMat.map = menuFlip ? this.screenMenuA : this.screenMenuB;
     this.screenMat.needsUpdate = true;
-    (this.screenGlow.material as THREE.SpriteMaterial).opacity = 0.42 + Math.sin(tt * 3.2) * 0.10;
+    (this.screenGlow.material as THREE.SpriteMaterial).opacity = 0.18 + Math.sin(tt * 3.2) * 0.04;
     // ---- euro notes slide out of the dispenser in shot 4 only ----
     const sLen = (s.b - s.a) / FPS;
     const U = Math.max(0, Math.min(1, (tt - (s.a / FPS)) / Math.max(0.01, sLen)));

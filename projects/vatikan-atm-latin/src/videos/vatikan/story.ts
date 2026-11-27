@@ -46,16 +46,16 @@ export const lin = (pts: [number, number][], x: number) => {
 export const PIAZZA_Z = -30;
 export const ATM_C: V3 = [0, 0, -2]; // the ATM kiosk, cover
 export const OBELISK_C: V3 = [0, 0, -30]; // the square's obelisk
-export const HERO_SPOT: V3 = [2.2, 0, 3.5]; // inside cover-cam portrait FOV
-export const CARDINAL_SPOT: V3 = [-2.0, 0, 3.0]; // inside cover-cam portrait FOV
+export const HERO_SPOT: V3 = [2.0, 0, 3.0]; // inside cover-cam portrait FOV
+export const CARDINAL_SPOT: V3 = [-1.7, 0, 2.2]; // inside cover-cam portrait FOV
 // The ATM never moves; the hero + cardinal spots per shot.
 export const HERO_AT: Record<number, V3> = {
-  1: [2.2, 0, 3.5], 2: [2.6, 0, -0.5], 3: [1.5, 0, 0.5], 4: [1.9, 0, -1.2],
-  5: [-2.3, 0, -1.7], 6: [2.2, 0, 3.5],
+  1: [2.0, 0, 3.0], 2: [2.6, 0, -0.5], 3: [1.5, 0, 0.5], 4: [1.9, 0, -1.2],
+  5: [-2.3, 0, -1.7], 6: [2.0, 0, 3.0],
 };
 export const CARDINAL_AT: Record<number, V3> = {
-  1: [-2.0, 0, 3.0], 2: [-2.4, 0, -0.5], 3: [-2.0, 0, 0.5], 4: [-1.7, 0, -1.2],
-  5: [-1.8, 0, 2.5], 6: [-2.0, 0, 3.0],
+  1: [-1.7, 0, 2.2], 2: [-2.4, 0, -0.5], 3: [-2.0, 0, 0.5], 4: [-1.7, 0, -1.2],
+  5: [-1.8, 0, 2.5], 6: [-1.7, 0, 2.2],
 };
 
 // ---------------- shots ----------------
