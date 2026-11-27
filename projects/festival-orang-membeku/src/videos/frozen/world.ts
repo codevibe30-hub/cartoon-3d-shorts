@@ -144,7 +144,7 @@ const snowTex = () => ctex("frozenGrassRich", 1024, 1024, (g, r) => {
     const x = r() * S, y = r() * S, h = 9 + r() * 10;
     wrapDraw(S, x, y, 18, (xx, yy) => {
       for (let b = -2; b <= 2; b++) {
-        g.strokeStyle = b % 2 ? "#69b047" : "#356f24"; g.globalAlpha = 0.65 + r() * 0.35; g.lineWidth = 1.8;
+        g.strokeStyle = b % 2 ? "#cfe0f2" : "#9db8d8"; g.globalAlpha = 0.65 + r() * 0.35; g.lineWidth = 1.8;
         g.beginPath(); g.moveTo(xx, yy); g.quadraticCurveTo(xx + b * 2.2, yy - h * 0.6, xx + b * 3.4, yy - h); g.stroke();
       }
     });
@@ -504,7 +504,6 @@ export class World {
   private dummy = new THREE.Object3D();
   private gate!: THREE.Group;
   private lanterns: THREE.Group[] = [];
-  private flag!: THREE.Mesh;
   private plane!: THREE.Group;
   private trucks: THREE.Group[] = [];
   private coffins: THREE.Group[] = [];
@@ -568,7 +567,7 @@ export class World {
     const land = new THREE.Mesh(new THREE.CircleGeometry(420, 36), lam2({ map: rep(snowTex(), 150, 150) }));
     land.rotation.x = -Math.PI / 2; land.position.set(0, -0.12, -40); land.receiveShadow = true; R.add(land);
     // the snow-packed square: pale slabs from the foreground to the gate
-    const plaza = new THREE.Mesh(new THREE.PlaneGeometry(34, 52), lam2({ map: rep(paveTex(), 6, 9), color: "#dfe9f4" }));
+    const plaza = new THREE.Mesh(new THREE.PlaneGeometry(34, 52), lam2({ map: rep(snowTex(), 6, 9) }));
     plaza.rotation.x = -Math.PI / 2; plaza.position.set(0, 0, 2); plaza.receiveShadow = true; R.add(plaza);
     // snow verges flanking the square + sun pools + shade pools
     for (const s of [1, -1]) {
@@ -589,9 +588,10 @@ export class World {
     }
     // ---- the Tuff Shed + festival tents ----
     const shed = makeShed();
-    shed.position.set(0, 0, SHED_Z - 4.5);
+    shed.scale.setScalar(1.35);
+    shed.position.set(0, 0, -30);
     R.add(shed);
-    blob(R, 0, 0.13, SHED_Z - 4.5, 12, 10, 0.28);
+    blob(R, 0, 0.13, -30, 14, 11, 0.28);
     const tentA = makeTent("#c0161d");
     tentA.position.set(-13, 0, -26); R.add(tentA);
     const tentB = makeTent("#2e6db4");
@@ -600,12 +600,7 @@ export class World {
     this.gate.position.set(0, 0, GATE_Z);
     R.add(this.gate);
     this.lanterns = (this.gate as unknown as { userData: { lanterns: THREE.Group[] } }).userData.lanterns;
-    // flagpole on the school roof with a red flag
-    const pole = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.12, 7.5, 8), lam2({ color: "#d8d8dc" }));
-    pole.position.set(-13, SHED_Z - 4.5 + 0, 0); pole.position.set(-13, 14.5, SHED_Z - 4.5); pole.castShadow = true; R.add(pole);
-    const flagM = lam2({ color: "#d21f26", side: THREE.DoubleSide });
-    this.flag = new THREE.Mesh(new THREE.PlaneGeometry(2.6, 1.6), flagM);
-    this.flag.position.set(-11.6, 17.4, SHED_Z - 4.5); this.flag.castShadow = true; R.add(this.flag);
+    // (flag removed: the pole floated detached in frame)
     // ---- plaza trees, mixed sizes, both sides ----
     const greens = ["#2e5d43", "#3f7a55", "#27503a"];
     const treePts: [number, number][] = [];
@@ -640,7 +635,7 @@ export class World {
       dummy.position.set(p.x, 0.1, p.z); dummy.rotation.set(0, yaw, 0);
       dummy.scale.setScalar(p.s); dummy.updateMatrix();
       tufts.setMatrixAt(i, dummy.matrix);
-      tint.setHSL(0.24 + (r() - 0.5) * 0.04, 0.35, 0.86 + (r() - 0.5) * 0.24);
+      tint.setHSL(0.58, 0.12, 0.88 + (r() - 0.5) * 0.2);
       tufts.setColorAt(i, tint);
       this.tuftData.push({ x: p.x, z: p.z, s: p.s, yaw });
     });
@@ -752,7 +747,7 @@ export class World {
     slope.position.set(cx, 0.4, cz); slope.receiveShadow = true; R.add(slope);
     const mtnM = lam2({ color: "#c8d8ea" });
     const mtnM2 = lam2({ color: "#aebfd8" });
-    for (const [mx, mz, w, h, m] of [[-50, -37, 14, 12, mtnM], [-38, -38, 11, 9, mtnM2], [-30, -37, 9, 7, mtnM]] as [number, number, number, number, THREE.MeshLambertMaterial][]) {
+    for (const [mx, mz, w, h, m] of [[-52, -44, 16, 13, mtnM], [-38, -45, 12, 10, mtnM2], [-28, -44, 10, 8, mtnM]] as [number, number, number, number, THREE.MeshLambertMaterial][]) {
       const tri = new THREE.Mesh(new THREE.ConeGeometry(w / 2, h, 4), m);
       tri.position.set(mx, h / 2 - 0.5, mz); tri.rotation.y = Math.PI / 4; R.add(tri);
       const cap = new THREE.Mesh(new THREE.ConeGeometry(w / 4, h * 0.32, 4), lam2({ color: "#ffffff" }));
@@ -845,9 +840,6 @@ export class World {
     }
     // gate lanterns sway gently
     this.lanterns.forEach((lg, i) => { lg.rotation.z = Math.sin(tt * 1.1 + i * 1.7) * 0.05; lg.rotation.x = Math.cos(tt * 0.9 + i) * 0.03; });
-    // the school flag waves
-    this.flag.rotation.y = Math.sin(tt * 2.2) * 0.12;
-    this.flag.rotation.z = Math.sin(tt * 1.6) * 0.04;
     // the trucks crawl toward the shed (shots 1-7: parked by the shed after shot 3)
     this.trucks.forEach((truck, k) => {
       const p = truckAt(Math.min(tt, SHOTS[2].b / FPS - 0.01), k);

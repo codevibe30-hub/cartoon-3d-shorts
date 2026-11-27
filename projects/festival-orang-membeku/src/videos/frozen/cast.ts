@@ -356,8 +356,8 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
     // NORWAY 1989: Grandpa Bredo skis down the snowy mountainside,
     // pines + peaks behind him; the hero narrates from the side.
     ski();
-    out.places.push(stand(HERO, -38, 0, -26, "stern", -0.2, {}, 1.15));
-    blob(out, -38, 0, -26);
+    out.places.push(stand(HERO, -46.5, 0, -30.5, "stern", -0.2, {}, 1.0));
+    blob(out, -46.5, 0, -30.5);
     card("cardName", ["BREDO", "MORSTOEL"], SLOPE_C[0], 2, SLOPE_C[2] - 6, 4.2, 0.5);
   } else if (id === 3) {
     // THE DRY ICE: the truck crawls to the shed — the caretaker

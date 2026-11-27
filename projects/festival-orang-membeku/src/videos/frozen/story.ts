@@ -46,7 +46,7 @@ export const lin = (pts: [number, number][], x: number) => {
 // z -22..-36 (snowy mountainside, pines, ski tracks).
 export const GATE_Z = -16;
 export const SHED_Z = -36;
-export const HERO_SPOT: V3 = [4.9, 0, -2];
+export const HERO_SPOT: V3 = [3.0, 0, -2];
 export const SLOPE_C: V3 = [-42, 0, -29];
 export const RACE_C: V3 = [0, 0, 2];
 
@@ -61,8 +61,8 @@ export const crowdAt = (id: number, tSec: number, i: number, dir: CrowdDir): { x
   const u = clamp01((tSec - a) / Math.max(0.01, b - a));
   const lanes = [-3.6, -2.4, -1.2, 0, 1.2, 2.4, 3.6, -3.0, -1.8, -0.6, 0.6, 1.8, 3.0, -4.2, 4.2];
   const x = lanes[i % lanes.length];
-  const z0 = dir < 0 ? 14 - (i % 5) * 4.5 : -14 + (i % 5) * 4.5;
-  const z = z0 + dir * u * 22;
+  const z0 = dir < 0 ? 8 - (i % 5) * 3.5 : -10 + (i % 5) * 3.5;
+  const z = z0 + dir * u * 16;
   return { x, z, phase: (tSec * 1.5 + i * 0.37) % 1 };
 };
 
@@ -92,7 +92,7 @@ export const raceAt = (tSec: number, i: number): { x: number; z: number; phase: 
   const u = clamp01((tSec - a) / Math.max(0.01, b - a));
   const lanes = [-4.5, -1.5, 1.5, 4.5];
   const x = lanes[i % lanes.length];
-  const z = 20 - u * 30 - (i % 2) * 2;
+  const z = 16 - u * 26 - (i % 2) * 2;
   return { x, z, phase: (tSec * 1.6 + i * 0.41) % 1 };
 };
 
@@ -147,8 +147,8 @@ export const camAt = (id: number, f: number): Cam => {
       // gentle push-in only: the approved frame-0 composition
       // (k = 1 at the shot's first frame) stays intact
       return full(dolly(CAM_COVER.pos, CAM_COVER.look, Math.exp(-0.00025 * lf), { fov: 46 }));
-    case 2: // NORWAY SLOPE: low on the mountainside, grandpa skiing down toward camera
-      return full(dolly([-36.5, 2.1, -23.5], [-44, 1.1, -34], Math.exp(-0.0004 * lf), { fov: 44 }));
+    case 2: // NORWAY SLOPE: pulled back so the skier + mountains read, hero clear of the lens
+      return full(dolly([-33, 3.0, -19], [-44, 1.2, -34], Math.exp(-0.0004 * lf), { fov: 46 }));
     case 3: { // TRACKING the ice truck down the lane toward the shed —
       // pulled back + higher so the truck reads as a delivery (not a
       // white wall) and the near-side ice carriers stay in frame
@@ -157,8 +157,8 @@ export const camAt = (id: number, f: number): Cam => {
     }
     case 4: // MEDIUM on the ice pile: blocks stacked high, scale + workers, vapour
       return full(dolly([-2.0, 2.4, 8], [-6.5, 2.2, -13], Math.exp(-0.0005 * lf), { fov: 42 }));
-    case 5: // TRACKING the coffin race down the track — low, fast, crowd both sides
-      return full(dolly([7.5, 2.6, 16], [-1, 1.2, -12], Math.exp(-0.0003 * lf), { fov: 46 }));
+    case 5: // TRACKING the coffin race — pulled back so coffins + racers read, crowd both sides
+      return full(dolly([9, 3.2, 20], [-2, 1.0, -14], Math.exp(-0.0003 * lf), { fov: 44 }));
     case 6: // CLOSE on the gate table: the ice coffin opens
       return full(dolly([1.5, 2.2, -4], [3.5, 1.7, -15], Math.exp(-0.0006 * lf), { fov: 40 }));
     default:
