@@ -700,10 +700,14 @@ export class World {
       }
     }
     // ---- the wildlife (shot 5 only — hidden otherwise) ----
-    const el1 = makeElephant(1); el1.position.set(-3.5, 0, -11); // was -4.5: body clipped at left edge el1.rotation.y = 0.4; el1.visible = false; R.add(el1);
-    const el2 = makeElephant(2); el2.position.set(1.5, 0, -13); // was 3.5,-15: out of frame right el2.rotation.y = -0.5; el2.scale.setScalar(0.8); el2.visible = false; R.add(el2);
-    const rh = makeRhino(); rh.position.set(-2.5, 0, -12); // was 8,-10: out of frame right rh.rotation.y = -0.7; rh.visible = false; R.add(rh);
-    const tg = makeTiger(); tg.position.set(-5.5, 0, -13); // was -8.5,-14: out of frame left tg.rotation.y = 0.9; tg.visible = false; R.add(tg);
+    // el1 left of the hero (was -4.5: body clipped at the left edge)
+    const el1 = makeElephant(1); el1.position.set(-3.5, 0, -11); el1.rotation.y = 0.4; el1.visible = false; R.add(el1);
+    // el2 peeking left of Jadav (was 3.5,-15: out of frame right)
+    const el2 = makeElephant(2); el2.position.set(1.5, 0, -13); el2.rotation.y = -0.5; el2.scale.setScalar(0.8); el2.visible = false; R.add(el2);
+    // rhino centre-left behind the tiger (was 8,-10: out of frame right)
+    const rh = makeRhino(); rh.position.set(-1.5, 0, -15); rh.rotation.y = -0.7; rh.visible = false; R.add(rh);
+    // tiger centre, orange, between hero and Jadav (was -8.5,-14: out of frame left)
+    const tg = makeTiger(); tg.position.set(0, 0, -13); tg.rotation.y = 0.9; tg.visible = false; R.add(tg);
     this.animals.push(el1, el2, rh, tg);
     void r;
   }
