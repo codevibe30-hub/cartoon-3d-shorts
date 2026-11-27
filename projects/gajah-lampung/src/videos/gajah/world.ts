@@ -527,9 +527,11 @@ export class World {
       this.herd.push(e);
       blob(R, x, 0.06, z, 2.6, 3.8, 0.3);
     });
-    // ---- the food mountain (shot 3) ----
+    // ---- the food mountain (shot 3 ONLY — hidden elsewhere so it
+    // never looms in another shot's foreground) ----
     this.foodPile = makeFoodPile();
     this.foodPile.position.set(FOOD_PILE[0], 0, FOOD_PILE[2]);
+    this.foodPile.visible = false;
     R.add(this.foodPile);
     blob(R, FOOD_PILE[0], 0.05, FOOD_PILE[2], 3.4, 2.6, 0.3);
   }
@@ -773,11 +775,13 @@ export class World {
     for (const c2 of this.clouds) c2.visible = true;
     // ---- the patrol elephant poses per shot ----
     const ep = ELEPHANT_AT[id] as V3;
-    const yaws: Record<number, number> = { 1: 0, 2: 2.6, 3: 0.3, 4: 0.4, 5: 0.6, 6: 0 };
+    const yaws: Record<number, number> = { 1: 0, 2: 2.2, 3: 0.3, 4: 0.4, 5: 0.6, 6: 0 };
     this.patrol.g.position.set(ep[0], 0, ep[2]);
     if (this.patrolBlob) this.patrolBlob.position.set(ep[0], 0.06, ep[2]);
     this.patrol.g.rotation.y = yaws[id] ?? 0;
     this.patrol.g.visible = true;
+    // the food mountain exists only in the meal shot
+    this.foodPile.visible = id === 3;
     this.animateElephant(this.patrol, tt, id === 1 || id === 2 || id === 6, id === 3);
     // ---- the wild herd: shot 2 only ----
     this.herd.forEach((e) => {

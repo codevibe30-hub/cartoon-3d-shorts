@@ -324,8 +324,8 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
   } else if (id === 3) {
     // THE MEAL: close on the eating elephant — trunk lifting a
     // mountain of grass from the pile. Hero marvels beside it.
-    hero(-1.6, -3.0, "grin", -0.2);
-    ranger(-2.2, -6.5, "grin", 0.2);
+    hero(2.0, -2.6, "grin", -0.2);
+    ranger(0.2, -6.8, "grin", 0.2);
     card("cardMeal", ["300 KG", "SEHARI!"], 0, 2.5, -4, 3.4, 0.5);
   } else if (id === 4) {
     // THE LOSS: high wide — lush forest left, stump field right,

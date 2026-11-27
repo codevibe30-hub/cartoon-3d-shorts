@@ -49,18 +49,18 @@ export const HERO_SPOT: V3 = [2.4, 0, 5]; // inside cover-cam portrait FOV
 export const RANGER_SPOT: V3 = [-2.2, 0, 3]; // inside cover-cam portrait FOV
 export const ELEPHANT_C: V3 = [0, 0, -2]; // patrol elephant, cover
 export const HERD_C: V3 = [2, 0, -10]; // wild herd, shot 2
-export const FOOD_PILE: V3 = [-0.8, 0, -3.8]; // food mountain, shot 3 (in front of the elephant, on the camera axis)
+export const FOOD_PILE: V3 = [0.86, 0, -3.8]; // food mountain, shot 3 ONLY (hidden in all other shots) — in front of the elephant, on the shot-3 camera axis
 export const LONE_C: V3 = [0, 0, -10]; // lone elephant, shot 5
 // The patrol elephant's spot per shot (world.ts poses it here;
 // cast.ts anchors cards on it). Shot 2: beside the herd at the
 // crop edge. Shot 3: at the food pile. Shot 4: at the forest /
 // stump-field boundary. Shot 5: alone in the mist.
 export const ELEPHANT_AT: Record<number, V3> = {
-  1: [0, 0, -2], 2: [1.5, 0, -8], 3: [0, 0, -5],
+  1: [0, 0, -2], 2: [0.8, 0, -8.5], 3: [0, 0, -5],
   4: [0, 0, -14], 5: [0, 0, -10], 6: [0, 0, -2],
 };
 // The wild herd (shot 2 only): three smaller elephants near the crops.
-export const HERD_AT: V3[] = [[2, 0, -10], [3.5, 0, -12], [0.5, 0, -12.5]];
+export const HERD_AT: V3[] = [[3.0, 0, -11], [4.5, 0, -13], [1.5, 0, -13]];
 
 // ---------------- shots ----------------
 export type Light = LightName;
@@ -106,10 +106,10 @@ export const camAt = (id: number, f: number): Cam => {
       return full(dolly(CAM_COVER.pos, CAM_COVER.look, Math.exp(-0.00025 * lf), { fov: 46 }));
     case 2: // THE PATROL: medium across the path — patrol elephant + ranger, wild herd by the crops
       return full(dolly([-7, 2.4, 4], [4, 1.2, -12], Math.exp(-0.0004 * lf), { fov: 44 }));
-    case 3: // THE MEAL: close on the eating elephant — trunk lifting grass from the pile
-      return full(dolly([-3.5, 2.0, 3], [0, 1.2, -6], Math.exp(-0.0005 * lf), { fov: 40 }));
-    case 4: // THE LOSS: high wide — lush forest left, stump field right, one elephant at the boundary
-      return full(dolly([-10, 9, 18], [4, 2, -22], Math.exp(-0.0003 * lf), { fov: 46 }));
+    case 3: // THE MEAL: pulled back + raised — the whole elephant + head + trunk + pile in frame (round 1 had the camera inside the elephant's flank)
+      return full(dolly([4.5, 2.6, 5], [0, 1.8, -5], Math.exp(-0.0005 * lf), { fov: 42 }));
+    case 4: // THE LOSS: high wide from the path axis — round 1's camera sat behind a side tree that filled the frame; this one looks down the stump-field axis, elephant centred
+      return full(dolly([2, 11, 22], [-4, 1, -18], Math.exp(-0.0003 * lf), { fov: 48 }));
     case 5: // THE LONE ONE: medium in the misty clearing — a single elephant, hero + ranger sombre
       return full(dolly([4, 2.4, 3], [-1, 1.6, -12], Math.exp(-0.0005 * lf), { fov: 42 }));
     default:
