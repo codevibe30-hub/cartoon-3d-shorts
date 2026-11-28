@@ -1,0 +1,1 @@
+{"compilerOptions":{"esModuleInterop":true,"forceConsistentCasingInFileNames":true,"jsx":"react-jsx","lib":["es2020","dom"],"module":"Preserve","moduleResolution":"Bundler","noEmit":true,"noUnusedLocals":false,"resolveJsonModule":true,"skipLibCheck":true,"strict":true,"target":"ES2018"},"exclude":["remotion.config.ts","out"]}
