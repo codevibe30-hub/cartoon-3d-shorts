@@ -364,11 +364,13 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
 
   if (id === 1) {
     // THE COVER (frame 0): the POST OFFICE + giant H0H 0H0 sign,
-    // letters fluttering, snow falling — Santa in red by the door,
-    // the hero shocked BESIDE it, claim GIANT.
+    // letters fluttering, snow falling — Santa in red + the hero
+    // shocked BESIDE the truck near the camera axis, the claim GIANT.
+    // (v2: hero/Santa moved from x 3.6/5.6 — off-frame in v1 — to
+    // x 1.2/2.0; the kid crosses to the left so no one overlaps.)
     heroAt(HERO_SPOT[0], 0, HERO_SPOT[2], "shock", -0.15, { wave: 0.7 });
     santaAt(SANTA_SPOT[0], SANTA_SPOT[2], "laugh");
-    kidAt(2.2, -4.2, "grin", { wave: 0.8 });
+    kidAt(-0.8, -3.0, "grin", { wave: 0.8 });
     letterFx(2.2, 0, -3.6);
     lettersFx();
     card("cardHook", ["H0H", "0H0"], 0, 2.6, -8, 5.0, 0.52);
@@ -377,9 +379,9 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
     // truck approaching with letters in its wake
     heroAt(HERO_SPOT[0], 0, HERO_SPOT[2], "grin", 0);
     santaAt(SANTA_SPOT[0], SANTA_SPOT[2], "grin");
-    elf(ELF_A, 2.4, -3.6, "grin", { wave: 0.4 });
-    elf(ELF_B, 4.4, -2.6);
-    kidAt(-2.8, -5.4);
+    elf(ELF_A, 1.8, -4.2, "grin", { wave: 0.4 });
+    elf(ELF_B, 2.8, -2.8);
+    kidAt(-2.0, -4.0);
     lettersFx();
     card("cardPole", ["KUTUB", "UTARA"], 0, 3.0, -10, 4.2, 0.5);
   } else if (id === 3) {
@@ -416,7 +418,9 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
     card("cardFree", ["TANPA", "PERANGKO"], 0, 3.0, -8, 3.0, 0.5);
   } else if (id === 6) {
     // THE TIMELINE: letter stacks towering since 1982, the hero
-    // laughs at the pile — the payoff number lands
+    // laughs at the pile — the payoff number lands. v2: camera to
+    // the right side (truck's lit flank) + hero/Santa/elf clear of
+    // the truck on the right — v1 was a truck-only wall.
     heroAt(HERO_SPOT[0], 0, HERO_SPOT[2], "laugh", 0, { wave: 0.8 });
     elf(ELF_C, 1.9, -5.0, "grin");
     letterFx(LETTER_SPOTS[0][0], 0, LETTER_SPOTS[0][2]);
@@ -430,7 +434,7 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
     // Loop to frame 0.
     heroAt(HERO_SPOT[0], 0, HERO_SPOT[2], "laugh", -0.15, { wave: 0.7 });
     santaAt(SANTA_SPOT[0], SANTA_SPOT[2], "laugh");
-    kidAt(2.4, -3.6, "laugh");
+    kidAt(-0.8, -3.0, "laugh");
     lettersFx();
     card("cardHo", ["HO HO", "HO!"], 0, 2.6, -8, 5.0, 0.52);
   }

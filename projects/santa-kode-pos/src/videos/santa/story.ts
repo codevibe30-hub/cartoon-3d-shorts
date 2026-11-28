@@ -42,18 +42,20 @@ export const lin = (pts: [number, number][], x: number) => {
 // The road is x in [-3.4, 3.4]; sidewalks x in [3.4, 5.2] and
 // [-5.2, -3.4]; snow cottages line both sides from |x| = 6.
 // The North Pole post office stands on the RIGHT (x ~ +7, z ~ -8)
-// with its giant H0H 0H0 sign facing the street. Santa waits by
-// its door. The RED mail truck runs along the road centre (x = 0),
+// with its giant H0H 0H0 sign facing the street. The hero + Santa
+// stand on the right sidewalk NEAR THE CAMERA AXIS — portrait
+// half-FOV is only ~13 deg, so anyone at x > 3, z < -3 is off-frame
+// (v1 lesson: hero + Santa at x 3.6/5.6 never appeared in any shot).
+// The RED mail truck runs along the road centre (x = 0),
 // nose toward +Z (toward camera) in shots 1-2, driving away (-Z)
 // in shots 4-5, stopped at the curb in shots 3 and 6.
-// The hero stands on the right sidewalk near the camera.
 // Letters flutter in the wind above the street whenever the
 // post office is on screen.
 export const ROAD_HALF = 3.4;
 export const WALK_R = 4.3; // right sidewalk centre
 export const WALK_L = -4.3; // left sidewalk centre
-export const HERO_SPOT: V3 = [3.6, 0, -1.5];
-export const SANTA_SPOT: V3 = [5.6, 0, -6.2];
+export const HERO_SPOT: V3 = [1.2, 0, -2.0];
+export const SANTA_SPOT: V3 = [2.0, 0, -4.2];
 export const ELF_SPOTS: V3[] = [[2.6, 0, -5.2], [4.4, 0, -3.4], [-2.8, 0, -6.0]];
 export const TRUCK_HOME: V3 = [0, 0, -4];
 export const LETTER_SPOTS: V3[] = [[2.9, 0, -4.6], [3.5, 0, -4.0], [4.1, 0, -4.6]];
@@ -131,8 +133,13 @@ export const camAt = (id: number, f: number): Cam => {
       return full(dolly([5.6, 2.8, 3.2], [2.0, 1.0, -4.5], Math.exp(-0.0005 * lf), { fov: 42 }));
     case 5: // THE FREE LETTER: hero holds up his letter, no stamp
       return full(dolly([4.2, 2.0, 2.5], [1.6, 1.3, -5], Math.exp(-0.0004 * lf), { fov: 42 }));
-    case 6: // THE TIMELINE: letter stacks + hero, 1982 to now
-      return full(dolly([-5.2, 2.4, 3.5], [0.8, 1.3, -7], Math.exp(-0.0004 * lf), { fov: 42 }));
+    case 6: // THE TIMELINE: letter stacks + hero, 1982 to now.
+      // v2: camera moved to the RIGHT side (was left [-5.2,2.4,3.5]):
+      // from the left the truck's shaded flank filled the frame and
+      // hid the hero (30 deg off-axis) + elf + letters behind it.
+      // From the right the truck's LIT red flank faces the camera
+      // and hero + Santa + elf stand clear of the truck on the right.
+      return full(dolly([5.0, 2.6, 4.0], [1.0, 1.2, -5.5], Math.exp(-0.0004 * lf), { fov: 42 }));
     default:
       return full(dolly(CAM_COVER.pos, CAM_COVER.look, 1, { fov: 46 }));
   }
