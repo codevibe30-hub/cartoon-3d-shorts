@@ -420,9 +420,12 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
     // THE TIMELINE: letter stacks towering since 1982, the hero
     // laughs at the pile — the payoff number lands. v2: camera to
     // the right side (truck's lit flank) + hero/Santa/elf clear of
-    // the truck on the right — v1 was a truck-only wall.
-    heroAt(HERO_SPOT[0], 0, HERO_SPOT[2], "laugh", 0, { wave: 0.8 });
-    elf(ELF_C, 1.9, -5.0, "grin");
+    // the truck on the right — v1 was a truck-only wall. v2b: Santa
+    // was never placed here + the hero sat half off-frame left, so
+    // hero moves right (2.8,-2.8), Santa joins at (1.7,-4.0), the
+    // elf drops out (he hid behind Santa at this angle).
+    heroAt(2.8, 0, -2.8, "laugh", 0, { wave: 0.8 });
+    santaAt(1.7, -4.0, "laugh");
     letterFx(LETTER_SPOTS[0][0], 0, LETTER_SPOTS[0][2]);
     letterFx(LETTER_SPOTS[1][0], 0, LETTER_SPOTS[1][2]);
     letterFx(LETTER_SPOTS[2][0], 0, LETTER_SPOTS[2][2]);
