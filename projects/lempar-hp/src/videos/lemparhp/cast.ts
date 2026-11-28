@@ -484,9 +484,13 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
     // off-frame right — moved to (0.7, 1.35, -3.9), smaller,
     // beside the judge's raised hand; the big phone at the top
     // right was half-cut — moved down-left, smaller.
+    // V3: (0.7, 1.35, -3.9) sat BEHIND the judge — the "2" was
+    // hidden by his body. Moved to the judge's LEFT and 0.2 m
+    // IN FRONT of him (0.55, 1.6, -3.4): clear of the thrower
+    // (right edge) and clear of the judge (left edge).
     throwerAt(0.0, -3.0, "laugh", { wave: 1.0 });
     judgeAt(1.2, -3.6, "grin");
-    scoreFx(0.7, 1.35, -3.9, 0.9);
+    scoreFx(0.55, 1.6, -3.4, 0.9);
     phoneBigFx(-0.3, 3.9, -6.5, 1.1, 2.2);
     card("cardFree", ["GAYA", "BEBAS"], 0, 2.6, -4.5, 4.2, 0.5);
   } else if (id === 5) {
