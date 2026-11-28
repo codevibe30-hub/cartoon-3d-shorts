@@ -745,7 +745,6 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
     heroAt(1.5, 0, -3.5, "nervous", -0.15, {});
     friendAt(-0.8, -3.5, "stern", { wave: 0.5 });
     urnFx(0.85, 1.05, -3.1, 1.7);
-    passingFx(-1.1, 1.8, -5.2, 2.6);
     card("cardTulang", ["RITUAL", "TULANG"], 0, 2.6, -8, 4.6, 0.5);
   } else if (id === 6) {
     // THE FIX: chopsticks lying flat on the hashioki rest,
