@@ -153,20 +153,18 @@ const hutTex = (seed: number) => ctex(`luwakHut${seed}`, 512, 512, (g, r) => {
     g.fillStyle = "rgba(255,235,200,0.10)"; g.fillRect(x + 3, 0, 2, 512);
   }
   for (let i = 0; i < 1500; i++) { g.fillStyle = `rgba(${r() > 0.5 ? "255,240,210" : "40,30,20"},${0.02 + r() * 0.04})`; g.fillRect(r() * 512, r() * 512, 2.5, 2.5); }
-  for (let row = 0; row < 4; row++) {
-    for (let col = 0; col < 4; col++) {
-      const x = 28 + col * 120, y = 30 + row * 96, w = 72, h = 62;
-      const lit = r() > 0.4;
-      g.fillStyle = lit ? "#ffd98a" : "#2e3a4e";
-      g.fillRect(x, y, w, h);
-      g.fillStyle = "rgba(20,16,10,0.55)";
-      g.fillRect(x, y + h / 2 - 2, w, 4);
-      g.fillRect(x + w / 2 - 2, y, 4, h);
-      g.strokeStyle = "rgba(30,22,14,0.7)"; g.lineWidth = 3;
-      g.strokeRect(x, y, w, h);
-      if (lit) { g.fillStyle = "rgba(255,255,255,0.25)"; g.fillRect(x, y, w, 10); }
-    }
-  }
+  // ONE door + ONE small window only — v1's 4x4 window grid made
+  // every hut read as an apartment block, not a garden hut.
+  g.fillStyle = "#4a3020"; g.fillRect(216, 300, 80, 212);
+  g.strokeStyle = "rgba(30,22,14,0.7)"; g.lineWidth = 4; g.strokeRect(216, 300, 80, 212);
+  g.fillStyle = "#d9b45a"; g.beginPath(); g.arc(282, 410, 7, 0, 7); g.fill();
+  const lit = r() > 0.4;
+  g.fillStyle = lit ? "#ffd98a" : "#2e3a4e"; g.fillRect(360, 120, 84, 72);
+  g.fillStyle = "rgba(20,16,10,0.55)";
+  g.fillRect(360, 154, 84, 4); g.fillRect(400, 120, 4, 72);
+  g.strokeStyle = "rgba(30,22,14,0.7)"; g.lineWidth = 3; g.strokeRect(360, 120, 84, 72);
+  // a horizontal beam across the wall
+  g.fillStyle = "rgba(40,26,12,0.4)"; g.fillRect(0, 240, 512, 10);
   // thatch strip along the top edge
   g.fillStyle = "#c9a86a";
   g.beginPath(); g.moveTo(0, 0);
@@ -280,7 +278,7 @@ const makeMainHut = () => {
   }
   // the giant KOPI sign board on posts, angled toward the camera side
   const sign = new THREE.Mesh(new THREE.PlaneGeometry(4.6, 2.3),
-    lam2({ map: kopiSignTex(), side: THREE.DoubleSide }));
+    new THREE.MeshBasicMaterial({ map: kopiSignTex(), side: THREE.DoubleSide }));
   sign.position.set(-4.6, 3.4, 1.8); sign.rotation.y = -0.55; sign.castShadow = true; g.add(sign);
   for (const s of [1, -1]) {
     const post = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.11, 3.4, 6), lam2({ color: "#5d4028" }));
@@ -377,10 +375,11 @@ export class World {
     }
     // wooden huts lining both sides (varied heights/widths)
     const blocks: [number, number, number, number, number][] = [
-      // x, z, w, h, d
-      [9.5, -20, 7, 7, 8], [9.5, -33, 7, 6, 8], [9.5, -46, 9, 8, 10],
-      [-9.5, -12, 8, 7, 9], [-9.5, -25, 7, 6, 8], [-9.5, -38, 9, 8, 10], [-9.5, -52, 7, 6, 8],
-      [10.5, 4, 8, 7, 9], [-10.5, 2, 8, 6, 9],
+      // x, z, w, h, d — v2: smaller + further out (v1's tall
+      // windowed boxes lined the path like a city street)
+      [11.5, -20, 6, 5, 7], [11.5, -33, 6, 4.5, 7], [11.5, -46, 7, 6, 8],
+      [-11.5, -12, 7, 5, 8], [-11.5, -25, 6, 4.5, 7], [-11.5, -38, 7, 6, 8], [-11.5, -52, 6, 4.5, 7],
+      [12.5, 4, 7, 5, 8], [-12.5, 2, 7, 4.5, 8],
     ];
     blocks.forEach(([x, z, w, h, d], i) => {
       const b = makeHut(w, h, d, i);

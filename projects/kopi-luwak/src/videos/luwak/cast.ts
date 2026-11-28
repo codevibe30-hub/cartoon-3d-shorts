@@ -454,7 +454,7 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
   };
   const heroAt = (x: number, y: number, z: number, expr: Expr, look = -0.15, extra: Partial<FrontOpts> = {}, scale = 1.5) =>
     out.places.push(stand(HERO, x, y, z, expr, look, extra, scale));
-  const luwakAt = (x: number, z: number, scale = 1.5) => {
+  const luwakAt = (x: number, z: number, scale = 1.3) => {
     const d = cam.pos.distanceTo(tmp.set(x, 1.2, z)) / scale;
     const [w, h, k] = tier(d);
     out.places.push({ key: `LUWAK|${w}x${h}`, x, y: 0, z, scale, roll: Math.sin(t * 1.6) * 0.04, draw: (p) => drawLuwak(p), size: [w, h, k] });
@@ -484,17 +484,23 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
   } else if (id === 3) {
     // THE PICK: close on the luwak choosing the ripest cherry
     luwakAt(LUWAK_SPOT[0], LUWAK_SPOT[2]);
-    cherryFx(CHERRY_SPOTS[0][0], 0.4, CHERRY_SPOTS[0][2], 1.4);
-    cherryFx(CHERRY_SPOTS[1][0], 0.35, CHERRY_SPOTS[1][2], 1.1);
-    cherriesFx();
-    card("cardCurator", ["KURATOR", "RASA"], 0, 2.6, -4.5, 3.2, 0.5);
+    // v2: cherries smaller + further back (v1's close-up cherries
+    // were giant billboards cut off at the frame corners) and no
+    // fluttering cherries in the close-up; card raised so it
+    // clears the luwak's ears (v1: ears poked into the card).
+    cherryFx(CHERRY_SPOTS[0][0], 0.3, CHERRY_SPOTS[0][2], 0.8);
+    cherryFx(CHERRY_SPOTS[1][0], 0.3, CHERRY_SPOTS[1][2], 0.7);
+    card("cardCurator", ["KURATOR", "RASA"], 0, 2.6, -4.5, 4.2, 0.5);
   } else if (id === 4) {
     // THE COLLECTION: the farmer gathers the droppings, beans
     // beside him — the card is NARROW (0.36) and anchored at the
     // tail end, far from the farmer's face (Lembata lesson).
-    farmerAt(FARMER_SPOT[0], FARMER_SPOT[2], "grin");
-    beanFx(0.4, 0.4, -4.4, 0.9);
-    beanFx(1.2, 0.35, -4.6, 0.7);
+    // v2: farmer moved on-axis for the shot-4 camera (v1: at
+    // FARMER_SPOT x -1.6 he was ~30 deg off-axis = off-frame);
+    // beans small + resting on the ground (v1: floating discs).
+    farmerAt(2.2, -4.2, "grin");
+    beanFx(1.4, 0.15, -4.6, 0.5);
+    beanFx(2.9, 0.15, -4.8, 0.4);
     cherriesFx();
     card("cardWash", ["DICUCI", "BERSIH"], 0, 2.6, -11, 4.6, 0.36);
   } else if (id === 5) {
@@ -503,14 +509,17 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
     heroAt(1.8, 0, -3.0, "nervous", -0.15, { wave: 0.3 });
     // the cup sits IN the hero's raised hand (hand ≈ (2.45, 1.55, -2.7))
     cupFx(2.45, 1.55, -2.7, 1.6, 1.6);
-    farmerAt(4.2, -2.4, "laugh");
+    // v2: farmer on-axis for the shot-5 camera (v1: x 4.2 was off-frame right).
+    farmerAt(2.6, -3.8, "laugh");
     cherriesFx();
     card("cardBitter", ["NGGAK", "PAHIT"], 0, 3.0, -8, 3.0, 0.5);
   } else if (id === 6) {
     // THE PRICE: sacks of beans + the $1000/KG board, the hero
     // counts on his fingers — the payoff number lands
     heroAt(2.8, 0, -2.8, "laugh", 0, { wave: 0.8 });
-    farmerAt(1.7, -4.0, "laugh");
+    // v2: farmer left so the sack sits clear between hero and farmer;
+    // sack moved on-axis (v1: at x 3.2 it was off-frame right).
+    farmerAt(1.2, -3.6, "laugh");
     sackFx(SACK_SPOT[0], 0, SACK_SPOT[2], 2.4);
     cherriesFx();
     card("cardPrice", ["$1000/KG"], 0, 2.6, -4.5, 4.0, 0.5);

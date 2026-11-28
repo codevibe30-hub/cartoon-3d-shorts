@@ -57,13 +57,13 @@ export const ROAD_HALF = 2.5;
 export const WALK_R = 4.3; // right field edge centre
 export const WALK_L = -4.3; // left field edge centre
 export const HERO_SPOT: V3 = [1.2, 0, -2.0];
-export const LUWAK_SPOT: V3 = [2.2, 0, -3.6];
+export const LUWAK_SPOT: V3 = [1.8, 0, -3.2];
 export const FARMER_SPOT: V3 = [-1.6, 0, -3.2];
 export const CUP_SPOT: V3 = [-1.8, 0, -7.5];
 export const RACK_SPOT: V3 = [3.8, 0, -6.0];
-export const SACK_SPOT: V3 = [3.2, 0, -5.0];
-export const HUT_POS: V3 = [8.5, 0, -10];
-export const CHERRY_SPOTS: V3[] = [[2.9, 0, -4.6], [3.5, 0, -4.0], [4.1, 0, -4.6]];
+export const SACK_SPOT: V3 = [2.4, 0, -4.8];
+export const HUT_POS: V3 = [7.5, 0, -10];
+export const CHERRY_SPOTS: V3[] = [[2.6, 0, -5.0], [3.2, 0, -5.2], [4.1, 0, -4.6]];
 // Coffee leaves drift down from the trees while the garden is on screen.
 export const leavesAt = (tSec: number): number => (tSec * 0.7) % 1;
 // The luwak's tail sway phase, driven by shot time.
