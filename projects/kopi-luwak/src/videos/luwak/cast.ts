@@ -517,10 +517,11 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
     // THE PRICE: sacks of beans + the $1000/KG board, the hero
     // counts on his fingers — the payoff number lands
     heroAt(2.8, 0, -2.8, "laugh", 0, { wave: 0.8 });
-    // v2: farmer left so the sack sits clear between hero and farmer;
-    // sack moved on-axis (v1: at x 3.2 it was off-frame right).
-    farmerAt(1.2, -3.6, "laugh");
-    sackFx(SACK_SPOT[0], 0, SACK_SPOT[2], 2.4);
+    // v2b: farmer DROPPED from this shot — the frame is only ~4.9 m
+    // wide at this depth (hero 1.6 m + farmer 1.6 m + sack 2.4 m
+    // cannot sit side by side), so the farmer always covered the
+    // sack. One clear sack left of the hero, KOPI text fully visible.
+    sackFx(0.6, 0, -4.6, 2.4);
     cherriesFx();
     card("cardPrice", ["$1000/KG"], 0, 2.6, -4.5, 4.0, 0.5);
   } else if (id === 7) {

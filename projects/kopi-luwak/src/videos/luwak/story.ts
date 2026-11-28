@@ -61,7 +61,7 @@ export const LUWAK_SPOT: V3 = [1.8, 0, -3.2];
 export const FARMER_SPOT: V3 = [-1.6, 0, -3.2];
 export const CUP_SPOT: V3 = [-1.8, 0, -7.5];
 export const RACK_SPOT: V3 = [3.8, 0, -6.0];
-export const SACK_SPOT: V3 = [2.4, 0, -4.8];
+export const SACK_SPOT: V3 = [0.6, 0, -4.6];
 export const HUT_POS: V3 = [7.5, 0, -10];
 export const CHERRY_SPOTS: V3[] = [[2.6, 0, -5.0], [3.2, 0, -5.2], [4.1, 0, -4.6]];
 // Coffee leaves drift down from the trees while the garden is on screen.
