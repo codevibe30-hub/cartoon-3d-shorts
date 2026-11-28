@@ -180,11 +180,15 @@ const makePeledang = () => {
   // mast + lateen sail (cream, billowing)
   const mast = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.12, 6.4, 8), lam2({ color: "#5d4028" }));
   mast.position.set(0, 3.9, -0.6); mast.castShadow = true; g.add(mast);
-  const sailM = new THREE.MeshLambertMaterial({ color: "#f2e8c8", side: THREE.DoubleSide });
-  const sailGeo = new THREE.PlaneGeometry(4.6, 4.4, 1, 1);
+  // v2: the sail runs FORE-AFT (ZY plane), like a real lateen sail
+  // along the hull — from the cover camera (looking down the boat
+  // axis) it reads edge-on instead of a giant dark wall hiding the
+  // hero. lam2() so it lights cream, not mud-dark.
+  const sailM = lam2({ color: "#f2e8c8", side: THREE.DoubleSide });
+  const sailGeo = new THREE.PlaneGeometry(3.6, 3.4, 1, 1);
   const sail = new THREE.Mesh(sailGeo, sailM);
-  sail.position.set(0.1, 4.4, -0.9);
-  sail.rotation.set(0, 0.25, 0.5);
+  sail.position.set(0.12, 4.1, 1.2);
+  sail.rotation.set(0, Math.PI / 2 - 0.12, 0.18);
   sail.castShadow = true; g.add(sail);
   // steering oar at the stern
   const oar = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.05, 2.6, 6), lam2({ color: "#8a6844" }));
@@ -443,7 +447,7 @@ export class World {
       this.boat.rotation.z = Math.sin(tt * 1.9) * 0.018;
       this.boat.rotation.x = Math.cos(tt * 1.4) * 0.012;
     }
-    if (this.sail) this.sail.rotation.z = 0.5 + Math.sin(tt * 1.2) * 0.06;
+    if (this.sail) this.sail.rotation.y = Math.PI / 2 - 0.12 + Math.sin(tt * 1.2) * 0.05;
     // the whale bobs slower and deeper; the tail thrashes on shots 4-5
     if (this.whale) this.whale.position.y = whaleBob(tt);
     if (this.whaleTail) {

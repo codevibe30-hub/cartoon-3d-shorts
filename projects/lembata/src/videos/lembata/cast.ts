@@ -344,7 +344,7 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
   // the whale's back rides its own slower swell
   const whaleY = WHALE_TOP + whaleBob(tt);
   const harpoonFx = (x: number, y: number, z: number) => {
-    out.fx.push({ key: "harpoon", cw: 256, ch: 512, draw: drawHarpoon, x, y, z, w: 0.9, h: 1.8, soft: true });
+    out.fx.push({ key: "harpoon", cw: 256, ch: 512, draw: drawHarpoon, x, y, z, w: 1.3, h: 2.6, soft: true });
   };
   const splashFx = (x: number, y: number, z: number, w = 1.6) => {
     out.fx.push({ key: "splash", cw: 256, ch: 256, draw: (p) => fxBurst(p, tt * 2, "#dff2ff", 9, 30, 110), x, y, z, w, h: w, soft: true });
@@ -382,19 +382,23 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
   } else if (id === 4) {
     // THE JUMP: the lamafa ON the whale's back, harpoon driven
     // down, the whale thrashing, spray everywhere
-    out.places.push(stand(HERO, WHALE_MID[0], whaleY, WHALE_MID[2], "grin", -0.2, { wave: 1 }, 1.5));
-    harpoonFx(WHALE_MID[0] + 0.7, whaleY + 1.6, WHALE_MID[2]);
+    // v2: the hero stood dead-centre under the card and his head
+    // vanished behind it — he now stands toward the head end, the
+    // card anchors at the tail end, smaller, so face + card coexist
+    out.places.push(stand(HERO, WHALE_MID[0] - 1.6, whaleY, WHALE_MID[2] + 1.2, "grin", -0.2, { wave: 1 }, 1.5));
+    harpoonFx(WHALE_MID[0] - 0.9, whaleY + 1.6, WHALE_MID[2] + 1.2);
     splashFx(WHALE_MID[0] - 2, 1.4, WHALE_MID[2] + 1.2, 2.4);
-    splashFx(WHALE_TAIL[0], 1.2, WHALE_TAIL[2], 2.0);
+    splashFx(WHALE_TAIL[0], 1.2, WHALE_TAIL[2], 2.6);
     crew(CREW_A, 0, "shock");
-    card("cardThrash", ["PAUS", "NGAMUK"], WHALE_TAIL[0], WHALE_TOP, WHALE_TAIL[2], 3.4, 0.5);
+    card("cardThrash", ["PAUS", "NGAMUK"], WHALE_TAIL[0], WHALE_TOP, WHALE_TAIL[2], 4.2, 0.44);
   } else if (id === 5) {
     // TOWED: the tail hammers the sea, the boat is dragged,
     // a long foam wake trails behind
     heroBow("nervous", 0.1, { wave: 0.5 });
     crew(CREW_A, 0, "shock");
     crew(CREW_B, 1, "shock");
-    splashFx(WHALE_TAIL[0], 1.0, WHALE_TAIL[2], 2.6);
+    splashFx(WHALE_TAIL[0], 1.0, WHALE_TAIL[2], 3.2);
+    splashFx(WHALE_MID[0] + 1, 1.0, WHALE_MID[2] + 1.0, 2.2);
     card("cardSeason", ["MEI–", "OKTOBER"], WHALE_TAIL[0], WHALE_TOP, WHALE_TAIL[2], 3.0, 0.5);
   } else if (id === 6) {
     // THE HAUL: the crew heaves on the tow rope, the whale

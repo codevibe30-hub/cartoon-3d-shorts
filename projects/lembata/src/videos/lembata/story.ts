@@ -100,7 +100,9 @@ const dolly = (pos: V3, look: V3, k: number, rest: Partial<Cam> = {}): Shot =>
 // The cover camera: low over the swell, looking at the whale —
 // the WHALE big across the centre, the boat + lamafa at the
 // right edge, the claim card centred up-frame.
-const CAM_COVER: { pos: V3; look: V3 } = { pos: [0.2, 2.6, 9.5], look: [-1.2, 1.6, -9] };
+// v2: closer + shifted right so the lamafa on the bow reads big
+// at the frame's right edge instead of a speck behind the sail.
+const CAM_COVER: { pos: V3; look: V3 } = { pos: [3.5, 2.6, 6.5], look: [-1.5, 1.6, -9] };
 
 export const camAt = (id: number, f: number): Cam => {
   const s = SHOTS[id - 1];
@@ -114,13 +116,17 @@ export const camAt = (id: number, f: number): Cam => {
     case 2: // HIGH WIDE: the whole peledang under sail, volcano behind
       return full(dolly([9, 7.5, 13], [-1, 1.2, -8], Math.exp(-0.0003 * lf), { fov: 46 }));
     case 3: // CLOSE on the lamafa at the bow, whale back beside him
-      return full(dolly([5.6, 2.4, -3.5], [0.6, 1.6, -10.5], Math.exp(-0.0005 * lf), { fov: 42 }));
+      // v2: was aimed past the hero — he cropped at the right edge
+      // and the card never entered frame; re-centred on the bow
+      return full(dolly([4.2, 2.2, -2.0], [1.2, 1.6, -10.2], Math.exp(-0.0005 * lf), { fov: 42 }));
     case 4: // THE JUMP: lamafa on the whale's back, harpoon down
       return full(dolly([-6.5, 3.2, -2.5], [-2.2, 1.4, -10], Math.exp(-0.0004 * lf), { fov: 42 }));
     case 5: // WIDE on the thrashing tail + the towed boat
       return full(dolly([7.5, 3.4, 6], [-1, 1.0, -9], Math.exp(-0.0003 * lf), { fov: 44 }));
     case 6: // MEDIUM on the crew hauling the tow rope, whale behind
-      return full(dolly([6.2, 2.6, 1.5], [1.2, 1.2, -7], Math.exp(-0.0005 * lf), { fov: 40 }));
+      // v2: was too tight on the stern — the bow hero never entered
+      // frame; pulled back and aimed further forward
+      return full(dolly([5.6, 2.4, 0.5], [1.8, 1.3, -6.5], Math.exp(-0.0005 * lf), { fov: 40 }));
     default:
       return full(dolly(CAM_COVER.pos, CAM_COVER.look, 1, { fov: 46 }));
   }
