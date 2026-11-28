@@ -1,0 +1,8 @@
+# Sumber — Sumpit Jepang (tatebashi)
+
+- Discover Japan (discover-japan.info, "Japanese Etiquette: the Dos and Don'ts That Matter"): "Never stand chopsticks upright in a bowl of rice (tatebashi). A bowl with chopsticks planted in it is the offering placed by the pillow of the dead." Juga: mengoper makanan sumpit-ke-sumpit (hashiwatashi) meniru keluarga mengoper tulang kremasi ke guci.
+- Tasting Table (tastingtable.com, "9 Etiquette Rules To Follow When Using Chopsticks"): di Jepang, sumpit yang ditancapkan tegak di nasi disebut "tatebashi" (standing chopsticks); semangkuk nasi dengan sumpit tegak adalah cara menyajikan makanan untuk orang mati; visualnya sama dengan ritual berkabung/dupa.
+- YOLO Japan (media.yolo-japan.com, "Japanese Table Manners & Chopstick Etiquette"): tabel tabu — Tatebashi: "The same shape as the rice offered to the deceased at a Buddhist funeral. A very bad omen and deeply disrespectful." Hashiwatashi: "The same gesture used for passing cremated bones at a funeral."
+- Interac Network (interacnetwork.com, "Chopstick Etiquette in Japan"): mangkuk nasi dengan dua sumpit berdiri adalah tradisi pemakaman Jepang — persembahan untuk almarhum, ditaruh di depan foto, di sisi jenazah, atau di altar Buddha rumah tangga.
+- Kawaraban (kawaraban.jp, "Japanese Dining Etiquette for Foreigners"): 10 gestur sumpit terlarang (kirai-bashi) — tate-bashi meniru persembahan pemakaman; hashi-watashi meniru pengoperan tulang kremasi (kotsuage).
+- Get Around Japan (getaroundjapan.jp): tatebashi berhubungan langsung dengan ritus pemakaman — dupa dan persembahan ditaruh tegak di nasi untuk almarhum; melakukan ini di meja makan setara menaruh persembahan kubur di tengah makan.
