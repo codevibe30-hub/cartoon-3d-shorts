@@ -24,12 +24,16 @@ export const LIGHTS: Record<LightName, LightPreset> = {
     bias: -0.00025, normalBias: 0.015,
   },
   golden: {
-    az: 6, el: 7,
-    lit: [1.5, 0.68, 0.24], shade: [0.15, 0.15, 0.3], lift: [0.04, 0.06, 0.17], lambert: 0.35, sideK: 0.82, term: 0.07,
+    // v2: v1's low flat sun (az 6, el 7) left every camera-facing
+    // surface in shade — the closing shot read as night-blue, not
+    // golden. Sun higher + off-axis so the street and facade catch
+    // warm raking light; shade lifted and warmed so nothing goes navy.
+    az: 25, el: 18,
+    lit: [1.5, 0.68, 0.24], shade: [0.3, 0.24, 0.34], lift: [0.09, 0.08, 0.15], lambert: 0.35, sideK: 0.82, term: 0.07,
     charTint: [1.0, 0.78, 0.56], charShade: 0.88, charGrad: 0.1, bodyGrad: 0.25, sideTint: [0.85, 0.80, 0.95],
     blob: [0.75, 0.74, 0.9], actorShadow: true,
     top: "#6a4f8c", hor: "#ffd08a", skyCurve: [0.05, 0.6, 1.0], fog: "#e59d78", fogNear: 40, fogFar: 300, sunDisc: "#ffcf9e",
-    sunCol: "#ffab5e", sunI: 4.2, sky: "#d8b0b8", ground: "#8a6a60", hemiI: 0.46,
+    sunCol: "#ffab5e", sunI: 4.6, sky: "#d8b0b8", ground: "#8a6a60", hemiI: 0.6,
     bias: -0.0006, normalBias: 0.03,
   },
   storm: {

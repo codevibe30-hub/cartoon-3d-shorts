@@ -12,7 +12,7 @@
 // light rig: sun key w/ soft shadows + hemisphere fill + rim.
 import * as THREE from "three";
 import { Kit } from "./build";
-import { ctex, rep, rng, cloudHD, CLOUD_DAY, cobble, planks, roof } from "./paint";
+import { ctex, rep, rng, cloudHD, CLOUD_DAY, CLOUD_GOLD, cobble, planks, roof } from "./paint";
 import { LIGHTS, LOOK, LightPreset } from "./lights";
 import { TONE, CHAR, twoTone, untone } from "./shade";
 import { NOINK } from "./ink";
@@ -66,6 +66,33 @@ const skyTexDay = () => ctex("etalaseSkyDay", 2048, 1024, (g, r) => {
   sn.addColorStop(0, "rgba(255,250,225,0.95)"); sn.addColorStop(0.1, "rgba(255,240,190,0.55)"); sn.addColorStop(1, "rgba(255,240,190,0)");
   g.fillStyle = sn; g.fillRect(100, 0, 640, 520);
   g.fillStyle = "#fffbe8"; g.beginPath(); g.arc(420, 200, 30, 0, 7); g.fill();
+});
+/** Golden-hour sky (shot 7 only): the same dome, but peach at the
+ *  horizon rising through rose to muted mauve at the zenith, and a
+ *  bigger, warmer sun — the day dome stayed blue in v1 because the
+ *  dome texture was built once and never swapped per light. */
+const skyTexGolden = () => ctex("etalaseSkyGolden", 2048, 1024, (g, r) => {
+  const grad = g.createLinearGradient(0, 0, 0, 1024);
+  grad.addColorStop(0, "#86708c"); grad.addColorStop(0.3, "#b57d88"); grad.addColorStop(0.55, "#d3866e");
+  grad.addColorStop(0.8, "#e29468"); grad.addColorStop(1, "#eaa26e");
+  g.fillStyle = grad; g.fillRect(0, 0, 2048, 1024);
+  for (let i = 0; i < 7; i++) {
+    const x = r() * 2048, y = 60 + r() * 190, w = 260 + r() * 420;
+    const wg = g.createRadialGradient(x, y, 4, x, y, w / 2);
+    wg.addColorStop(0, "rgba(255,220,170,0.22)"); wg.addColorStop(1, "rgba(255,220,170,0)");
+    g.save(); g.translate(x, y); g.scale(1, 0.16); g.translate(-x, -y);
+    g.fillStyle = wg; g.fillRect(x - w / 2, y - w / 2, w, w); g.restore();
+  }
+  const clusters: [number, number, number][] = [
+    [120, 430, 62], [420, 385, 84], [760, 450, 56], [1080, 395, 96], [1420, 445, 60],
+    [1700, 380, 88], [1980, 440, 58], [600, 330, 44], [1300, 320, 48], [1850, 300, 40],
+  ];
+  for (const [x, y, s] of clusters) paintPuff(g, r, x, y, s);
+  for (let i = 0; i < 9000; i++) { g.fillStyle = `rgba(${r() > 0.5 ? "255,230,200" : "90,50,60"},${0.02 + r() * 0.035})`; g.fillRect(r() * 2048, r() * 1024, 2.2, 2.2); }
+  const sn = g.createRadialGradient(420, 200, 8, 420, 200, 340);
+  sn.addColorStop(0, "rgba(255,230,170,0.95)"); sn.addColorStop(0.12, "rgba(255,200,120,0.6)"); sn.addColorStop(1, "rgba(255,200,120,0)");
+  g.fillStyle = sn; g.fillRect(60, 0, 720, 560);
+  g.fillStyle = "#ffe9bb"; g.beginPath(); g.arc(420, 200, 42, 0, 7); g.fill();
 });
 /** soft radial glow sprite (the sun's halo in the 3D scene) */
 const glowTex = () => ctex("etalaseGlow", 256, 256, (g) => {
@@ -364,6 +391,9 @@ export class World {
   private fog = new THREE.Fog("#b8d0ec", 18, 170);
   private skyDay: THREE.Mesh;
   private clouds: THREE.Sprite[] = [];
+  private cloudDay: THREE.Texture[] = [];
+  private cloudGold: THREE.Texture[] = [];
+  private skyGolden = false;
   private sunCache = new Map<number, THREE.Vector3>();
   private frustum = new THREE.Frustum();
   private m4 = new THREE.Matrix4(); private v = new THREE.Vector3(); private sph = new THREE.Sphere();
@@ -402,6 +432,8 @@ export class World {
       sp.position.set(x, y, z);
       sp.scale.set(w, w * 0.34, 1);
       sp.layers.set(NOINK); R.add(sp); this.clouds.push(sp);
+      this.cloudDay.push(sp.material.map as THREE.Texture);
+      this.cloudGold.push(cloudHD(300 + i * 37, CLOUD_GOLD));
       this.cloudBase.push({ x, sp: 1.1 + (i % 4) * 0.45 });
     });
     // the sun's halo + core, upper left down the street
@@ -422,9 +454,9 @@ export class World {
   private buildStreet(R: THREE.Group, r: () => number) {
     // ground: cobbled street + a lighter sidewalk strip in front
     // of the shops (map kept simple: no scrolling needed here)
-    const street = new THREE.Mesh(new THREE.PlaneGeometry(90, 26), lam2({ map: rep(cobble(), 18, 5), color: "#b8b0a0" }));
+    const street = new THREE.Mesh(new THREE.PlaneGeometry(90, 26), lam2({ map: rep(cobble(), 36, 10), color: "#b8b0a0" }));
     street.rotation.x = -Math.PI / 2; street.position.set(0, 0, -2); street.receiveShadow = true; R.add(street);
-    const walk = new THREE.Mesh(new THREE.PlaneGeometry(90, 5.5), lam2({ map: rep(cobble(), 18, 1.2), color: "#d8cfba" }));
+    const walk = new THREE.Mesh(new THREE.PlaneGeometry(90, 5.5), lam2({ map: rep(cobble(), 36, 2.4), color: "#d8cfba" }));
     walk.rotation.x = -Math.PI / 2; walk.position.set(0, 0.04, -7.2); walk.receiveShadow = true; R.add(walk);
     // ---- the shop row (facades at z = -10, fronts to +Z) ----
     const shops: [number, number, string, string, string, string, string][] = [
@@ -481,7 +513,8 @@ export class World {
     const temp = makeTempura(1.0); temp.position.set(-1.9, 1.78, 0.1); caseG.add(temp);
     const oni = makeOnigiri(1.2); oni.position.set(0.6, 1.78, -0.2); caseG.add(oni);
     const oni2 = makeOnigiri(1.0); oni2.position.set(1.1, 1.78, 0.25); oni2.rotation.y = 0.7; caseG.add(oni2);
-    // a parfait glass on the top shelf, far right
+    // a parfait glass on the MIDDLE shelf, far right — v1 had it on the
+    // top shelf where it poked above the case and read as a floating egg
     const parfait = new THREE.Group();
     const glass = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.12, 0.5, 12),
       new THREE.MeshPhysicalMaterial({ color: "#dfeef2", transparent: true, opacity: 0.35, roughness: 0.05 }));
@@ -490,15 +523,16 @@ export class World {
     cream.position.y = 0.52; parfait.add(cream);
     const cherry = new THREE.Mesh(new THREE.SphereGeometry(0.06, 8, 6), lam2({ color: "#d42f2f" }));
     cherry.position.set(0.05, 0.62, 0.03); parfait.add(cherry);
-    parfait.position.set(2.3, 2.6, -0.2); caseG.add(parfait);
-    // steam sprites above the big ramen (animated in update)
+    parfait.position.set(2.2, 1.78, -0.2); caseG.add(parfait);
+    // steam sprites just above the big ramen (animated in update):
+    // v1 rose 2.5→3.6, through the case roof — now 1.5→2.6, inside the glass
     const steamM = new THREE.SpriteMaterial({ map: steamTex(), transparent: true, depthWrite: false, opacity: 0.5 });
     for (let i = 0; i < 3; i++) {
       const sp = new THREE.Sprite(steamM.clone());
-      sp.position.set(-0.6 + (i - 1) * 0.3, 2.6, 0.2);
+      sp.position.set(-0.6 + (i - 1) * 0.3, 1.6, 0.2);
       sp.scale.set(0.5, 0.7, 1); sp.layers.set(NOINK);
       caseG.add(sp);
-      this.steams.push({ sp, x: -0.6 + (i - 1) * 0.3, y: 2.5, z: 0.2, ph: i * 0.33 });
+      this.steams.push({ sp, x: -0.6 + (i - 1) * 0.3, y: 1.5, z: 0.2, ph: i * 0.33 });
     }
     caseG.position.set(cx, 0, cz);
     R.add(caseG);
@@ -525,12 +559,14 @@ export class World {
       this.trees.push({ g: t, ph: 3.1 + i * 1.61 });
       blob(R, x, 0.06, z, 2.6, 2.6, 0.3);
     });
-    // ---- falling sakura petals over the street ----
+    // ---- falling sakura petals over the street: kept at z <= -3 so no
+    // petal ever drifts within a metre of a camera (v1: giant pink blob
+    // on the workshop shot) and a touch smaller
     for (let i = 0; i < 26; i++) {
       const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: petalTex(), transparent: true, depthWrite: false, opacity: 0.95 }));
-      const px = -16 + r() * 34, py = 1 + r() * 7, pz = -9 + r() * 12;
+      const px = -16 + r() * 34, py = 2 + r() * 6, pz = -9 + r() * 6;
       sp.position.set(px, py, pz);
-      const sc = 0.22 + r() * 0.2;
+      const sc = 0.2 + r() * 0.16;
       sp.scale.set(sc, sc, 1); sp.layers.set(NOINK);
       R.add(sp);
       this.petals.push(sp);
@@ -554,10 +590,11 @@ export class World {
     wb.position.set(-14, 0, -6.5);
     R.add(wb);
     blob(R, -14, 0.06, -6.5, 3.6, 2.2, 0.3);
-    // workshop sign above the bench
+    // workshop sign above the bench — v1 sat at the frame's right edge
+    // and was cut off; shifted left so the whole board reads
     const wbSign = new THREE.Mesh(new THREE.PlaneGeometry(2.6, 0.65),
       new THREE.MeshLambertMaterial({ map: signTex("etalaseSignGUJO", "GUJO", "#5d4028", "#f6ecd2") }));
-    wbSign.position.set(-14, 3.1, -9.6); R.add(wbSign);
+    wbSign.position.set(-15.4, 3.1, -9.6); R.add(wbSign);
     // ---- street table near the hero: onigiri replica + REAL ramen (shot 7) ----
     const table = new THREE.Group();
     const top = new THREE.Mesh(new THREE.CylinderGeometry(0.85, 0.85, 0.08, 18), lam2({ color: "#8a6844", map: rep(planks(), 1, 1) }));
@@ -644,7 +681,17 @@ export class World {
     untone(Lp.fog, this.fog.color);
     this.fog.near = Lp.fogNear * 1.6; this.fog.far = Lp.fogFar * 1.6;
     scene.fog = this.fog; scene.background = null;
+    // ---- sky dome + clouds: swap to the golden palette on golden shots ----
     this.skyDay.visible = true;
+    const golden = s.light === "golden";
+    if (golden !== this.skyGolden) {
+      this.skyGolden = golden;
+      (this.skyDay.material as THREE.MeshBasicMaterial).map = golden ? skyTexGolden() : skyTexDay();
+      (this.skyDay.material as THREE.MeshBasicMaterial).needsUpdate = true;
+      this.clouds.forEach((c2, i) => {
+        (c2.material as THREE.SpriteMaterial).map = golden ? this.cloudGold[i] : this.cloudDay[i];
+      });
+    }
     for (const c2 of this.clouds) c2.visible = true;
     // ---- STANDAR GERAK: everything that should move, moves ----
     // clouds drift on the wind, each at its own pace

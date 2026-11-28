@@ -244,7 +244,10 @@ export const drawCardFit = (lines: string[], bg: string, fg: string, maxFs = 120
   }
   // the claim text, with its own soft shadow pressed into the board
   g.fillStyle = fg; g.textAlign = "center"; g.textBaseline = "middle";
-  const fs = fitFont(lines, maxFs, g, bw - 64);
+  // v2: maxW was bw-64 — the longest line sat flush on the borders
+  // and the corner rivets overlapped its first/last letters; bw-110
+  // leaves a real margin on every card
+  const fs = fitFont(lines, maxFs, g, bw - 110);
   g.font = `900 ${fs}px 'Arial Black', Arial, sans-serif`;
   g.save();
   g.shadowColor = "rgba(90,50,0,0.45)"; g.shadowBlur = 0; g.shadowOffsetY = 4;
@@ -337,9 +340,10 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
   // a giant fact card glued to the view axis for the whole shot
   const card = (key: string, lines: string[], tx: number, ty: number, tz: number, up: number, sf = 0.52) =>
     cardAerial(key, drawCardFit(lines, "#f2c018", "#1c1503", 100), S0, SLEN, tx, ty, tz, 0.5, up, sf, true);
-  // steam wisps floating above the big plastic ramen in the case
+  // steam wisps floating just above the big plastic ramen in the case —
+  // v2: was y 3.6, ABOVE the case roof, reading as smoke over the shop
   const steamOverCase = () => {
-    out.fx.push({ key: "steamCase", cw: 256, ch: 256, draw: drawSteam, x: CASE_POS[0] - 0.6, y: 3.6, z: CASE_POS[2] + 0.4, w: 0.9, h: 0.9, soft: true });
+    out.fx.push({ key: "steamCase", cw: 256, ch: 256, draw: drawSteam, x: CASE_POS[0] - 0.6, y: 2.0, z: CASE_POS[2] + 0.4, w: 0.9, h: 0.9, soft: true });
   };
   // sparkle glints on the glossy replicas
   const sparkleOn = (x: number, y: number, z: number) => {
@@ -367,10 +371,13 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
     card("cardName", ["SHOKUHIN", "SAMPURU"], -2, 2, -8, 4.2, 0.5);
   } else if (id === 3) {
     // DIKIRA ASLI: the tourist reaches for the replica sushi,
-    // arm up, while the hero watches in disbelief
+    // arm up, while the hero watches in disbelief — v2: the hero
+    // was at HERO_SPOT, 33 deg off this camera's axis, invisible;
+    // he now stands beside the tourist, inside the frame
     out.places.push(stand(TOURIST, TOURIST_SPOT[0], 0.18, TOURIST_SPOT[2], "grin", 0.2, { wave: 1 }, 1.4));
     blob(out, TOURIST_SPOT[0], 0.18, TOURIST_SPOT[2]);
-    hero("shock", -0.3);
+    out.places.push(stand(HERO, 0.9, 0.18, -3.0, "shock", -0.3, {}, 1.4));
+    blob(out, 0.9, 0.18, -3.0);
     steamOverCase();
     card("cardTourist", ["DIKIRA", "ASLI!"], CASE_POS[0], 2.5, CASE_POS[2], 3.2, 0.5);
   } else if (id === 4) {
@@ -388,10 +395,13 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
     card("cardSteam", ["BERASAP", "TERUS!"], CASE_POS[0], 2.5, CASE_POS[2], 3.0, 0.5);
   } else if (id === 6) {
     // NGGAK PERNAH BASI: the hero pokes the plastic onigiri on
-    // the street table — it does not dent, at all
-    out.places.push(stand(HERO, TABLE_POS[0] - 0.9, 0.18, TABLE_POS[2] + 0.9, "nervous", 0.3, { wave: 0.8 }, 1.4));
+    // the street table — it does not dent, at all. v2: the camera
+    // was so close the card covered the hero's face and his cap
+    // was cropped by the frame top — pulled back, card raised and
+    // shrunk, hero a touch smaller so head + card both fit
+    out.places.push(stand(HERO, TABLE_POS[0] - 0.9, 0.18, TABLE_POS[2] + 0.9, "nervous", 0.3, { wave: 0.8 }, 1.2));
     blob(out, TABLE_POS[0] - 0.9, 0.18, TABLE_POS[2] + 0.9);
-    card("cardStale", ["NGGAK PERNAH", "BASI"], TABLE_POS[0], 2, TABLE_POS[2], 3.2, 0.46);
+    card("cardStale", ["NGGAK PERNAH", "BASI"], TABLE_POS[0], 2, TABLE_POS[2], 4.2, 0.4);
   } else if (id === 7) {
     // THE PUNCHLINE LOOP: back on the cover framing in golden
     // light — the hero laughs, a REAL steaming ramen bowl now

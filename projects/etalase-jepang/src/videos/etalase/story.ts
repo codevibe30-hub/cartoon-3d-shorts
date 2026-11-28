@@ -101,15 +101,19 @@ export const camAt = (id: number, f: number): Cam => {
       // composition (k = 1 at the shot's first frame) stays intact
       return full(dolly(CAM_COVER.pos, CAM_COVER.look, Math.exp(-0.00025 * lf), { fov: 46 }));
     case 2: // WIDE street: hero + chef before the restaurant row
-      return full(dolly([6, 4.5, 10], [-2, 1.5, -8], Math.exp(-0.0003 * lf), { fov: 46 }));
+      // v2: look shifted left so the chef is fully in frame (was half-cut)
+      return full(dolly([6, 4.5, 10], [-2.6, 1.5, -8], Math.exp(-0.0003 * lf), { fov: 46 }));
     case 3: // CLOSE on the tourist reaching for the replica sushi
       return full(dolly([2.5, 2.0, 0.5], [-1.5, 1.8, -5.5], Math.exp(-0.0005 * lf), { fov: 42 }));
     case 4: // The Gujo workshop corner: craftsman painting tempura
       return full(dolly([-10, 2.2, 0], [-14, 1.2, -6.5], Math.exp(-0.0004 * lf), { fov: 42 }));
     case 5: // CLOSE on the giant ramen replica inside the case
-      return full(dolly([-0.5, 2.3, -1.5], [-1.5, 2.2, -5.5], Math.exp(-0.0006 * lf), { fov: 38 }));
+      // v2: re-centred on the bowl itself (was aimed at the case
+      // centre, leaving the bowl at the left edge and the frame empty)
+      return full(dolly([-1.0, 2.0, -1.0], [-2.0, 1.7, -5.5], Math.exp(-0.0006 * lf), { fov: 38 }));
     case 6: // CLOSE on the hero poking the plastic onigiri
-      return full(dolly([4.5, 2.0, 0.5], [2.8, 1.2, -4], Math.exp(-0.0005 * lf), { fov: 40 }));
+      // v2: pulled back so the hero's head and the claim card both fit
+      return full(dolly([6.0, 2.4, 2.0], [2.8, 1.2, -4], Math.exp(-0.0005 * lf), { fov: 40 }));
     default:
       return full(dolly(CAM_COVER.pos, CAM_COVER.look, 1, { fov: 46 }));
   }
