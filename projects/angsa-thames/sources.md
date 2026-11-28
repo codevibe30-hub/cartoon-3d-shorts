@@ -1,0 +1,6 @@
+# Sumber fakta — Angsa Thames Milik Raja (diverifikasi 2026-11-28)
+
+- Wikipedia, "Swan Upping" (https://en.wikipedia.org/wiki/Swan_Upping): upacara tahunan — angsa bisu di Thames dikumpulkan, ditangkap, diberi cincin, dilepas; Mahkota memiliki semua angsa bisu tanpa tanda di perairan terbuka (hak prerogatif sejak abad ke-12); Vintners dan Dyers adalah dua-satunya badan lain yang masih memegang hak itu; 5 hari, minggu ke-3 Juli, Sunbury → Abingdon; angsa Raja dicatat Marker of the Swans, berseragam merah; anak angsa ditentukan pemiliknya dari induknya (Raja/Dyers/Vintners); pemegang gelar "Seigneur of the Swans" saat ini Raja Charles III.
+- Smithsonian Magazine (https://www.smithsonianmag.com/history/fascinating-history-british-thrones-swans-180964249/): teriakan "All up!", perahu skiff tradisional, bendera biru (Dyers/Vintners) dan merah (Raja); kini fungsi konservasi — sensus populasi dan kesehatan Thames.
+- Guide London (https://www.guidelondon.org.uk/blog/around-london/swan-upping-counting-the-crowns-swans-on-the-river-thames/): 79 mil, 5 hari, lewat Kastil Windsor; angsa ditimbang dan dicek luka (kail pancing); Dyers biru, Vintners putih, Raja merah.
+- Cabinet Magazine (https://www.cabinetmagazine.org/issues/36/turner.php): ±1.000 angsa di bentangan Thames itu; denda maks £5.000 dan/atau 6 bulan penjara bila melukai angsa.
