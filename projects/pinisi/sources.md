@@ -1,0 +1,11 @@
+# Sumber fakta — Kapal Pinisi Tanpa Gambar Rancangan (diverifikasi 2026-11-28)
+
+- UNESCO 2017: "Pinisi, art of boatbuilding in South Sulawesi" masuk Representative List of the Intangible Cultural Heritage of Humanity. (ich.unesco.org; indonesia.travel; seasia.co)
+- Tanpa cetak biru: "No blueprints exist for pinisi" — semua desain ada di kepala para perajin; master builder punggawa mengandalkan rasio hafalan + mata berpengalaman. (AramcoWorld 2021, dari Tana Beru; seasia.co)
+- Pusat pembangunan: Tana Beru, Bira, Ara, Lemo-Lemo di Kabupaten Bulukumba, Sulawesi Selatan; masyarakat Konjo. (UNESCO; indonesia.travel; seasia.co; divetrips.id)
+- Shell-first: papan lambung dipasang dulu sebelum rangka dalam; disambung pasak kayu (wooden dowels/pegs), tanpa paku besi pada struktur utama; papan dibentuk dengan mata. (seasia.co; divetrips.id; luxuryphinisi.com)
+- Kayu: ulin (ironwood) untuk lunas dan tulang punggung, jati untuk geladak dan trim. (seasia.co; luxuryphinisi.com)
+- Ritual adat di tiap tahap: dari pemilihan pohon, peletakan lunas (upacara katto), sampai peluncuran kapal ke laut yang ditarik ramai-ramai warga desa. (seasia.co; silolona.com; divetrips.id)
+- Ukuran: lambung tradisional sampai 40 meter (Silolona 36 m); pembangunan 2–4 tahun. (AramcoWorld; silolona.com)
+- Rig pinisi: dua tiang, tujuh layar; nama "pinisi" merujuk pada rig/layar, bukan satu desain lambung tetap. (UNESCO via suprabacruises.com; seasia.co)
+- Catatan: proyek yacht pinisi modern bisa memakai gambar rancangan — klaim naskah dibatasi ke tradisi ("kapal pinisi tradisional dibangun tanpa gambar"). (pinisiboat.com)
