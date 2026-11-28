@@ -468,36 +468,44 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
   } else if (id === 3) {
     // THE WIND-UP: close on the thrower gripping the phone —
     // the phone in his raised hand, the judge beside him.
-    // Thrower at (-0.8, -2.6) is on-axis for the shot-3 camera
-    // (~0 deg); judge at (0.4, -3.4) is ~7 deg — both in frame.
+    // V2 (final v1 check): JUDGE_SPOT (0.4, -3.4) left the judge's
+    // face half-cut at the right edge — shot-3 judge moved to
+    // (0.0, -3.5); the phone floated right of the hand — moved
+    // to (-0.25, 1.55, -2.65) so it sits IN the raised hand.
     throwerAt(THROWER_SPOT[0], THROWER_SPOT[2], "grin", { wave: 1.0 });
-    judgeAt(JUDGE_SPOT[0], JUDGE_SPOT[2], "neutral");
-    // the phone sits IN the thrower's raised hand (hand ≈ (0.1, 1.6, -2.7))
-    phoneFx(0.1, 1.6, -2.7, 0.5);
+    judgeAt(0.0, -3.5, "neutral");
+    // the phone sits IN the thrower's raised hand (hand ≈ (-0.25, 1.55, -2.65))
+    phoneFx(-0.25, 1.55, -2.65, 0.45);
     card("cardOrg", ["HP", "PANITIA"], 0, 2.6, -4.5, 4.2, 0.5);
   } else if (id === 4) {
     // FREESTYLE: the thrower mid-trick, arm high, phone in the
     // air — the judge holds up the score card "12".
-    // Thrower at (0.0, -3.0) on-axis for the shot-4 camera;
-    // judge at (1.2, -3.6) ~5 deg off-axis.
+    // V2 (final v1 check): score at (1.9, 1.4, -3.8) was ~85%
+    // off-frame right — moved to (0.7, 1.35, -3.9), smaller,
+    // beside the judge's raised hand; the big phone at the top
+    // right was half-cut — moved down-left, smaller.
     throwerAt(0.0, -3.0, "laugh", { wave: 1.0 });
     judgeAt(1.2, -3.6, "grin");
-    scoreFx(1.9, 1.4, -3.8, 1.1);
-    phoneBigFx(0.6, 4.6, -6, 1.2, 2.4);
+    scoreFx(0.7, 1.35, -3.9, 0.9);
+    phoneBigFx(-0.3, 3.9, -6.5, 1.1, 2.2);
     card("cardFree", ["GAYA", "BEBAS"], 0, 2.6, -4.5, 4.2, 0.5);
   } else if (id === 5) {
     // THE RECORD: Ere's 101.46 m throw — the thrower releases,
     // the phone sails far down the field, the hero cheers.
+    // V2: phone at z -14 was tiny/barely visible — moved closer
+    // and lower so it reads as a phone sailing downfield.
     throwerAt(0.2, -3.4, "laugh", { wave: 1.0 });
     heroAt(1.6, 0, -2.6, "laugh", -0.15, { wave: 0.8 });
-    phoneBigFx(-0.5, 5.2, -14, 1.6, 3.2);
+    phoneBigFx(-0.5, 4.4, -12, 1.6, 3.2);
     boardFx("100 M", 3.4, 0, -24, 2.6);
     card("cardRecord", ["REKOR", "DUNIA"], 0, 2.6, -8, 4.0, 0.5);
   } else if (id === 6) {
     // THE RECYCLE: the green bin overflowing with old phones —
     // the hero gives a thumbs-up beside it.
+    // V2: the recycle symbol was hidden behind the hero — bin
+    // shifted 0.2 m left so the symbol clears the hero's body.
     heroAt(1.4, 0, -2.8, "grin", -0.15, { wave: 0.5 });
-    binFx(BIN_SPOT[0], 0, BIN_SPOT[2], 2.4);
+    binFx(BIN_SPOT[0] - 0.2, 0, BIN_SPOT[2], 2.4);
     phonesFx();
     card("cardRecycle", ["DIDAUR", "ULANG"], 0, 2.6, -8, 4.6, 0.5);
   } else if (id === 7) {
