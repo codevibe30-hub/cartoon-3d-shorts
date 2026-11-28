@@ -274,7 +274,9 @@ const CREW: Who = { i: 81, o: { jacket: "#e8c832", pants: "#2a2f3a", boots: "#3a
 /** A tied trash bag: a plump rounded sack with a knotted top,
  *  drawn on a 256x256 canvas. Colour passed per use. */
 export const drawTrashBag = (col: string) => (p: Pen) => {
-  p.dot(128, 150, 78);
+  // v1: the body was an INK dot — a black ball that read as a bomb.
+  // The bag body is now the bag colour (ink-outlined), knot on top.
+  p.ell(128, 150, 78, 78, col);
   p.line([[128, 78], [108, 48]], col, 14, false);
   p.line([[128, 78], [148, 48]], col, 14, false);
   p.line([[108, 48], [128, 30]], col, 10, false);
@@ -294,7 +296,8 @@ export const drawIceCream = (p: Pen) => {
   p.line([[128, 110], [96, 200]], "#d8a860", 16, false);
   p.line([[128, 110], [160, 200]], "#d8a860", 16, false);
   p.line([[96, 200], [160, 200]], "#d8a860", 16, false);
-  p.dot(128, 84, 52);
+  // v1: the scoop was an INK dot — a black ball. Strawberry scoop now.
+  p.dot(128, 84, 52, "#f2a0b8");
 };
 
 // ---------------- staging ----------------
@@ -390,8 +393,10 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
     // THE HANDOFF: close on the curb — hero + neighbour hand their
     // bags to the crew at the stopped truck
     heroAt(2.9, 0, -3.4, "grin", -0.2, { wave: 0.5 });
-    nb(NB_A, 3.9, -2.8, "grin");
-    crewAt(1.2, -4.6, "grin");
+    // v1: NB_A stood half-hidden behind the truck's yellow side wall,
+    // and the crew was swallowed by the truck edge — both pulled clear
+    nb(NB_A, 4.3, -2.2, "grin");
+    crewAt(2.0, -4.4, "grin");
     bagFx(2.9, 0, -3.0, "#e8542e");
     bagFx(3.9, 0, -2.4, "#3b5b9a");
     notesFx();
@@ -410,7 +415,9 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
     // THE MIX-UP: the newcomer holds coins + an ice cream, sure
     // the music means dessert — the truck rolls past behind him
     heroAt(1.8, 0, -3.0, "nervous", -0.15, { wave: 0.3 });
-    out.fx.push({ key: "icecream", cw: 256, ch: 256, draw: drawIceCream, x: 2.5, y: 1.1, z: -2.6, w: 0.7, h: 0.7, soft: true });
+    // v1: the cone floated at chest height, detached from the hand —
+    // it now sits IN the hero's raised hand (hand ≈ (2.45, 1.55, -2.7))
+    out.fx.push({ key: "icecream", cw: 256, ch: 256, draw: drawIceCream, x: 2.45, y: 1.55, z: -2.7, w: 0.8, h: 0.8, soft: true });
     nb(NB_A, 4.2, -2.4, "laugh");
     notesFx();
     card("cardIce", ["BUKAN", "ES KRIM"], 0, 3.0, -8, 3.0, 0.5);
@@ -418,7 +425,8 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
     // THE SORT: three coloured bags on the sidewalk, the crew
     // sorting — the payoff number lands
     heroAt(HERO_SPOT[0], 0, HERO_SPOT[2], "laugh", 0, { wave: 0.8 });
-    crewAt(1.4, -4.8, "grin");
+    // v1: the crew stood behind the truck's side wall — moved clear
+    crewAt(1.9, -5.0, "grin");
     bagFx(BAG_SPOTS[0][0], 0, BAG_SPOTS[0][2], "#e8542e");
     bagFx(BAG_SPOTS[1][0], 0, BAG_SPOTS[1][2], "#e8c832");
     bagFx(BAG_SPOTS[2][0], 0, BAG_SPOTS[2][2], "#3b9a5a");

@@ -115,8 +115,10 @@ export const camAt = (id: number, f: number): Cam => {
       // gentle push-in only: the approved frame-0 composition
       // (k = 1 at the shot's first frame) stays intact
       return full(dolly(CAM_COVER.pos, CAM_COVER.look, Math.exp(-0.00025 * lf), { fov: 46 }));
-    case 2: // HIGH WIDE: the whole street, apartment blocks, truck approaching
-      return full(dolly([8.5, 7.5, 12], [-1, 1.5, -10], Math.exp(-0.0003 * lf), { fov: 46 }));
+    case 2: // HIGH WIDE: over the road centre so no near building can
+      // cross the frame (v1: camera at x=8.5 put a blurry facade over
+      // 70% of the shot and hid the truck + the FÜR ELISE card)
+      return full(dolly([0.5, 6.0, 13], [-0.5, 1.2, -12], Math.exp(-0.0003 * lf), { fov: 46 }));
     case 3: // CLOSE on the hero + neighbour handing bags to the crew
       return full(dolly([4.6, 2.0, 1.2], [1.8, 1.3, -4.5], Math.exp(-0.0005 * lf), { fov: 42 }));
     case 4: // THE CHASE: hero running after the truck, waving
@@ -124,7 +126,9 @@ export const camAt = (id: number, f: number): Cam => {
     case 5: // THE ICE-CREAM MIX-UP: hero with coins, truck passing behind
       return full(dolly([4.2, 2.0, 2.5], [1.6, 1.3, -5], Math.exp(-0.0004 * lf), { fov: 42 }));
     case 6: // SORTING: three coloured bags on the sidewalk, crew sorting
-      return full(dolly([4.4, 2.2, 0.8], [1.6, 0.9, -4.5], Math.exp(-0.0005 * lf), { fov: 40 }));
+      // v1: camera 2.4 m from the hero made his head fill half the frame
+      // and cut the 5% JADI 50% card — pulled back to ~5 m like shot 3
+      return full(dolly([5.6, 2.8, 3.2], [2.0, 1.0, -4.5], Math.exp(-0.0005 * lf), { fov: 42 }));
     default:
       return full(dolly(CAM_COVER.pos, CAM_COVER.look, 1, { fov: 46 }));
   }

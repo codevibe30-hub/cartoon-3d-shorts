@@ -26,3 +26,12 @@
 
 ## Komentar debat (usulan)
 Kamu tim ngejar truk sampah atau tim ketinggalan terus? Ceritain di komen!
+
+## v2 — perbaikan dari verifikasi final v1 (frame 0/55/182/315/438/566/696/849/935)
+- Shot 2 RUSAK: kamera x=8.5 ketutup dinding gedung blur 70% frame — truk + kartu FÜR ELISE tak terlihat. Kamera pindah ke atas tengah jalan [0.5, 6.0, 13].
+- Shot 6 RUSAK: kamera 2,4 m dari hero — kepala penuhi setengah frame, kartu "5% JADI 50%" terpotong, 3 kantong tak terlihat. Kamera ditarik ke [5.6, 2.8, 3.2] (±5 m, seperti shot 3); crew pindah ke (1.9, -5.0).
+- Truk "mundur" di shot 4–5: model tak pernah berputar — kini rotation.y = π di shot 4–5 (jalan menjauh dengan hidung duluan); asap knalpot ikut pindah sisi.
+- Kantong sampah: badan tadinya dot INK hitam (kelihatan seperti bom) — kini ell berisi warna kantong + tali.
+- Es krim shot 5: scoop tadinya dot hitam melayang — kini pink stroberi, dipindah ke tangan hero yang terangkat (2.45, 1.55, -2.7).
+- Shot 3: tetangga + crew tadinya ketutup sisi kuning truk — NB_A ke (4.3, -2.2), crew ke (2.0, -4.4).
+- Window re-render v2: 0:75 s.d. 750:825 (11 window); shot 7 (825:900, 900:936) tidak berubah.

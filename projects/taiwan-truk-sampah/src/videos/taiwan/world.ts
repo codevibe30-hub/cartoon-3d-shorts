@@ -483,6 +483,10 @@ export class World {
       const tz = truckZAt(id, tt);
       this.truck.position.z = tz;
       this.truck.position.y = Math.sin(tt * 7.5) * 0.015; // engine idle tremble
+      // v1: in shots 4-5 the truck drove AWAY while still facing the
+      // camera (reversing). It now turns around to drive away nose-first.
+      const away = id === 4 || id === 5;
+      this.truck.rotation.y = away ? Math.PI : 0;
       const spin = tz * 2.1;
       for (const w of this.truckWheels) w.rotation.x = spin;
     }
@@ -497,7 +501,10 @@ export class World {
       mat.opacity = 0.5 * (1 - ph);
       const sc2 = 0.5 + ph * 1.2;
       pf.sp.scale.set(sc2, sc2, 1);
-      pf.sp.position.set(pf.x + Math.sin(tt * 1.3 + pf.ph * 9) * 0.1, pf.y + ph * 1.6, (this.truck ? this.truck.position.z : pf.z) - 3.4);
+      // exhaust trails from the truck's tail — which flips to the
+      // camera side when the truck turns around in shots 4-5
+      const away = id === 4 || id === 5;
+      pf.sp.position.set(pf.x + Math.sin(tt * 1.3 + pf.ph * 9) * 0.1, pf.y + ph * 1.6, (this.truck ? this.truck.position.z : pf.z) + (away ? 3.4 : -3.4));
     }
     // ---------------- cast + effects ----------------
     const right = new THREE.Vector3().setFromMatrixColumn(cam.matrixWorld, 0);
