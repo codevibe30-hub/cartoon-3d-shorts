@@ -1,0 +1,6 @@
+# Sources — v2 #38 "Kejuaraan Dunia Lempar HP" (LUAR)
+
+- phys.org / AFP, "New world record set at mobile-phone throwing contest", 19 Aug 2012 — https://phys.org/news/2012-08-world-mobile-phone-contest.html — Ere Karjalainen, 18, threw a phone 101.46 m at the Savonlinna championships; second place Jeremy Gallop 94.67 m; event held in Savonlinna since 2000.
+- The Register, "Phone-flingers flock to Finland for World Championships", 20 Aug 2012 — https://www.theregister.com/2012/08/20/phone-flingers-flock-to-finland-for-world-championships/ — three contests: distance throw, freestyle judged on creativity/aesthetics, junior under-12s; organised by local translation company Fennolingua to publicise phone recycling; handsets provided by local phone recycling banks.
+- UMTSWorld / Fennolingua, "MOBILE PHONE THROWING WORLD CHAMPIONSHIPS", 24 Aug 2002 — https://www.umtsworld.com/lastword/lw0044.htm — 2002 world record 66.72 m (Petri Valta, Nokia 5110); freestyle scored on style + length; phones supplied by the organiser.
+- itechguides.com, "Is Mobile Phone Throwing a National Sport in Finland?" — confirms Savonlinna 2000 origin, distance/freestyle/team/junior formats, organiser-supplied old handsets; notes the 110.42 m Guinness figure is NOT reconciled with the verified 101.46 m Yle record — the script uses 101.46 m only.
