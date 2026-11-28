@@ -385,12 +385,17 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
     // v2: the hero stood dead-centre under the card and his head
     // vanished behind it — he now stands toward the head end, the
     // card anchors at the tail end, smaller, so face + card coexist
-    out.places.push(stand(HERO, WHALE_MID[0] - 1.6, whaleY, WHALE_MID[2] + 1.2, "grin", -0.2, { wave: 1 }, 1.5));
-    harpoonFx(WHALE_MID[0] - 0.9, whaleY + 1.6, WHALE_MID[2] + 1.2);
+    // v4: the v2 offset (-1.6) still let the card eat the hero's
+    // face for the shot's first ~3 s (whale-bob peak) — push him
+    // a full 1.2 m further toward the head end, harpoon follows
+    out.places.push(stand(HERO, WHALE_MID[0] - 2.8, whaleY, WHALE_MID[2] + 1.2, "grin", -0.2, { wave: 1 }, 1.5));
+    harpoonFx(WHALE_MID[0] - 2.1, whaleY + 1.6, WHALE_MID[2] + 1.2);
     splashFx(WHALE_MID[0] - 2, 1.4, WHALE_MID[2] + 1.2, 2.4);
     splashFx(WHALE_TAIL[0], 1.2, WHALE_TAIL[2], 2.6);
     crew(CREW_A, 0, "shock");
-    card("cardThrash", ["PAUS", "NGAMUK"], WHALE_TAIL[0], WHALE_TOP, WHALE_TAIL[2], 4.2, 0.44);
+    // v4: smaller + lifted higher so the bob peak can't push the
+    // hero's head up into it
+    card("cardThrash", ["PAUS", "NGAMUK"], WHALE_TAIL[0], WHALE_TOP, WHALE_TAIL[2], 4.6, 0.40);
   } else if (id === 5) {
     // TOWED: the tail hammers the sea, the boat is dragged,
     // a long foam wake trails behind

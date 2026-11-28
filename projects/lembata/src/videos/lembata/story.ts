@@ -123,7 +123,9 @@ export const camAt = (id: number, f: number): Cam => {
       // From here the sail is 4+ m off-axis, card + hero clear.
       return full(dolly([-4.5, 2.2, -2.0], [1.2, 1.6, -10.2], Math.exp(-0.0005 * lf), { fov: 42 }));
     case 4: // THE JUMP: lamafa on the whale's back, harpoon down
-      return full(dolly([-6.5, 3.2, -2.5], [-2.2, 1.4, -10], Math.exp(-0.0004 * lf), { fov: 42 }));
+      // v4: pulled back + up — at the shot's start the whale-bob
+      // peak cropped the hero's head at the frame top
+      return full(dolly([-7.2, 3.6, -2.0], [-2.2, 1.4, -10], Math.exp(-0.0004 * lf), { fov: 42 }));
     case 5: // WIDE on the thrashing tail + the towed boat
       // v3: mirrored to -X (same sail-on-axis defect as shot 3:
       // the sail plane sliced the MEI-OKTOBER card); look nudged
