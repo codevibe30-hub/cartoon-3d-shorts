@@ -857,12 +857,12 @@ export const stage = (id: number, tt: number, cam: CamInfo): Stage => {
     // grabbing at the leg; his friend freezes on the right.
     const drop = (Math.sin((tt - t0) * 4.4) + 1) / 2;
     noteFx(out, 0, 1.52, -5.3, 3.9 * pulse);
-    footFx(out, 0.15, 3.62 - drop * 0.62, -4.35, 2.5);
-    footShadowFx(out, 0.05, 0.78, -4.95, 1.7 + drop * 0.7, 0.7 + drop * 0.45);
+    footFx(out, 0.95, 3.62 - drop * 0.62, -4.35, 2.5);
+    footShadowFx(out, 0.9, 0.78, -4.95, 1.7 + drop * 0.7, 0.7 + drop * 0.45);
     heroAt(out, cam, tt, 0, hx, hz, { expr: "shock", wave: 0.95 });
     friendAt(out, cam, tt, 1, fx2, fz, { expr: "shock", wave: 0.85 });
     burst(1.75, 3.1, -4.9, 1.5);
-    card(out, cam, ["PENJARA", "15 TAHUN!"], 0, 4.62, -6.4, 2.85 * u);
+    card(out, cam, ["PENJARA", "15 TAHUN!"], -1.55, 4.62, -6.4, 2.7 * u);
   }
   if (shot === 2) {
     // THE REASON: wide on the market corner — the note and a
@@ -884,9 +884,9 @@ export const stage = (id: number, tt: number, cam: CamInfo): Stage => {
     // law (the friend's default spot falls outside this
     // camera's narrow axis, so he stays out of this shot).
     noteFx(out, -0.4, 1.45, -4.7, 3.3);
-    lawFx(out, 0.7, 2.55, -10.8, 4.5);
-    heroAt(out, cam, tt, 0, hx, hz, { expr: "nervous", wave: 0.2 });
-    card(out, cam, ["PASAL", "112"], 0.4, 5.15, -7.6, 2.5 * u);
+    lawFx(out, -1.2, 2.7, -8.8, 3.4);
+    heroAt(out, cam, tt, 0, hx, hz, { expr: "nervous", wave: 0.2 }, 1.15);
+    card(out, cam, ["PASAL", "112"], 0.2, 2.9, -4.5, 2.2 * u);
   }
   if (shot === 4) {
     // RE-HOOK: a baht coin ROLLS in from the left straight at
@@ -894,30 +894,30 @@ export const stage = (id: number, tt: number, cam: CamInfo): Stage => {
     // travels and spins through the whole shot.
     const s0 = s.a / FPS, s1 = s.b / FPS;
     const ru = clamp01((tt - s0) / ((s1 - s0) * 0.92));
-    const cx = -2.5 + ru * 2.75;
-    speedFx(out, cx - 1.45, 0.98, -3.05, 1.9);
-    coinFx(out, cx, 0.92, -2.95, 1.65, -ru * 5.2);
+    const cx = -1.7 + ru * 2.0;
+    speedFx(out, cx - 1.3, 0.95, -3.0, 1.7);
+    coinFx(out, cx, 0.9, -2.9, 1.45, -ru * 5.2);
     heroAt(out, cam, tt, 0, hx, hz, { expr: "shock", wave: 1.0 });
-    friendAt(out, cam, tt, 1, -0.2, -3.0, { expr: "shock", wave: 0.9 });
-    card(out, cam, ["JANGAN PAKAI", "KAKI!"], 0, 4.62, -6.4, 2.85 * u);
+    friendAt(out, cam, tt, 1, -1.1, -3.3, { expr: "shock", wave: 0.9 });
+    card(out, cam, ["JANGAN PAKAI", "KAKI!"], 0.3, 3.35, -4.6, 2.3 * u);
   }
   if (shot === 5) {
     // THE SAVE: the giant hand comes down and stops the coin
     // dead — the way Thais actually do it. Both relax.
-    handFx(out, -0.15, 1.28, -2.95, 3.3);
+    handFx(out, 0.55, 1.35, -2.9, 2.6);
     heroAt(out, cam, tt, 0, hx, hz, { expr: "relief", wave: 0.3 });
     friendAt(out, cam, tt, 1, 0.0, -3.2, { expr: "relief_open", wave: 0.5 });
     note(1.9, 3.3, -4.2, Math.floor(tt * 2) % 3, 0.42);
-    card(out, cam, ["PAKAI", "TANGAN"], 0, 4.62, -6.4, 2.7 * u);
+    card(out, cam, ["PAKAI", "TANGAN"], 0.5, 3.3, -4.4, 2.2 * u);
   }
   if (shot === 6) {
     // THE CONTRAST: the hero, relieved, nearly pats his
     // friend on the head — and freezes: a halo of sacredness
     // glows over it. Feet lowest, head highest.
-    haloFx(out, 0.1, 2.95, -2.95, 1.15);
+    haloFx(out, 1.6, 2.95, -3.25, 1.15);
     heroAt(out, cam, tt, 0, hx, hz, { expr: "nervous", wave: 0.75 });
-    friendAt(out, cam, tt, 1, 0.1, -3.1, { expr: "shock", wave: 0.65 });
-    card(out, cam, ["KEPALA ITU", "SUCI"], 0, 4.62, -6.4, 2.85 * u);
+    friendAt(out, cam, tt, 1, 1.6, -3.4, { expr: "shock", wave: 0.65 });
+    card(out, cam, ["KEPALA ITU", "SUCI"], 0.6, 3.15, -4.6, 2.2 * u);
   }
   if (shot === 7) {
     // PUNCHLINE LOOP (golden): the foot is gone, the note is
