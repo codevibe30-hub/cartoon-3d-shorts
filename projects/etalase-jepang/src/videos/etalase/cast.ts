@@ -371,13 +371,14 @@ export const stage = (id: number, t: number, cam: CamInfo): Stage => {
     card("cardName", ["SHOKUHIN", "SAMPURU"], -2, 2, -8, 4.2, 0.5);
   } else if (id === 3) {
     // DIKIRA ASLI: the tourist reaches for the replica sushi,
-    // arm up, while the hero watches in disbelief — v2: the hero
-    // was at HERO_SPOT, 33 deg off this camera's axis, invisible;
-    // he now stands beside the tourist, inside the frame
+    // arm up, while the hero watches in disbelief — v3: the hero
+    // first stood at (0.9,-3.0), 3.8 m from this camera, so his
+    // shocked face filled half the frame cropped at the edges;
+    // he now stands further back beside the case, whole and readable
     out.places.push(stand(TOURIST, TOURIST_SPOT[0], 0.18, TOURIST_SPOT[2], "grin", 0.2, { wave: 1 }, 1.4));
     blob(out, TOURIST_SPOT[0], 0.18, TOURIST_SPOT[2]);
-    out.places.push(stand(HERO, 0.9, 0.18, -3.0, "shock", -0.3, {}, 1.4));
-    blob(out, 0.9, 0.18, -3.0);
+    out.places.push(stand(HERO, 0.1, 0.18, -4.2, "shock", -0.3, {}, 1.4));
+    blob(out, 0.1, 0.18, -4.2);
     steamOverCase();
     card("cardTourist", ["DIKIRA", "ASLI!"], CASE_POS[0], 2.5, CASE_POS[2], 3.2, 0.5);
   } else if (id === 4) {
